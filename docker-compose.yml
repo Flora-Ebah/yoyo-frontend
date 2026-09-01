@@ -1,0 +1,66 @@
+version: "3.9"
+
+services:
+  sheba-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_APP_TITLE: ${NEXT_PUBLIC_APP_TITLE}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
+        BASEPATH: ${BASEPATH}
+
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+        NEXT_PUBLIC_API_VERSION: ${NEXT_PUBLIC_API_VERSION}
+        NEXT_PUBLIC_API_PATH: ${NEXT_PUBLIC_API_PATH}
+        NEXT_PUBLIC_SOCKET_URL: ${NEXT_PUBLIC_SOCKET_URL}
+        NEXT_PUBLIC_API_KEY: ${NEXT_PUBLIC_API_KEY}
+
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID}
+        NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+
+        NEXT_APP_CONTACT_EMAIL: ${NEXT_APP_CONTACT_EMAIL}
+        NEXT_APP_CONTACT_PHONE: ${NEXT_APP_CONTACT_PHONE}
+        NEXT_APP_CONTACT_ADDRESS: ${NEXT_APP_CONTACT_ADDRESS}
+        NEXT_APP_CONTACT_HOURS: ${NEXT_APP_CONTACT_HOURS}
+        NEXT_APP_CONTACT_SOCIAL_FACEBOOK: ${NEXT_APP_CONTACT_SOCIAL_FACEBOOK}
+        NEXT_APP_CONTACT_SOCIAL_LINKEDIN: ${NEXT_APP_CONTACT_SOCIAL_LINKEDIN}
+        NEXT_APP_CONTACT_SOCIAL_YOUTUBE: ${NEXT_APP_CONTACT_SOCIAL_YOUTUBE}
+
+    image: sheba-admin:secure
+    container_name: sheba-admin
+    restart: unless-stopped
+
+    # Optionnel : garde-le si Dokploy place bien un .env à côté du compose.
+    # Sinon, Dokploy injecte via son UI et tu peux supprimer env_file.
+    env_file:
+      - .env
+
+    environment:
+      NODE_ENV: production
+      PORT: "6001"
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    ports:
+      - "6001:6001"
+
+    # Security hardening
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+      - /app/.next/cache:rw,noexec,nosuid,size=64m
+
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 200
+    mem_limit: 512m
+    cpus: "1.0"
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:6001/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
