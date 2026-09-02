@@ -227,7 +227,7 @@ const NotificationsButton = () => {
         }}
         onItemClick={handleNotificationOpen}
       />
-      <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth='sm' fullWidth>
+      <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth='sm' fullWidth PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
         <DialogTitle>{selectedNotification?.title || 'Notification'}</DialogTitle>
         <DialogContent>
           <Box className='flex flex-col gap-3'>
@@ -244,7 +244,7 @@ const NotificationsButton = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleDialogClose} variant='contained'>
+          <Button onClick={handleDialogClose} variant='contained' disableElevation sx={{ borderRadius: 0, textTransform: 'none' }}>
             Fermer
           </Button>
         </DialogActions>

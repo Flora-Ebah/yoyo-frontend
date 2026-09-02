@@ -88,16 +88,16 @@ const getAvatar = (
   const { avatarImage, avatarIcon, avatarText, title, avatarColor, avatarSkin } = params
 
   if (avatarImage) {
-    return <Avatar src={avatarImage} />
+    return <Avatar variant='square' src={avatarImage} />
   } else if (avatarIcon) {
     return (
-      <CustomAvatar color={avatarColor} skin={avatarSkin || 'light-static'}>
+      <CustomAvatar variant='square' color={avatarColor} skin={avatarSkin || 'light-static'}>
         <i className={avatarIcon} />
       </CustomAvatar>
     )
   } else {
     return (
-      <CustomAvatar color={avatarColor} skin={avatarSkin || 'light-static'}>
+      <CustomAvatar variant='square' color={avatarColor} skin={avatarSkin || 'light-static'}>
         {avatarText || getInitials(title)}
       </CustomAvatar>
     )
@@ -321,7 +321,7 @@ const NotificationDropdown = ({
                           borderLeft: 'none',
                           borderRight: 'none'
                         }
-                      : { borderRadius: '6px', overflow: 'hidden' }
+                      : { borderRadius: 0, overflow: 'hidden' }
                 }
               >
                 <ClickAwayListener onClickAway={handleClose}>
@@ -332,7 +332,7 @@ const NotificationDropdown = ({
                         sx={{
                           width: 38,
                           height: 38,
-                          borderRadius: '6px',
+                          borderRadius: 0,
                           display: 'grid',
                           placeItems: 'center',
                           bgcolor: 'var(--mui-palette-primary-lightOpacity)',
@@ -362,8 +362,8 @@ const NotificationDropdown = ({
                             size='small'
                             onClick={() => readAllNotifications()}
                             sx={{
-                              borderRadius: '6px',
-                              border: '1px solid var(--mui-palette-divider)',
+                              borderRadius: 0,
+                              border: 'none',
                               color: 'text.secondary',
                               '&:hover': { bgcolor: 'action.hover', color: 'primary.main' }
                             }}
@@ -375,7 +375,7 @@ const NotificationDropdown = ({
                     </Box>
                     <Divider sx={{ borderStyle: 'dashed' }} />
                     {/* Onglets Toutes / Non lues */}
-                    <Box sx={{ display: 'flex', gap: 0.5, p: 0.5, mx: 1.5, my: 1.25, borderRadius: '6px', bgcolor: 'action.hover' }}>
+                    <Box sx={{ display: 'flex', gap: 0.5, p: 0.5, mx: 1.5, my: 1.25, borderRadius: 0, bgcolor: 'action.hover' }}>
                       {([
                         { key: 'all', label: 'Toutes', count: notificationsState.length },
                         { key: 'unread', label: 'Non lues', count: notificationCount }
@@ -394,7 +394,7 @@ const NotificationDropdown = ({
                               justifyContent: 'center',
                               gap: 0.75,
                               height: 32,
-                              borderRadius: '6px',
+                              borderRadius: 0,
                               cursor: 'pointer',
                               fontSize: 12.5,
                               fontWeight: 700,
@@ -412,7 +412,7 @@ const NotificationDropdown = ({
                                   minWidth: 18,
                                   height: 18,
                                   px: 0.5,
-                                  borderRadius: '6px',
+                                  borderRadius: 0,
                                   display: 'inline-flex',
                                   alignItems: 'center',
                                   justifyContent: 'center',
@@ -439,7 +439,7 @@ const NotificationDropdown = ({
                       if (items.length === 0) {
                         return (
                           <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1.5, py: 7, px: 3 }}>
-                            <Box sx={{ width: 56, height: 56, borderRadius: '6px', display: 'grid', placeItems: 'center', bgcolor: 'action.hover', color: 'text.disabled' }}>
+                            <Box sx={{ width: 56, height: 56, borderRadius: 0, display: 'grid', placeItems: 'center', bgcolor: 'action.hover', color: 'text.disabled' }}>
                               <svg width={26} height={26} viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth={2} strokeLinecap='round' strokeLinejoin='round'>
                                 <path d='M10.268 21a2 2 0 0 0 3.464 0' />
                                 <path d='M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326' />
