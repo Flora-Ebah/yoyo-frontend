@@ -333,7 +333,9 @@ export default function DashboardPage() {
   const errorColor = theme.palette.error.main
   const info = theme.palette.info.main
 
-  if (loading) {
+  // Loader plein écran uniquement au tout premier chargement (aucune donnée encore).
+  // Les rechargements dus aux filtres gardent le contenu affiché (pas d'écran blanc).
+  if (loading && !stats) {
     return (
       <PageContainer>
         <Box className='flex items-center justify-center' sx={{ minHeight: '50vh' }}>
