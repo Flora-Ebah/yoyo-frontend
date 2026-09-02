@@ -415,6 +415,8 @@ export default function ProsPage() {
                   </Button>
                 </>
               ) : (
+                <>
+                  <Typography sx={{ flex: 1, fontSize: 15, fontWeight: 800, color: 'text.primary' }}>Professionnels</Typography>
                 <FilterModal
                   active={isFiltered}
                   onApply={() => {}}
@@ -438,6 +440,7 @@ export default function ProsPage() {
                     <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
                   </FilterField>
                 </FilterModal>
+                </>
               )}
             </Box>
 

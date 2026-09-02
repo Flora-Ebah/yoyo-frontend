@@ -407,6 +407,8 @@ export default function ClientsPage() {
                 </Button>
               </>
             ) : (
+              <>
+                <Typography sx={{ flex: 1, fontSize: 15, fontWeight: 800, color: 'text.primary' }}>Clients</Typography>
               <FilterModal
                 active={isFiltered}
                 onApply={() => {}}
@@ -430,6 +432,7 @@ export default function ClientsPage() {
                   <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
                 </FilterField>
               </FilterModal>
+              </>
             )}
           </Box>
 
