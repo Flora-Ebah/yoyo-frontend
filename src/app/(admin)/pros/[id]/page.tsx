@@ -202,7 +202,7 @@ export default function ProDetailPage() {
 
       {/* En-tête partenaire */}
       <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', mb: 3 }}>
-        <Box sx={{ height: 64, backgroundColor: 'primary.main' }} />
+        <Box sx={{ height: 64, backgroundColor: alpha(theme.palette.primary.main, 0.4) }} />
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ display: 'flex', alignItems: { xs: 'flex-start', sm: 'flex-end' }, gap: 2, flexWrap: 'wrap' }}>
             <Avatar

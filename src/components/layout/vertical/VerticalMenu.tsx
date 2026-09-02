@@ -179,7 +179,7 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
           </MenuItem>
         )}
         {can('read', 'pros') && (
-          <MenuItem href='/pros' icon={<IcoStore size={ICON_SIZE} />}>
+          <MenuItem href='/pros' exactMatch={false} activeUrl='/pros' icon={<IcoStore size={ICON_SIZE} />}>
             Professionnels
           </MenuItem>
         )}
