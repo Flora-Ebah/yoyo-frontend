@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
@@ -13,7 +13,8 @@ import { alpha, useTheme } from '@mui/material/styles'
 import PageContainer from '@/components/PageContainer'
 import { useSession } from '@/hooks/useSession'
 import { AddIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, FilterBar, SearchInput, SelectFilter, DateRangeFilter, ResetButton, type Column, type UiPalette } from '@/components/ui'
-import { ENROLMENTS_MOCK, CURRENT_COMMERCIAL_ID, type Enrolment, type EnrolmentStatus } from '@/data/enrolments.mock'
+import { type Enrolment, type EnrolmentStatus } from '@/data/enrolments.mock'
+import { enrolmentService } from '@/services/enrolment.service'
 
 const statusMeta: Record<EnrolmentStatus, { label: string; palette: UiPalette }> = {
   activated: { label: 'Activé', palette: 'success' },
@@ -46,8 +47,19 @@ export default function CommercialPage() {
 
   const agentName = `${session?.user?.firstname || ''} ${session?.user?.lastname || ''}`.trim() || session?.user?.username || 'Commercial'
 
-  // Le commercial ne voit QUE ses enrôlements (mock ; côté API ce sera imposé serveur : createdBy=self)
-  const mine = useMemo(() => ENROLMENTS_MOCK.filter(e => e.commercialId === CURRENT_COMMERCIAL_ID), [])
+  // Le commercial ne voit QUE ses enrôlements : le backend l'impose via scope=me (créateur = soi).
+  const [mine, setMine] = useState<Enrolment[]>([])
+
+  useEffect(() => {
+    let active = true
+
+    enrolmentService
+      .list({ scope: 'me', pageSize: 500 })
+      .then(rows => { if (active) setMine(rows) })
+      .catch(() => { if (active) setMine([]) })
+
+    return () => { active = false }
+  }, [])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
