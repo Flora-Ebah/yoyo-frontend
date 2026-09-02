@@ -228,16 +228,16 @@ const NotificationsButton = () => {
         onItemClick={handleNotificationOpen}
       />
       <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth='sm' fullWidth PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
-        <DialogTitle>{selectedNotification?.title || 'Notification'}</DialogTitle>
+        <DialogTitle sx={{ fontSize: 15, fontWeight: 700 }}>{selectedNotification?.title || 'Notification'}</DialogTitle>
         <DialogContent>
-          <Box className='flex flex-col gap-3'>
+          <Box className='flex flex-col gap-2'>
             {selectedNotification?.subtitle && (
-              <Typography variant='body1' color='text.primary'>
+              <Typography sx={{ fontSize: 12.5, lineHeight: 1.5 }} color='text.primary'>
                 {selectedNotification.subtitle}
               </Typography>
             )}
             {selectedNotification?.time && (
-              <Typography variant='caption' color='text.secondary'>
+              <Typography sx={{ fontSize: 11 }} color='text.secondary'>
                 {selectedNotification.time}
               </Typography>
             )}
