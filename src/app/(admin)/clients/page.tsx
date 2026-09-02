@@ -31,7 +31,7 @@ import { toast } from 'react-toastify'
 import { Eye, Bell, ShieldX, Phone, MapPin, ShieldCheck, CalendarDays } from 'lucide-react'
 
 import PageContainer from '@/components/PageContainer'
-import { StatusPill, StatCard, RowActions, FilterBar, SearchInput, SelectFilter, DateRangeFilter, ResetButton } from '@/components/ui'
+import { StatusPill, StatCard, RowActions, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField } from '@/components/ui'
 import { clientManagementService, type YoyoClient } from '@/services/client-management.service'
 
 const statusOptions = ['', 'active', 'inactive', 'suspended', 'removed', 'archived']
@@ -407,33 +407,29 @@ export default function ClientsPage() {
                 </Button>
               </>
             ) : (
-              <FilterBar>
-                <SearchInput
-                  value={query}
-                  onChange={v => { setPage(0); setQuery(v) }}
-                  placeholder='Rechercher un client (nom, email, contact)'
-                />
-                <SelectFilter
-                  value={status}
-                  onChange={v => { setPage(0); setStatus(v) }}
-                  options={[
-                    { value: '', label: 'Statut : tous' },
-                    ...statusOptions.filter(Boolean).map(item => ({ value: item, label: statusMeta[item]?.label || item }))
-                  ]}
-                />
-                <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
-                {isFiltered && (
-                  <ResetButton
-                    onClick={() => {
-                      setPage(0)
-                      setQuery('')
-                      setStatus('')
-                      setDateFrom('')
-                      setDateTo('')
-                    }}
+              <FilterModal
+                active={isFiltered}
+                onApply={() => {}}
+                onReset={() => { setPage(0); setQuery(''); setStatus(''); setDateFrom(''); setDateTo('') }}
+                subtitle='Affinez la liste des clients.'
+              >
+                <FilterField label='Recherche'>
+                  <SearchInput value={query} onChange={v => { setPage(0); setQuery(v) }} placeholder='Rechercher un client (nom, email, contact)' minWidth={0} />
+                </FilterField>
+                <FilterField label='Statut'>
+                  <SelectFilter
+                    value={status}
+                    onChange={v => { setPage(0); setStatus(v) }}
+                    options={[
+                      { value: '', label: 'Statut : tous' },
+                      ...statusOptions.filter(Boolean).map(item => ({ value: item, label: statusMeta[item]?.label || item }))
+                    ]}
                   />
-                )}
-              </FilterBar>
+                </FilterField>
+                <FilterField label='Période'>
+                  <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
+                </FilterField>
+              </FilterModal>
             )}
           </Box>
 

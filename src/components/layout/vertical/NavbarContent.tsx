@@ -70,7 +70,7 @@ const searchInputStyle: React.CSSProperties = {
   borderRadius: 0,
   border: 'none',
   borderBottom: '2px solid var(--mui-palette-divider)',
-  background: 'transparent',
+  background: 'var(--mui-palette-background-paper)',
   padding: '0 14px 0 38px',
   fontSize: 14,
   color: 'var(--mui-palette-text-primary)',

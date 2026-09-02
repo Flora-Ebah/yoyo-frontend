@@ -1,7 +1,7 @@
 'use client'
 
 import type { ChangeEvent } from 'react'
-import { StatusPill, AddIcon, RowActions, FilterBar, SearchInput, SelectFilter, DateRangeFilter, ResetButton } from '@/components/ui'
+import { StatusPill, AddIcon, RowActions, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField } from '@/components/ui'
 import { useEffect, useMemo, useState } from 'react'
 
 import Alert from '@mui/material/Alert'
@@ -415,33 +415,29 @@ export default function ProsPage() {
                   </Button>
                 </>
               ) : (
-                <FilterBar>
-                  <SearchInput
-                    value={query}
-                    onChange={v => { setPage(0); setQuery(v) }}
-                    placeholder='Rechercher un pro (nom, ville, email)'
-                  />
-                  <SelectFilter
-                    value={status}
-                    onChange={v => { setPage(0); setStatus(v) }}
-                    options={[
-                      { value: '', label: 'Statut : tous' },
-                      ...statusOptions.filter(Boolean).map(item => ({ value: item, label: statusMeta[item]?.label || item }))
-                    ]}
-                  />
-                  <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
-                  {isFiltered && (
-                    <ResetButton
-                      onClick={() => {
-                        setPage(0)
-                        setQuery('')
-                        setStatus('')
-                        setDateFrom('')
-                        setDateTo('')
-                      }}
+                <FilterModal
+                  active={isFiltered}
+                  onApply={() => {}}
+                  onReset={() => { setPage(0); setQuery(''); setStatus(''); setDateFrom(''); setDateTo('') }}
+                  subtitle='Affinez la liste des pros.'
+                >
+                  <FilterField label='Recherche'>
+                    <SearchInput value={query} onChange={v => { setPage(0); setQuery(v) }} placeholder='Rechercher un pro (nom, ville, email)' minWidth={0} />
+                  </FilterField>
+                  <FilterField label='Statut'>
+                    <SelectFilter
+                      value={status}
+                      onChange={v => { setPage(0); setStatus(v) }}
+                      options={[
+                        { value: '', label: 'Statut : tous' },
+                        ...statusOptions.filter(Boolean).map(item => ({ value: item, label: statusMeta[item]?.label || item }))
+                      ]}
                     />
-                  )}
-                </FilterBar>
+                  </FilterField>
+                  <FilterField label='Période'>
+                    <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
+                  </FilterField>
+                </FilterModal>
               )}
             </Box>
 

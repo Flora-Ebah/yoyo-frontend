@@ -34,6 +34,7 @@ const button: Theme['components'] = {
         fontWeight: 500,
         fontSize: '0.8125rem',
         lineHeight: 1.5,
+        borderRadius: 0,
         '&.MuiButton-sizeMedium': {
           paddingTop: '6px',
           paddingBottom: '6px',

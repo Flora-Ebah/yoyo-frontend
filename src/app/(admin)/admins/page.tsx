@@ -22,7 +22,7 @@ import Typography from '@mui/material/Typography'
 import { alpha, useTheme } from '@mui/material/styles'
 
 import PageContainer from '@/components/PageContainer'
-import { AddIcon, EditIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, FilterBar, SearchInput, SelectFilter, ResetButton, RowActions, Field, type Column } from '@/components/ui'
+import { AddIcon, EditIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, SearchInput, SelectFilter, FilterModal, FilterField, RowActions, Field, type Column } from '@/components/ui'
 import {
   adminAccountService,
   type AdminAccount,
@@ -381,11 +381,19 @@ export default function AdminAccountsPage() {
       <SectionCard
         title='Administrateurs'
         action={
-          <FilterBar>
-            <SearchInput value={search} onChange={v => { setPage(0); setSearch(v) }} placeholder='Rechercher (nom, email)' />
-            <SelectFilter value={status} onChange={v => { setPage(0); setStatus(v as AdminStatus | '') }} options={statusOptions.map(o => ({ value: o.value, label: o.label }))} />
-            {isFiltered && <ResetButton onClick={() => { setPage(0); setSearch(''); setStatus('') }} />}
-          </FilterBar>
+          <FilterModal
+            active={isFiltered}
+            onApply={() => {}}
+            onReset={() => { setPage(0); setSearch(''); setStatus('') }}
+            subtitle='Affinez la liste des administrateurs.'
+          >
+            <FilterField label='Recherche'>
+              <SearchInput value={search} onChange={v => { setPage(0); setSearch(v) }} placeholder='Rechercher (nom, email)' minWidth={0} />
+            </FilterField>
+            <FilterField label='Statut'>
+              <SelectFilter value={status} onChange={v => { setPage(0); setStatus(v as AdminStatus | '') }} options={statusOptions.map(o => ({ value: o.value, label: o.label }))} />
+            </FilterField>
+          </FilterModal>
         }
       >
         {loading ? (

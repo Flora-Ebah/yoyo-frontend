@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography'
 
 // Component Imports
 import PageContainer from '@/components/PageContainer'
-import { AddIcon, StatusPill, SectionCard, DataTable, FilterBar, SelectFilter, RowActions, type Column, type UiPalette } from '@/components/ui'
+import { AddIcon, StatusPill, SectionCard, DataTable, SelectFilter, FilterModal, FilterField, RowActions, type Column, type UiPalette } from '@/components/ui'
 import { type Category } from '@/services/category.service'
 
 // Local Imports
@@ -127,26 +127,35 @@ export default function CategoriesPage() {
       <SectionCard
         title='Catégories'
         action={
-          <FilterBar>
-            <SelectFilter
-              value={statusFilter}
-              onChange={v => { setStatusFilter(v); setPagination(p => ({ ...p, page: 0 })) }}
-              options={[
-                { value: 'all', label: 'Statut : tous' },
-                { value: 'active', label: 'Actif' },
-                { value: 'inactive', label: 'Inactif' },
-                { value: 'archived', label: 'Archivé' }
-              ]}
-            />
-            <SelectFilter
-              value={parentFilter}
-              onChange={v => { setParentFilter(v); setPagination(p => ({ ...p, page: 0 })) }}
-              options={[
-                { value: 'all', label: 'Parent : toutes' },
-                { value: 'root', label: 'Catégories racines' }
-              ]}
-            />
-          </FilterBar>
+          <FilterModal
+            active={statusFilter !== 'all' || parentFilter !== 'all'}
+            onApply={() => {}}
+            onReset={() => { setStatusFilter('all'); setParentFilter('all'); setPagination(p => ({ ...p, page: 0 })) }}
+            subtitle='Affinez la liste des catégories.'
+          >
+            <FilterField label='Statut'>
+              <SelectFilter
+                value={statusFilter}
+                onChange={v => { setStatusFilter(v); setPagination(p => ({ ...p, page: 0 })) }}
+                options={[
+                  { value: 'all', label: 'Statut : tous' },
+                  { value: 'active', label: 'Actif' },
+                  { value: 'inactive', label: 'Inactif' },
+                  { value: 'archived', label: 'Archivé' }
+                ]}
+              />
+            </FilterField>
+            <FilterField label='Parent'>
+              <SelectFilter
+                value={parentFilter}
+                onChange={v => { setParentFilter(v); setPagination(p => ({ ...p, page: 0 })) }}
+                options={[
+                  { value: 'all', label: 'Parent : toutes' },
+                  { value: 'root', label: 'Catégories racines' }
+                ]}
+              />
+            </FilterField>
+          </FilterModal>
         }
       >
         {loading ? (

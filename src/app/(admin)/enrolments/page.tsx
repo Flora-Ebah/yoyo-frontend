@@ -17,7 +17,7 @@ import { alpha, useTheme } from '@mui/material/styles'
 
 import PageContainer from '@/components/PageContainer'
 import { usePermissions } from '@/hooks/usePermissions'
-import { StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, FilterBar, SearchInput, SelectFilter, DateRangeFilter, ResetButton, type Column, type UiPalette } from '@/components/ui'
+import { StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField, type Column, type UiPalette } from '@/components/ui'
 import { summarizeByCommercial, type Enrolment, type EnrolmentStatus, type CommercialSummary } from '@/data/enrolments.mock'
 import { enrolmentService } from '@/services/enrolment.service'
 
@@ -317,13 +317,25 @@ function EnrolmentsInner() {
       {/* Filtres (partagés par les deux onglets) */}
       <Card sx={{ border: 'none', boxShadow: 'none' }}>
         <CardContent sx={{ p: 2.5 }}>
-          <FilterBar>
-            <SearchInput value={query} onChange={setQuery} placeholder='Rechercher (marchand, boutique, commercial)' />
-            <SelectFilter value={commercialId} onChange={setCommercialId} options={[{ value: '', label: 'Commercial : tous' }, ...commercials.map(c => ({ value: c.id, label: c.name }))]} />
-            <SelectFilter value={status} onChange={setStatus} options={[{ value: '', label: 'Statut : tous' }, { value: 'activated', label: 'Activé' }, { value: 'pending', label: 'En attente' }]} />
-            <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
-            {isFiltered && <ResetButton onClick={() => { setQuery(''); setCommercialId(''); setStatus(''); setDateFrom(''); setDateTo('') }} />}
-          </FilterBar>
+          <FilterModal
+            active={isFiltered}
+            onApply={() => {}}
+            onReset={() => { setQuery(''); setCommercialId(''); setStatus(''); setDateFrom(''); setDateTo('') }}
+            subtitle='Affinez la liste des enrôlements.'
+          >
+            <FilterField label='Recherche'>
+              <SearchInput value={query} onChange={setQuery} placeholder='Rechercher (marchand, boutique, commercial)' minWidth={0} />
+            </FilterField>
+            <FilterField label='Commercial'>
+              <SelectFilter value={commercialId} onChange={setCommercialId} options={[{ value: '', label: 'Commercial : tous' }, ...commercials.map(c => ({ value: c.id, label: c.name }))]} />
+            </FilterField>
+            <FilterField label='Statut'>
+              <SelectFilter value={status} onChange={setStatus} options={[{ value: '', label: 'Statut : tous' }, { value: 'activated', label: 'Activé' }, { value: 'pending', label: 'En attente' }]} />
+            </FilterField>
+            <FilterField label='Période'>
+              <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
+            </FilterField>
+          </FilterModal>
         </CardContent>
       </Card>
 
