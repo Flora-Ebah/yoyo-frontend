@@ -65,7 +65,7 @@ export class DashboardService {
         to: filters.to,
         paymentStatus: filters.paymentStatus
       }),
-      moderationService.listCertifications({ page: 1, pageSize: 200, orderBy: 'desc', sortBy: 'createdAt' }),
+      moderationService.listCertifications({ page: 1, pageSize: 200, orderBy: 'desc', sortBy: 'createdAt', from: filters.from, to: filters.to }),
       moderationService.listQuestions({ page: 1, pageSize: 1 })
     ])
 
