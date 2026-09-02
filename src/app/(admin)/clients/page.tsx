@@ -31,7 +31,7 @@ import { toast } from 'react-toastify'
 import { Eye, Bell, ShieldX, Phone, MapPin, ShieldCheck, CalendarDays } from 'lucide-react'
 
 import PageContainer from '@/components/PageContainer'
-import { StatusPill, StatCard, RowActions, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField } from '@/components/ui'
+import { StatusPill, StatCard, RowActions, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField, RefreshButton } from '@/components/ui'
 import { clientManagementService, type YoyoClient } from '@/services/client-management.service'
 
 const statusOptions = ['', 'active', 'inactive', 'suspended', 'removed', 'archived']
@@ -315,11 +315,7 @@ export default function ClientsPage() {
     <PageContainer
       title='Clients YoYo'
       subtitle='Suivi, modération et communication avec les clients finaux'
-      actions={
-        <Button onClick={loadData} disableElevation sx={softBtn}>
-          Actualiser
-        </Button>
-      }
+      actions={<RefreshButton onClick={loadData} spinning={loading} />}
     >
       {/* Cartes stats */}
       <Box

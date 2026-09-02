@@ -25,7 +25,7 @@ import { alpha, useTheme } from '@mui/material/styles'
 import { toast } from 'react-toastify'
 
 import PageContainer from '@/components/PageContainer'
-import { StatusPill, StatCard, SearchInput, SelectFilter, DateRangeFilter, ResetButton } from '@/components/ui'
+import { StatusPill, StatCard, SearchInput, SelectFilter, DateRangeFilter, ResetButton, RefreshButton } from '@/components/ui'
 import {
   normalizePaymentStatus,
   transactionMonitoringService,
@@ -390,7 +390,7 @@ export default function TransactionsPage() {
       title='Transactions YoYo'
       subtitle='Suivi des paiements clients et opérations de correction'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap', width: { xs: '100%', md: 'auto' } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 40, p: 0.5, borderRadius: 0, backgroundColor: 'action.hover' }}>
             {['Abonnements', 'Paiements partenaires'].map((label, i) => (
               <Box
@@ -417,9 +417,7 @@ export default function TransactionsPage() {
               </Box>
             ))}
           </Box>
-          <Button onClick={() => (tab === 0 ? loadData() : loadPayments())} disableElevation sx={{ ...softBtn, ml: { xs: 'auto', md: 0 }, minWidth: { xs: 40, md: 'auto' }, px: { xs: 0, md: 2 }, '& .MuiButton-startIcon': { marginInlineEnd: { xs: 0, md: 1 } } }}>
-            <Box component='span' sx={{ display: { xs: 'none', md: 'inline' } }}>Actualiser</Box>
-          </Button>
+          <RefreshButton onClick={() => (tab === 0 ? loadData() : loadPayments())} />
         </Box>
       }
     >

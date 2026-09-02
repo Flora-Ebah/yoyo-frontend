@@ -22,7 +22,7 @@ import { alpha, useTheme } from '@mui/material/styles'
 import { Users, Store, Receipt, Wallet, ShieldCheck, HelpCircle, ArrowRight } from 'lucide-react'
 
 import PageContainer from '@/components/PageContainer'
-import { SelectFilter, DateRangeFilter } from '@/components/ui'
+import { SelectFilter, DateRangeFilter, RefreshButton } from '@/components/ui'
 import { usePermissions } from '@/hooks/usePermissions'
 import { dashboardService, type DashboardStats, type DashboardAnalytics } from '@/services/dashboard.service'
 import { moderationService, type CertificationItem } from '@/services/moderation.service'
@@ -532,24 +532,9 @@ export default function DashboardPage() {
           )}
 
           {/* Bouton actualiser : reste sur la même ligne que les onglets en mobile (order 2). */}
-          <Button
-            onClick={loadStats}
-            disableElevation
-            sx={{
-              order: { xs: 2, md: 3 },
-              ml: { xs: 'auto', md: 0 },
-              height: 40,
-              borderRadius: 0,
-              fontWeight: 600,
-              textTransform: 'none',
-              px: 2,
-              color: 'primary.main',
-              backgroundColor: alpha(theme.palette.primary.main, 0.1),
-              '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.18) }
-            }}
-          >
-            Actualiser
-          </Button>
+          <Box sx={{ order: { xs: 2, md: 3 }, ml: { xs: 'auto', md: 0 } }}>
+            <RefreshButton onClick={loadStats} spinning={loading} pushRight={false} />
+          </Box>
         </Box>
       }
     >

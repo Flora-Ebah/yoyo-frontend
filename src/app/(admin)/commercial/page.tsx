@@ -14,7 +14,7 @@ import { alpha, useTheme } from '@mui/material/styles'
 
 import PageContainer from '@/components/PageContainer'
 import { useSession } from '@/hooks/useSession'
-import { AddIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, SearchInput, SelectFilter, DateRangeFilter, type Column, type UiPalette } from '@/components/ui'
+import { AddIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, SearchInput, SelectFilter, DateRangeFilter, type Column, type UiPalette, RefreshButton } from '@/components/ui'
 import { type Enrolment, type EnrolmentStatus } from '@/data/enrolments.mock'
 import { enrolmentService } from '@/services/enrolment.service'
 
@@ -137,30 +137,7 @@ export default function CommercialPage() {
           <Button onClick={goNew} disableElevation variant='contained' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
             Nouveau partenaire
           </Button>
-          <Box
-            component='button'
-            onClick={load}
-            disabled={refreshing}
-            aria-label='Actualiser'
-            title='Actualiser'
-            sx={{
-              ml: 'auto',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-              width: 36, height: 36, borderRadius: 0, border: '1px solid', borderColor: alpha(theme.palette.primary.main, 0.35),
-              cursor: refreshing ? 'default' : 'pointer',
-              color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.1),
-              transition: 'background-color .15s', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.18) },
-              '& svg': refreshing ? { animation: 'yoyo-spin .8s linear infinite' } : undefined,
-              '@keyframes yoyo-spin': { to: { transform: 'rotate(360deg)' } }
-            }}
-          >
-            <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8' />
-              <path d='M21 3v5h-5' />
-              <path d='M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16' />
-              <path d='M8 16H3v5' />
-            </svg>
-          </Box>
+          <RefreshButton onClick={load} spinning={refreshing} />
         </Box>
       }
     >

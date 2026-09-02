@@ -27,7 +27,7 @@ import { toast } from 'react-toastify'
 import { ShieldX } from 'lucide-react'
 
 import PageContainer from '@/components/PageContainer'
-import { StatusPill, StatCard, RowActions, SearchInput, SelectFilter, DateRangeFilter, ResetButton, type UiPalette } from '@/components/ui'
+import { StatusPill, StatCard, RowActions, SearchInput, SelectFilter, DateRangeFilter, ResetButton, type UiPalette, RefreshButton } from '@/components/ui'
 import { moderationService, type CertificationItem, type SecretQuestion } from '@/services/moderation.service'
 
 const questionStatusOptions: Array<SecretQuestion['status']> = ['active', 'inactive', 'draft', 'removed']
@@ -305,7 +305,7 @@ export default function ModerationPage() {
       title='Modération YoYo'
       subtitle='Validation KYC des clients et contrôle des questions secrètes'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap', width: { xs: '100%', md: 'auto' } }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 40, p: 0.5, borderRadius: 0, backgroundColor: 'action.hover' }}>
             {([
               { k: 'documents', label: 'Dossiers KYC' },
@@ -335,9 +335,7 @@ export default function ModerationPage() {
               </Box>
             ))}
           </Box>
-          <Button onClick={() => (tab === 'documents' ? loadDocuments() : loadQuestions())} disableElevation sx={{ ...softBtn, ml: { xs: 'auto', md: 0 }, minWidth: { xs: 40, md: 'auto' }, px: { xs: 0, md: 2 }, '& .MuiButton-startIcon': { marginInlineEnd: { xs: 0, md: 1 } } }}>
-            <Box component='span' sx={{ display: { xs: 'none', md: 'inline' } }}>Actualiser</Box>
-          </Button>
+          <RefreshButton onClick={() => (tab === 'documents' ? loadDocuments() : loadQuestions())} />
         </Box>
       }
     >

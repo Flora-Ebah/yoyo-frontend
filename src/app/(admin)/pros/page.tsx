@@ -1,7 +1,7 @@
 'use client'
 
 import type { ChangeEvent } from 'react'
-import { StatusPill, AddIcon, RowActions, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField } from '@/components/ui'
+import { StatusPill, AddIcon, RowActions, SearchInput, SelectFilter, DateRangeFilter, FilterModal, FilterField, RefreshButton } from '@/components/ui'
 import { useEffect, useMemo, useState } from 'react'
 
 import Alert from '@mui/material/Alert'
@@ -315,7 +315,7 @@ export default function ProsPage() {
       title='Professionnels YoYo'
       subtitle='Suivi des partenaires, activation et modération de comptes pro'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap', width: { xs: '100%', sm: 'auto' } }}>
           {can('create', 'pros') && (
             <Button
               onClick={() => router.push('/pros/nouveau?next=/pros')}
@@ -326,9 +326,7 @@ export default function ProsPage() {
               Nouveau marchand
             </Button>
           )}
-          <Button onClick={loadData} disableElevation sx={softBtn}>
-            Actualiser
-          </Button>
+          <RefreshButton onClick={loadData} spinning={loading} />
         </Box>
       }
     >

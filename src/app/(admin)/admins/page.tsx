@@ -21,7 +21,7 @@ import Typography from '@mui/material/Typography'
 import { alpha, useTheme } from '@mui/material/styles'
 
 import PageContainer from '@/components/PageContainer'
-import { AddIcon, EditIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, SearchInput, SelectFilter, FilterModal, FilterField, RowActions, Field, type Column } from '@/components/ui'
+import { AddIcon, EditIcon, StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, SearchInput, SelectFilter, FilterModal, FilterField, RowActions, Field, type Column, RefreshButton } from '@/components/ui'
 import {
   adminAccountService,
   type AdminAccount,
@@ -355,15 +355,13 @@ export default function AdminAccountsPage() {
       title='Comptes administrateurs'
       subtitle='Gestion des accès au back-office et des rôles associés'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap', width: { xs: '100%', sm: 'auto' } }}>
           {canCreate && (
             <Button onClick={openCreate} disableElevation variant='contained' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
               Nouvel admin
             </Button>
           )}
-          <Button onClick={loadAdmins} disableElevation sx={softBtn}>
-            Actualiser
-          </Button>
+          <RefreshButton onClick={loadAdmins} spinning={loading} />
         </Box>
       }
     >
