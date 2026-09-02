@@ -140,7 +140,13 @@ export default function ProsPage() {
     loadData()
   }, [queryParams])
 
-  const handleOpenDetails = async (partner: YoyoPro) => {
+  // Le détail partenaire est désormais une page dédiée.
+  const handleOpenDetails = (partner: YoyoPro) => {
+    router.push(`/pros/${partner._id}`)
+  }
+
+  // Ancien chargement du détail (drawer) — conservé mais inutilisé.
+  const legacyLoadDetails = async (partner: YoyoPro) => {
     setSelectedPro(partner)
     setDetailsLoading(true)
     setDetailStats(null)

@@ -44,6 +44,8 @@ export interface PaymentListParams {
   from?: string
   to?: string
   q?: string
+  /** Filtre par partenaire (destinataire du paiement) — fiche détail partenaire. */
+  partner?: string
 }
 
 export interface PaymentOverviewStats {
@@ -96,7 +98,8 @@ class PaymentMonitoringService {
       status: params.status,
       from: params.from,
       to: params.to,
-      q: params.q
+      q: params.q,
+      partner: params.partner
     })
 
     const response = await apiClient.get<ApiEnvelope<YoyoPayment[]>>(`/payments${query}`, {
