@@ -11,10 +11,6 @@ const API_BASE_PATH = API_PATH
   ? `/${API_VERSION}/${API_PATH.replace(/^\/+|\/+$/g, '')}`.replace(/\/+/g, '/')
   : `/${API_VERSION}`
 
-// Utiliser une variable d'environnement serveur (sans NEXT_PUBLIC_)
-// Fallback sur NEXT_PUBLIC_API_KEY pour la compatibilité
-const API_KEY = process.env.API_KEY || process.env.PUBLIC_API_KEY || process.env.NEXT_PUBLIC_API_KEY
-
 // Log de la configuration en développement
 if (process.env.NODE_ENV === 'development') {
   console.log('[API Config]', {
@@ -52,58 +48,6 @@ export class ApiServerService {
   }
 
   /**
-   * Récupère le token public depuis les cookies ou le génère
-   */
-  public async getPublicToken(): Promise<string | null> {
-    const cookieStore = await cookies()
-    const publicToken = cookieStore.get('public_token')?.value
-    const publicTokenExpiry = cookieStore.get('public_token_expiry')?.value
-
-    // Vérifier si le token public existe et n'est pas expiré
-    if (publicToken && publicTokenExpiry) {
-      const expiry = parseInt(publicTokenExpiry, 10)
-
-      if (Date.now() < expiry) {
-        return publicToken
-      }
-    }
-
-    // Générer un nouveau token public si nécessaire
-    if (!API_KEY) {
-      return null
-    }
-
-    try {
-      const response = await fetch(`${API_BASE_URL}${API_BASE_PATH}/get-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': API_KEY
-        },
-        body: JSON.stringify({ apikey: API_KEY })
-      })
-
-      if (!response.ok) {
-        return null
-      }
-
-      const data = await response.json()
-      const token = typeof data?.data === 'string' ? data.data : data?.data?.token || data?.token
-
-      if (token) {
-        // Note: Le stockage dans les cookies doit être fait par le middleware ou une Server Action
-        // car on ne peut pas modifier les cookies directement depuis un service serveur
-        // Le token est retourné pour être utilisé dans les headers de la requête actuelle
-        return token
-      }
-    } catch (error) {
-      console.error('Erreur lors de la génération du token public:', error)
-    }
-
-    return null
-  }
-
-  /**
    * Construit les headers pour une requête
    */
   private async buildHeaders(includeAuth: boolean = true): Promise<HeadersInit> {
@@ -112,24 +56,11 @@ export class ApiServerService {
     }
 
     if (includeAuth) {
-      // Ajouter le token d'authentification si disponible
       const authToken = await this.getAuthToken()
 
       if (authToken) {
         headers['Authorization'] = `Bearer ${authToken}`
-      } else {
-        // Sinon, utiliser le token public
-        const publicToken = await this.getPublicToken()
-
-        if (publicToken) {
-          headers['Authorization'] = `Bearer ${publicToken}`
-        }
       }
-    }
-
-    // Ajouter la clé API si disponible
-    if (API_KEY) {
-      headers['x-api-key'] = API_KEY
     }
 
     return headers

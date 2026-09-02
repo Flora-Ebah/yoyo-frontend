@@ -268,30 +268,3 @@ export async function checkUsernameAvailabilityAction(username: string) {
     }
   }
 }
-
-/**
- * Server Action pour generer un token public
- */
-export async function generatePublicTokenAction(): Promise<{ token: string | null; error?: string }> {
-  try {
-    const response = await authService.generatePublicToken()
-
-    if (response && response.token) {
-      return {
-        token: response.token
-      }
-    }
-
-    return {
-      token: null,
-      error: 'Token non trouve dans la reponse'
-    }
-  } catch (error: any) {
-    console.error('Erreur lors de la generation du token public:', error)
-
-    return {
-      token: null,
-      error: error.message || 'Erreur lors de la generation du token public'
-    }
-  }
-}

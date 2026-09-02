@@ -1,7 +1,5 @@
 import { apiServer } from './api.server'
 
-const PUBLIC_API_KEY = process.env.API_KEY || process.env.PUBLIC_API_KEY || process.env.NEXT_PUBLIC_API_KEY || ''
-
 /**
  * Interface pour les credentials de connexion
  */
@@ -49,14 +47,6 @@ export interface AuthResponse {
   connectionId?: string
   expiresIn?: string
   refreshTokenExpiresIn?: string
-}
-
-/**
- * Interface pour la reponse de generation de token public
- */
-export interface PublicTokenResponse {
-  token: string
-  expiresIn?: number
 }
 
 /**
@@ -151,30 +141,6 @@ export class AuthService {
     }
 
     await apiServer.post('/client/logout', { loginId: connectionId })
-  }
-
-  /**
-   * Genere un token public (pour acces non authentifie)
-   * POST /get-token
-   */
-  async generatePublicToken(): Promise<PublicTokenResponse> {
-    if (!PUBLIC_API_KEY) {
-      throw new Error('API key manquante pour generer le token public')
-    }
-
-    const response = await apiServer.post<any>(
-      '/get-token',
-      { apikey: PUBLIC_API_KEY },
-      { skipAuth: true, skipRefresh: true }
-    )
-
-    const token = typeof response === 'string' ? response : response?.token || response?.data
-
-    if (!token) {
-      throw new Error('Token public non retourne par l\'API')
-    }
-
-    return { token }
   }
 
   /**

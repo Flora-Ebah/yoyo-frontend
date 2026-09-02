@@ -74,61 +74,6 @@ export class ApiClientService {
     return false
   }
 
-  /**
-   * Récupère le token public depuis localStorage ou le génère
-   * Régénère automatiquement le token s'il n'est pas détecté ou expiré
-   */
-  private async getPublicToken(): Promise<string | null> {
-    if (typeof window === 'undefined') return null
-
-    // Si l'utilisateur est vraiment authentifié, on ne doit PAS utiliser de token public
-    if (this.isUserAuthenticated()) {
-      return null
-    }
-
-    const publicToken = localStorage.getItem('public_token')
-    const publicTokenExpiry = localStorage.getItem('public_token_expiry')
-
-    // Vérifier si le token public existe et n'est pas expiré
-    if (publicToken && publicTokenExpiry) {
-      const expiry = parseInt(publicTokenExpiry, 10)
-
-      // Si le token est valide et non expiré, le retourner
-      if (Date.now() < expiry && publicToken.trim() !== '') {
-        return publicToken
-      }
-
-      // Si le token est expiré, le supprimer pour forcer la régénération
-      localStorage.removeItem('public_token')
-      localStorage.removeItem('public_token_expiry')
-    }
-
-    // Générer un nouveau token public via Server Action (API key côté serveur)
-    try {
-      const { generatePublicTokenAction } = await import('@/app/actions/auth.actions')
-      const result = await generatePublicTokenAction()
-
-      if (result.token && result.token.trim() !== '') {
-        // Stocker dans localStorage avec une expiration (24h par défaut)
-        const expiry = Date.now() + 24 * 60 * 60 * 1000
-
-        localStorage.setItem('public_token', result.token)
-        localStorage.setItem('public_token_expiry', expiry.toString())
-
-        return result.token
-      }
-
-      if (result.error) {
-        console.warn('Erreur lors de la génération du token public:', result.error)
-      } else {
-        console.warn('Token public généré mais vide ou invalide')
-      }
-    } catch (error) {
-      console.error('Erreur lors de la génération du token public:', error)
-    }
-
-    return null
-  }
 
   /**
    * Construit les headers pour une requête.
@@ -245,8 +190,6 @@ export class ApiClientService {
         // Nettoyer le localStorage
         if (typeof window !== 'undefined') {
           localStorage.removeItem('auth_token')
-          localStorage.removeItem('public_token')
-          localStorage.removeItem('public_token_expiry')
         }
 
         // Appeler l'action de déconnexion (sans redirection pour éviter les conflits)

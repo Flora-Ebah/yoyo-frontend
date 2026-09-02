@@ -2,7 +2,6 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
-import { apiServer } from '@/services/api.server'
 import { sessionService } from '@/services/session.service'
 
 /**
@@ -23,22 +22,18 @@ const API_PATH = process.env.API_PATH || process.env.NEXT_PUBLIC_API_PATH || ''
 const API_BASE_PATH = API_PATH
   ? `/${API_VERSION}/${API_PATH.replace(/^\/+|\/+$/g, '')}`.replace(/\/+/g, '/')
   : `/${API_VERSION}`
-const API_KEY = process.env.API_KEY || process.env.PUBLIC_API_KEY || process.env.NEXT_PUBLIC_API_KEY
 
 const target = (path: string, search: string) => `${API_BASE_URL}${API_BASE_PATH}/${path}${search}`
 
-/** En-tête Authorization : token de session (httpOnly) sinon token public. */
+/** En-tête Authorization : token de session (httpOnly). Les routes d'avant-connexion n'en
+ * exigent plus (App Check atteste l'origine à leur place). */
 async function authHeader(skipAuth: boolean): Promise<Record<string, string>> {
-  if (!skipAuth) {
-    const store = await cookies()
-    const token = store.get('auth_token')?.value
+  if (skipAuth) return {}
 
-    if (token) return { Authorization: `Bearer ${token}` }
-  }
+  const store = await cookies()
+  const token = store.get('auth_token')?.value
 
-  const publicToken = await apiServer.getPublicToken()
-
-  return publicToken ? { Authorization: `Bearer ${publicToken}` } : {}
+  return token ? { Authorization: `Bearer ${token}` } : {}
 }
 
 async function forward(req: NextRequest, pathParts: string[]): Promise<NextResponse> {
@@ -59,7 +54,6 @@ async function forward(req: NextRequest, pathParts: string[]): Promise<NextRespo
     const headers: Record<string, string> = {
       // On préserve le Content-Type entrant (avec la boundary multipart le cas échéant).
       ...(incomingContentType ? { 'Content-Type': incomingContentType } : {}),
-      ...(API_KEY ? { 'x-api-key': API_KEY } : {}),
       ...(appCheckToken ? { 'X-Firebase-AppCheck': appCheckToken } : {}),
       ...(await authHeader(skipAuth))
     }
