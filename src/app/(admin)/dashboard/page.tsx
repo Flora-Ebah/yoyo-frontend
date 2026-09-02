@@ -68,17 +68,19 @@ function formatTrend(value: number | null | undefined, unit: '%' | 'pts' = '%'):
   return { text: `${sign}${rounded.toString().replace('.', ',')}${unit === '%' ? '%' : ' pts'}`, up: rounded >= 0 }
 }
 
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat('fr-FR', {
-    style: 'currency',
-    currency: 'XOF',
-    minimumFractionDigits: 0
-  }).format(value || 0)
-}
-
 function formatNumber(value: number) {
   return new Intl.NumberFormat('fr-FR').format(value || 0)
 }
+
+/** Montant : nombre en taille normale + « FCFA » en exposant, police très réduite. */
+const MoneyValue = ({ value }: { value: number }) => (
+  <Box component='span' sx={{ whiteSpace: 'nowrap' }}>
+    {formatNumber(value)}
+    <Box component='sup' sx={{ fontSize: '0.4em', fontWeight: 600, ml: 0.3, verticalAlign: 'super', letterSpacing: '.03em', color: 'text.secondary' }}>
+      FCFA
+    </Box>
+  </Box>
+)
 
 function timeAgo(dateStr?: string) {
   if (!dateStr) return ''
@@ -106,7 +108,7 @@ const STATUS_META: Record<string, { label: string; kind: 'warning' | 'info' }> =
 /* ------------------------------------------------------------------ */
 type KpiCardProps = {
   title: string
-  value: string | number
+  value: React.ReactNode
   subtitle: string
   icon: React.ComponentType<{ size?: number }>
   color?: string
@@ -386,7 +388,7 @@ export default function DashboardPage() {
     },
     {
       title: 'Montant encaissé',
-      value: formatCurrency(stats.transactions.totalAmount),
+      value: <MoneyValue value={stats.transactions.totalAmount} />,
       subtitle: 'Volume total encaissé.',
       icon: Wallet,
       href: '/transactions'
@@ -440,7 +442,7 @@ export default function DashboardPage() {
 
   const kpis = [
     { label: 'Volume transactions', value: formatNumber(aTx.total), trend: volumeTrend.text, up: volumeTrend.up },
-    { label: 'Montant encaissé', value: formatCurrency(aTx.totalAmount), trend: amountTrend.text, up: amountTrend.up },
+    { label: 'Montant encaissé', value: <MoneyValue value={aTx.totalAmount} />, trend: amountTrend.text, up: amountTrend.up },
     { label: 'Taux de succès', value: `${Math.round(aSuccessRate)}%`, trend: successTrend.text, up: successTrend.up },
     {
       label: 'Nouveaux pros',
@@ -482,7 +484,7 @@ export default function DashboardPage() {
       title='Tableau de bord YoYo'
       subtitle='Pilotage global clients, pros, transactions et modération'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap', width: { xs: '100%', md: 'auto' } }}>
           {/* Onglets */}
           <Box
             sx={{
@@ -909,9 +911,7 @@ export default function DashboardPage() {
                   cornerRadius={2}
                   activeOuterRadiusOffset={8}
                   borderWidth={0}
-                  arcLinkLabelsSkipAngle={10}
-                  arcLinkLabelsTextColor={theme.palette.text.primary}
-                  arcLinkLabelsColor={{ from: 'color' }}
+                  enableArcLinkLabels={false}
                   arcLabelsSkipAngle={10}
                   arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
                   legends={[

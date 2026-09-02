@@ -27,7 +27,7 @@ const NavToggle = () => {
       sx={{
         height: 40,
         width: 40,
-        borderRadius: '6px',
+        borderRadius: 0,
         border: '1px solid var(--mui-palette-divider)',
         backgroundColor: 'var(--mui-palette-background-paper)',
         color: 'var(--mui-palette-text-primary)',
