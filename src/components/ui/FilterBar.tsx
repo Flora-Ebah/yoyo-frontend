@@ -67,12 +67,12 @@ export const SelectFilter = ({ value, onChange, options, minWidth = 160 }: { val
   </Box>
 )
 
-/** Plage de dates (Du / au) native, compacte, dans un seul conteneur bordé. */
+/** Plage de dates (Du / au) native, compacte, style souligné (bordure basse seule). */
 export const DateRangeFilter = ({ from, to, onFrom, onTo }: { from: string; to: string; onFrom: (v: string) => void; onTo: (v: string) => void }) => {
   const theme = useTheme()
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, height: CONTROL_H, px: 1.5, borderRadius: RADIUS, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', transition: 'border-color .15s', '&:hover': { borderColor: 'var(--mui-palette-action-active)' }, width: { xs: '100%', sm: 'auto' }, order: { xs: 3, sm: 0 }, '& input': { flex: { xs: 1, sm: 'initial' }, border: 'none', outline: 'none', background: 'transparent', color: 'var(--mui-palette-text-primary)', fontSize: 13, fontWeight: 500, fontFamily: 'inherit', cursor: 'pointer', colorScheme: theme.palette.mode } }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, height: CONTROL_H, px: 1.5, borderRadius: 0, border: 'none', borderBottom: '1px solid', borderBottomColor: 'divider', backgroundColor: 'transparent', transition: 'border-color .15s', '&:hover': { borderBottomColor: 'var(--mui-palette-action-active)' }, width: { xs: '100%', sm: 'auto' }, order: { xs: 3, sm: 0 }, '& input': { flex: { xs: 1, sm: 'initial' }, border: 'none', outline: 'none', background: 'transparent', color: 'var(--mui-palette-text-primary)', fontSize: 13, fontWeight: 500, fontFamily: 'inherit', cursor: 'pointer', colorScheme: theme.palette.mode } }}>
       <Box component='span' sx={{ fontSize: 13, fontWeight: 600, color: 'text.secondary' }}>Du</Box>
       <input type='date' value={from} max={to || undefined} onChange={e => onFrom(e.target.value)} />
       <Box component='span' sx={{ fontSize: 13, fontWeight: 600, color: 'text.secondary' }}>au</Box>
