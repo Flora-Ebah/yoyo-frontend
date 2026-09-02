@@ -8,20 +8,22 @@ import { useTheme } from '@mui/material/styles'
 const CONTROL_H = 36
 const RADIUS = '6px'
 
+// Style « souligné » : pas de bordure sauf la bordure du bas (input + select).
 const softField = {
   height: CONTROL_H,
-  borderRadius: RADIUS,
-  border: '1px solid',
-  borderColor: 'divider',
+  borderRadius: 0,
+  border: 'none',
+  borderBottom: '1px solid',
+  borderBottomColor: 'divider',
   outline: 'none',
-  backgroundColor: 'background.paper',
+  backgroundColor: 'transparent',
   fontSize: 13,
   fontWeight: 500,
   fontFamily: 'inherit',
   color: 'var(--mui-palette-text-primary)',
-  transition: 'border-color .15s, background-color .15s, box-shadow .15s',
-  '&:hover': { borderColor: 'var(--mui-palette-action-active)' },
-  '&:focus': { borderColor: 'var(--mui-palette-primary-main)' }
+  transition: 'border-color .15s, background-color .15s',
+  '&:hover': { borderBottomColor: 'var(--mui-palette-action-active)' },
+  '&:focus': { borderBottomColor: 'var(--mui-palette-primary-main)' }
 } as const
 
 // Chevron gris intégré au select (remplace la flèche native, incohérente selon les navigateurs).
