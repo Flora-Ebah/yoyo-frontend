@@ -51,10 +51,15 @@ const DAYS: { key: OpeningHour['day']; label: string; defaultOpen: boolean }[] =
 const defaultHours = (): OpeningHour[] =>
   DAYS.map(d => ({ day: d.key, isOpen: d.defaultOpen, openTime: '09:00', closeTime: '18:00', breaks: [] }))
 
+// Style « souligné » : pas de bordure sauf la bordure du bas (input / textarea / select).
 const fieldSx = {
-  width: '100%', height: 40, px: 1.5, borderRadius: '6px', border: '1px solid', borderColor: 'divider',
-  backgroundColor: 'background.paper', fontSize: 13, fontFamily: 'inherit', fontWeight: 500,
-  color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' }
+  width: '100%', height: 40, px: 0.5, borderRadius: 0,
+  border: 'none', borderBottom: '2px solid', borderBottomColor: 'divider',
+  backgroundColor: 'transparent', fontSize: 13, fontFamily: 'inherit', fontWeight: 500,
+  color: 'var(--mui-palette-text-primary)', outline: 'none',
+  transition: 'border-color .15s',
+  '&:hover': { borderBottomColor: 'var(--mui-palette-action-active)' },
+  '&:focus': { borderBottomColor: 'var(--mui-palette-primary-main)' }
 } as const
 
 const labelSx = { fontSize: 12.5, fontWeight: 600, color: 'text.secondary', mb: 0.75 } as const
@@ -245,7 +250,7 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
   // ---- Écran de succès ----
   if (done) {
     return (
-      <Box sx={{ maxWidth: 520, mx: 'auto', backgroundColor: 'background.paper', borderRadius: '6px', p: { xs: 3, sm: 4 } }}>
+      <Box sx={{ maxWidth: 520, mx: 'auto', backgroundColor: 'background.paper', borderRadius: 0, p: { xs: 3, sm: 4 } }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1.5 }}>
           <Box sx={{ width: 82, height: 82, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'success.main', backgroundColor: alpha(theme.palette.success.main, 0.14) }}>
             <i className='tabler-circle-check' style={{ fontSize: '2.7rem' }} />
@@ -256,10 +261,10 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
             {done.channels.includes('sms') ? <> et par SMS au <b>{contact}</b></> : null}. Le marchand définira son mot de passe.
           </Typography>
           <Box sx={{ display: 'flex', gap: 1.5, width: '100%', mt: 1.5, flexWrap: 'wrap' }}>
-            <Button onClick={() => router.push(next)} disableElevation sx={{ flex: 1, minWidth: 160, height: 36, borderRadius: '6px', textTransform: 'none', color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+            <Button onClick={() => router.push(next)} disableElevation sx={{ flex: 1, minWidth: 160, height: 36, borderRadius: 0, textTransform: 'none', color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               {listLabel}
             </Button>
-            <Button onClick={reset} disableElevation variant='contained' sx={{ flex: 1, minWidth: 160, height: 36, borderRadius: '6px', textTransform: 'none' }}>
+            <Button onClick={reset} disableElevation variant='contained' sx={{ flex: 1, minWidth: 160, height: 36, borderRadius: 0, textTransform: 'none' }}>
               Créer un nouveau
             </Button>
           </Box>
@@ -305,7 +310,7 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
   )
 
   const recap = (
-    <Box sx={{ backgroundColor: 'background.paper', borderRadius: '6px', border: '1px solid', borderColor: 'divider', p: 2.5, height: { md: 600 }, overflowY: 'auto' }}>
+    <Box sx={{ backgroundColor: 'background.paper', borderRadius: 0, border: 'none', p: 2.5, height: { md: 600 }, overflowY: 'auto' }}>
       <Typography sx={{ fontSize: 14, fontWeight: 800, color: 'text.primary', mb: 1.5 }}>Récapitulatif</Typography>
       <RecapSection title='Marchand'>
         <RecapRow k='Nom' v={`${firstname} ${lastname}`.trim()} />
@@ -331,20 +336,20 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
 
   // ---- Formulaire ----
   const form = (
-    <Box sx={{ backgroundColor: 'background.paper', borderRadius: '6px', border: '1px solid', borderColor: 'divider', p: { xs: 2.5, sm: 3 }, height: { md: 600 }, display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ backgroundColor: 'background.paper', borderRadius: 0, border: 'none', p: { xs: 2.5, sm: 3 }, height: { md: 600 }, display: 'flex', flexDirection: 'column' }}>
       {/* Barre : Annuler + Réinitialiser */}
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-        <Button onClick={() => router.push(next)} disableElevation sx={{ height: 36, borderRadius: '6px', fontSize: 13, textTransform: 'none', px: 2, color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.error.main, 0.2) } }}>
+        <Button onClick={() => router.push(next)} disableElevation sx={{ height: 36, borderRadius: 0, fontSize: 13, textTransform: 'none', px: 2, color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.error.main, 0.2) } }}>
           Annuler
         </Button>
-        <Button onClick={reset} disableElevation sx={{ height: 36, borderRadius: '6px', fontSize: 13, textTransform: 'none', px: 2, color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.2) } }}>
+        <Button onClick={reset} disableElevation sx={{ height: 36, borderRadius: 0, fontSize: 13, textTransform: 'none', px: 2, color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.2) } }}>
           Réinitialiser
         </Button>
       </Box>
 
       {/* Carte d'étape (dégradé + gros numéro) */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 1.75, mb: 2.5, borderRadius: '6px', background: `linear-gradient(90deg, ${alpha(primary, 0.15)}, ${alpha(primary, 0)})` }}>
-        <Box sx={{ width: 58, height: 58, flexShrink: 0, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'primary.main', color: '#fff', fontSize: 30, fontWeight: 800 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 1.75, mb: 2.5, borderRadius: 0, background: `linear-gradient(90deg, ${alpha(primary, 0.15)}, ${alpha(primary, 0)})` }}>
+        <Box sx={{ width: 58, height: 58, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'primary.main', color: '#fff', fontSize: 30, fontWeight: 800 }}>
           {step + 1}
         </Box>
         <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -422,7 +427,7 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
                       alignItems: 'center',
                       gap: 1,
                       p: 1,
-                      borderRadius: '6px',
+                      borderRadius: 0,
                       backgroundColor: 'action.hover'
                     }}
                   >
@@ -453,14 +458,14 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
             {/* Récap compact (mobile : la colonne récap est cachée) */}
             <Box sx={{ display: { md: 'none' }, mb: 2 }}>{recap}</Box>
             <Typography sx={labelSx}>Canaux d'envoi du lien d'activation</Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1.25, borderRadius: '6px', backgroundColor: 'action.hover', mb: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1.25, borderRadius: 0, backgroundColor: 'action.hover', mb: 1 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <i className='tabler-mail' style={{ fontSize: '1.1rem', color: theme.palette.text.secondary }} />
                 <Typography sx={{ fontSize: 14, fontWeight: 700, color: 'text.primary' }}>E-mail</Typography>
               </Box>
               <Switch checked={sendEmail} onChange={e => setSendEmail(e.target.checked)} />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1.25, borderRadius: '6px', backgroundColor: 'action.hover' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1.25, borderRadius: 0, backgroundColor: 'action.hover' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <i className='tabler-message-2' style={{ fontSize: '1.1rem', color: theme.palette.text.secondary }} />
                 <Typography sx={{ fontSize: 14, fontWeight: 700, color: 'text.primary' }}>SMS</Typography>
@@ -474,16 +479,16 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
       {/* Navigation */}
       <Box sx={{ display: 'flex', gap: 1.5, mt: 'auto', pt: 2.5 }}>
         {step > 0 && (
-          <Button onClick={goBack} disableElevation sx={{ flex: '0 0 132px', height: 36, borderRadius: '6px', fontSize: 13, textTransform: 'none', color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+          <Button onClick={goBack} disableElevation sx={{ flex: '0 0 132px', height: 36, borderRadius: 0, fontSize: 13, textTransform: 'none', color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
             Précédent
           </Button>
         )}
         {step < STEPS.length - 1 ? (
-          <Button onClick={goNext} disabled={!stepValid} disableElevation variant='contained' sx={{ flex: 1, height: 36, borderRadius: '6px', fontSize: 13, textTransform: 'none' }}>
+          <Button onClick={goNext} disabled={!stepValid} disableElevation variant='contained' sx={{ flex: 1, height: 36, borderRadius: 0, fontSize: 13, textTransform: 'none' }}>
             Suivant
           </Button>
         ) : (
-          <Button onClick={submit} disabled={!stepValid || submitting} disableElevation variant='contained' startIcon={submitting ? <CircularProgress size={18} color='inherit' /> : undefined} sx={{ flex: 1, height: 36, borderRadius: '6px', fontSize: 13, textTransform: 'none' }}>
+          <Button onClick={submit} disabled={!stepValid || submitting} disableElevation variant='contained' startIcon={submitting ? <CircularProgress size={18} color='inherit' /> : undefined} sx={{ flex: 1, height: 36, borderRadius: 0, fontSize: 13, textTransform: 'none' }}>
             Créer le marchand
           </Button>
         )}
