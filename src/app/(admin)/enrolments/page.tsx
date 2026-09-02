@@ -28,7 +28,7 @@ import {
   type Column,
   type UiPalette
 } from '@/components/ui'
-import { summarizeByCommercial, type Enrolment, type EnrolmentStatus } from '@/data/enrolments.mock'
+import { type Enrolment, type EnrolmentStatus } from '@/data/enrolments.mock'
 import { enrolmentService } from '@/services/enrolment.service'
 
 const statusMeta: Record<EnrolmentStatus, { label: string; palette: UiPalette }> = {
@@ -45,6 +45,15 @@ function formatDateTime(value: string) {
 
 function initials(name: string) {
   return name.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || '?'
+}
+
+/**
+ * Clé de navigation robuste vers la page d'un commercial : l'`id` s'il existe,
+ * sinon un repli sur le nom (`name:<nom>`) — évite un 404 quand l'enrôlement
+ * n'a pas de référence `commercial` peuplée.
+ */
+function commercialKey(e: { commercialId: string; commercialName: string }) {
+  return e.commercialId ? e.commercialId : `name:${e.commercialName}`
 }
 
 export default function EnrolmentsPage() {
@@ -103,7 +112,21 @@ export default function EnrolmentsPage() {
     })
   }, [enrolments, query, status, commercialId, dateFrom, dateTo])
 
-  const summary = useMemo(() => summarizeByCommercial(filtered), [filtered])
+  // Classement groupé par clé robuste (id, sinon nom) — évite de fusionner par id vide.
+  const leaderboard = useMemo(() => {
+    const map = new Map<string, { key: string; name: string; total: number; activated: number }>()
+
+    filtered.forEach(e => {
+      const key = commercialKey(e)
+      const cur = map.get(key) || { key, name: e.commercialName, total: 0, activated: 0 }
+
+      cur.total += 1
+      if (e.status === 'activated') cur.activated += 1
+      map.set(key, cur)
+    })
+
+    return Array.from(map.values()).sort((a, b) => b.activated - a.activated)
+  }, [filtered])
 
   const totals = useMemo(() => {
     const total = filtered.length
@@ -141,7 +164,7 @@ export default function EnrolmentsPage() {
       render: e => (
         <Box
           role='button'
-          onClick={ev => { ev.stopPropagation(); router.push(`/enrolments/commercial/${e.commercialId}`) }}
+          onClick={ev => { ev.stopPropagation(); router.push(`/enrolments/commercial/${encodeURIComponent(commercialKey(e))}`) }}
           sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.75, cursor: 'pointer', color: 'primary.main', fontWeight: 700, fontSize: 13, '&:hover': { textDecoration: 'underline' } }}
         >
           {e.commercialName}
@@ -210,26 +233,26 @@ export default function EnrolmentsPage() {
           {/* Classement des commerciaux */}
           <SectionCard title='Classement des commerciaux'>
             <Box sx={{ p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {summary.length === 0 ? (
+              {leaderboard.length === 0 ? (
                 <Box sx={{ py: 6, textAlign: 'center', color: 'text.secondary' }}>
                   <i className='tabler-users text-4xl' />
                   <Typography sx={{ fontSize: 13, fontWeight: 700, mt: 1 }}>Aucun commercial</Typography>
                 </Box>
               ) : (
-                [...summary].sort((a, b) => b.activated - a.activated).map((c, i) => {
+                leaderboard.map((c, i) => {
                   const rate = c.total > 0 ? Math.round((c.activated / c.total) * 100) : 0
 
                   return (
                     <Box
-                      key={c.commercialId}
+                      key={c.key}
                       role='button'
-                      onClick={() => router.push(`/enrolments/commercial/${c.commercialId}`)}
+                      onClick={() => router.push(`/enrolments/commercial/${encodeURIComponent(c.key)}`)}
                       sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 1.5, cursor: 'pointer', backgroundColor: 'action.hover', transition: 'background-color .15s', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.12) } }}
                     >
                       <Typography sx={{ fontSize: 12, fontWeight: 800, color: 'text.secondary', width: 20, flexShrink: 0 }}>#{i + 1}</Typography>
-                      <Avatar sx={{ width: 36, height: 36, flexShrink: 0, borderRadius: 0, fontSize: 12, fontWeight: 800, color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>{initials(c.commercialName)}</Avatar>
+                      <Avatar sx={{ width: 36, height: 36, flexShrink: 0, borderRadius: 0, fontSize: 12, fontWeight: 800, color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>{initials(c.name)}</Avatar>
                       <Box sx={{ flex: 1, minWidth: 0 }}>
-                        <Typography sx={{ fontSize: 13, fontWeight: 700, color: 'text.primary' }} noWrap>{c.commercialName}</Typography>
+                        <Typography sx={{ fontSize: 13, fontWeight: 700, color: 'text.primary' }} noWrap>{c.name}</Typography>
                         <Typography sx={{ fontSize: 11.5, color: 'text.secondary' }} noWrap>{c.total} enrôlés · {c.activated} activés · {rate}%</Typography>
                         <Box sx={{ mt: 0.75, height: 5, backgroundColor: 'var(--mui-palette-divider)', overflow: 'hidden' }}>
                           <Box sx={{ height: '100%', width: `${rate}%`, backgroundColor: 'success.main' }} />
@@ -249,7 +272,7 @@ export default function EnrolmentsPage() {
               columns={columns}
               rows={paged}
               getRowKey={e => e.id}
-              onRowClick={e => router.push(`/enrolments/commercial/${e.commercialId}`)}
+              onRowClick={e => router.push(`/enrolments/commercial/${encodeURIComponent(commercialKey(e))}`)}
               empty={{ icon: 'tabler-building-store', label: 'Aucun enrôlement' }}
               pagination={{
                 count: filtered.length,

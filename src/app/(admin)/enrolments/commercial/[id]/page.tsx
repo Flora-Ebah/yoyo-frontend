@@ -51,6 +51,11 @@ function initials(name: string) {
   return name.split(' ').map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || '?'
 }
 
+/** Même clé robuste que la page liste : id, sinon repli sur le nom (`name:<nom>`). */
+function commercialKey(e: { commercialId: string; commercialName: string }) {
+  return e.commercialId ? e.commercialId : `name:${e.commercialName}`
+}
+
 export default function CommercialDetailPage() {
   const theme = useTheme()
   const router = useRouter()
@@ -83,8 +88,10 @@ export default function CommercialDetailPage() {
     return () => { active = false }
   }, [])
 
-  const mine = useMemo(() => all.filter(e => e.commercialId === id), [all, id])
-  const name = mine[0]?.commercialName || 'Commercial'
+  // `id` peut être un vrai id OU un repli `name:<nom>` (enrôlements sans réf commercial).
+  const key = useMemo(() => { try { return decodeURIComponent(id || '') } catch { return id || '' } }, [id])
+  const mine = useMemo(() => all.filter(e => commercialKey(e) === key), [all, key])
+  const name = mine[0]?.commercialName || (key.startsWith('name:') ? key.slice(5) : 'Commercial')
 
   const totals = useMemo(() => {
     const total = mine.length
