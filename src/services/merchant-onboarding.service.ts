@@ -1,13 +1,12 @@
 /**
  * Service d'onboarding marchand à distance (vue commercial).
  *
- * ⚠️ FRONT-ONLY / STUB : l'API n'existe pas encore. `onboard()` simule une réponse.
- * Le binôme backend implémentera l'endpoint selon le contrat ci-dessous
- * (voir CONTRAT-API-ONBOARDING-MARCHAND.md). Pour brancher le vrai endpoint,
- * décommenter l'appel `apiClient.post(...)` et supprimer le bloc de simulation.
+ * Branché sur l'API backend : POST /partners/onboard (permission pros:create).
+ * Crée le compte marchand (sans OTP) + sa boutique et envoie le lien d'activation
+ * (e-mail / SMS selon les canaux choisis).
  */
 
-// import { apiClient } from './api.client'
+import { apiClient } from './api.client'
 
 export interface MerchantInfo {
   firstname: string
@@ -51,26 +50,18 @@ class MerchantOnboardingService {
    *   200   : { data: MerchantOnboardingResult }
    */
   async onboard(payload: MerchantOnboardingPayload): Promise<MerchantOnboardingResult> {
-    // --- Appel réel (à activer quand l'API existe) ---
-    // const response = await apiClient.post<{ data: MerchantOnboardingResult } | MerchantOnboardingResult>(
-    //   '/partners/onboard',
-    //   payload
-    // )
-    // return (response as any).data ?? (response as any)
+    const response = await apiClient.post<{ data: MerchantOnboardingResult } | MerchantOnboardingResult>(
+      '/partners/onboard',
+      payload
+    )
 
-    // --- SIMULATION (front-only) ---
-    await new Promise(resolve => setTimeout(resolve, 900))
-
-    const channels: string[] = []
-
-    if (payload.channels.email) channels.push('email')
-    if (payload.channels.sms) channels.push('sms')
+    const data: any = (response as any)?.data ?? response
 
     return {
-      merchantId: `sim_${Math.random().toString(36).slice(2, 10)}`,
-      partnerId: `sim_${Math.random().toString(36).slice(2, 10)}`,
-      activationSent: channels.length > 0,
-      channels
+      merchantId: data?.merchantId ?? '',
+      partnerId: data?.partnerId ?? '',
+      activationSent: !!data?.activationSent,
+      channels: Array.isArray(data?.channels) ? data.channels : []
     }
   }
 }
