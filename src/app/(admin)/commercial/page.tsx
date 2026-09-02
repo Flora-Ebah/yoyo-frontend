@@ -184,13 +184,12 @@ export default function CommercialPage() {
               sx={{
                 display: 'inline-flex', alignItems: 'center', gap: 0.75, flexShrink: 0,
                 height: 36, px: 1.5, cursor: 'pointer',
-                borderRadius: 0, border: '1px solid',
-                borderColor: isFiltered ? 'primary.main' : 'divider',
-                backgroundColor: isFiltered ? alpha(theme.palette.primary.main, 0.1) : 'action.hover',
+                borderRadius: 0, border: 'none',
+                backgroundColor: isFiltered ? alpha(theme.palette.primary.main, 0.12) : 'action.hover',
                 color: isFiltered ? 'primary.main' : 'text.secondary',
                 fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
-                transition: 'border-color .15s, color .15s, background-color .15s',
-                '&:hover': { borderColor: 'primary.main', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.1) }
+                transition: 'color .15s, background-color .15s',
+                '&:hover': { color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.12) }
               }}
             >
               <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>

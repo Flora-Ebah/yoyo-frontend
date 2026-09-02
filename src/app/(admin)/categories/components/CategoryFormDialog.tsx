@@ -4,7 +4,6 @@ import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Dialog from '@mui/material/Dialog'
 import IconButton from '@mui/material/IconButton'
-import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -94,36 +93,32 @@ export const CategoryFormDialog = ({
 
           <Field label='Catégorie parente'>
             <Select
+              native
               size='small'
               fullWidth
-              displayEmpty
               value={formData.parent || ''}
-              onChange={e => onFormDataChange({ ...formData, parent: e.target.value === '' ? null : e.target.value })}
-              renderValue={val => {
-                if (!val) return <Box component='span' sx={{ color: 'text.disabled' }}>Aucune (catégorie racine)</Box>
-
-                return parentCategories.find(c => c._id === val)?.name || ''
-              }}
+              onChange={e => onFormDataChange({ ...formData, parent: e.target.value === '' ? null : (e.target.value as string) })}
             >
-              <MenuItem value=''><em>Aucune (catégorie racine)</em></MenuItem>
+              <option value=''>Aucune (catégorie racine)</option>
               {parentCategories
                 .filter(cat => (mode === 'edit' ? cat._id !== selectedCategoryId : true))
                 .map(category => (
-                  <MenuItem key={category._id} value={category._id}>{category.name}</MenuItem>
+                  <option key={category._id} value={category._id}>{category.name}</option>
                 ))}
             </Select>
           </Field>
 
           <Field label='Statut'>
             <Select
+              native
               size='small'
               fullWidth
               value={formData.status || 'active'}
               onChange={e => onFormDataChange({ ...formData, status: e.target.value as any })}
             >
-              <MenuItem value='active'>Actif</MenuItem>
-              <MenuItem value='inactive'>Inactif</MenuItem>
-              <MenuItem value='archived'>Archivé</MenuItem>
+              <option value='active'>Actif</option>
+              <option value='inactive'>Inactif</option>
+              <option value='archived'>Archivé</option>
             </Select>
           </Field>
 

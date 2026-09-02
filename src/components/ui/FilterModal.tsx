@@ -63,13 +63,12 @@ export const FilterModal = ({ active, onOpen, onApply, onReset, title = 'Filtrer
         sx={{
           display: 'inline-flex', alignItems: 'center', gap: 0.75, flexShrink: 0,
           height: 36, px: 1.5, cursor: 'pointer',
-          borderRadius: 0, border: '1px solid',
-          borderColor: active ? 'primary.main' : 'divider',
-          backgroundColor: active ? alpha(theme.palette.primary.main, 0.1) : 'action.hover',
+          borderRadius: 0, border: 'none',
+          backgroundColor: active ? alpha(theme.palette.primary.main, 0.12) : 'action.hover',
           color: active ? 'primary.main' : 'text.secondary',
           fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
-          transition: 'border-color .15s, color .15s, background-color .15s',
-          '&:hover': { borderColor: 'primary.main', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.1) }
+          transition: 'color .15s, background-color .15s',
+          '&:hover': { color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.12) }
         }}
       >
         <Funnel />

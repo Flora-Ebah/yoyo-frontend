@@ -14,7 +14,6 @@ import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
 import InputLabel from '@mui/material/InputLabel'
 import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
@@ -445,9 +444,10 @@ export default function AdminAccountsPage() {
               <TextField size='small' type='password' placeholder='••••••••' value={formData.password} onChange={e => setFormData(p => ({ ...p, password: e.target.value }))} fullWidth />
             </Field>
             <Field label='Rôle' required>
-              <Select size='small' fullWidth displayEmpty value={formData.profile} onChange={e => setFormData(p => ({ ...p, profile: e.target.value }))} renderValue={val => val ? (profiles.find(pr => pr._id === val)?.name || '') : <Box component='span' sx={{ color: 'text.disabled' }}>Sélectionner un rôle</Box>}>
+              <Select native size='small' fullWidth value={formData.profile} onChange={e => setFormData(p => ({ ...p, profile: e.target.value as string }))}>
+                <option value=''>Sélectionner un rôle</option>
                 {profiles.map(profile => (
-                  <MenuItem key={profile._id} value={profile._id}>{profile.name}</MenuItem>
+                  <option key={profile._id} value={profile._id}>{profile.name}</option>
                 ))}
               </Select>
             </Field>
@@ -473,15 +473,15 @@ export default function AdminAccountsPage() {
               <TextField size='small' placeholder='Bureau' value={formData.office || ''} onChange={e => setFormData(p => ({ ...p, office: e.target.value }))} fullWidth />
             </Field>
             <Field label='Type'>
-              <Select size='small' fullWidth value={formData.type || 'interne'} onChange={e => setFormData(p => ({ ...p, type: e.target.value as 'interne' | 'externe' }))}>
-                {typeOptions.map(o => (<MenuItem key={o.value} value={o.value}>{o.label}</MenuItem>))}
+              <Select native size='small' fullWidth value={formData.type || 'interne'} onChange={e => setFormData(p => ({ ...p, type: e.target.value as 'interne' | 'externe' }))}>
+                {typeOptions.map(o => (<option key={o.value} value={o.value}>{o.label}</option>))}
               </Select>
             </Field>
             <Field label='Statut'>
-              <Select size='small' fullWidth value={formData.status || 'active'} onChange={e => setFormData(p => ({ ...p, status: e.target.value as AdminStatus }))}>
-                <MenuItem value='active'>Actif</MenuItem>
-                <MenuItem value='archived'>Archivé</MenuItem>
-                <MenuItem value='removed'>Supprimé</MenuItem>
+              <Select native size='small' fullWidth value={formData.status || 'active'} onChange={e => setFormData(p => ({ ...p, status: e.target.value as AdminStatus }))}>
+                <option value='active'>Actif</option>
+                <option value='archived'>Archivé</option>
+                <option value='removed'>Supprimé</option>
               </Select>
             </Field>
           </Box>

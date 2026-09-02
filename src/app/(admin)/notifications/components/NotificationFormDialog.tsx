@@ -53,16 +53,18 @@ const NotificationFormDialog = ({
     height: 44,
     px: 1.5,
     borderRadius: 0,
-    border: '1px solid',
-    borderColor: 'divider',
-    backgroundColor: 'background.paper',
+    border: 'none',
+    borderBottom: '2px solid',
+    borderBottomColor: 'divider',
+    backgroundColor: 'transparent',
     fontSize: 14,
     fontFamily: 'inherit',
     fontWeight: 600,
     color: 'var(--mui-palette-text-primary)',
     outline: 'none',
     cursor: 'pointer',
-    '&:focus': { borderColor: 'primary.main' }
+    transition: 'border-color .15s',
+    '&:focus': { borderBottomColor: 'primary.main' }
   }
 
   // Le backend n'accepte pour l'instant que l'envoi vers un utilisateur précis.
