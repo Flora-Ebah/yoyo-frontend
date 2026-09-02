@@ -23,13 +23,13 @@ export type SectionCardProps = {
 export const SectionCard = ({ title, action, fill, children }: SectionCardProps) => (
   <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', overflow: 'hidden', ...(fill ? { display: 'flex', flexDirection: 'column', height: '100%' } : {}) }}>
     {(title || action) && (
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1.5, rowGap: 1.5, flexWrap: 'wrap', px: 2.5, py: 2, borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1.5, flexWrap: 'nowrap', px: 2.5, py: 2, borderBottom: '1px solid', borderColor: 'divider', flexShrink: 0 }}>
         {typeof title === 'string' ? (
-          <Typography sx={{ fontSize: 15, fontWeight: 800, color: 'text.primary', flexShrink: 0 }}>{title}</Typography>
+          <Typography sx={{ fontSize: 15, fontWeight: 800, color: 'text.primary', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</Typography>
         ) : (
           title
         )}
-        {action && <Box sx={{ ml: { md: 'auto' }, width: { xs: '100%', md: 'auto' } }}>{action}</Box>}
+        {action && <Box sx={{ ml: 'auto', flexShrink: 0 }}>{action}</Box>}
       </Box>
     )}
     {fill ? <Box sx={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>{children}</Box> : children}
