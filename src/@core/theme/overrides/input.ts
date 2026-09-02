@@ -71,26 +71,32 @@ const input: Theme['components'] = {
   MuiOutlinedInput: {
     styleOverrides: {
       root: {
-        // Fond blanc (pas de gris) + contour fin ; focus primaire discret sans halo.
-        backgroundColor: 'var(--mui-palette-background-paper)',
+        // Style « souligné » carré : pas de contour complet, seulement une bordure basse.
+        backgroundColor: 'transparent',
+        borderRadius: 0,
         transition: 'border-color .15s, background-color .15s',
         '& .MuiOutlinedInput-notchedOutline': {
+          borderWidth: '0 0 2px 0',
+          borderRadius: 0,
           borderColor: 'var(--mui-palette-divider)'
         },
         '&:not(.Mui-focused):not(.Mui-error):not(.Mui-disabled):hover .MuiOutlinedInput-notchedOutline': {
+          borderWidth: '0 0 2px 0',
           borderColor: 'var(--mui-palette-action-active)'
         },
         '&.Mui-focused': {
-          backgroundColor: 'var(--mui-palette-background-paper)'
+          backgroundColor: 'transparent'
         },
         '&:not(.Mui-error).MuiInputBase-colorPrimary.Mui-focused .MuiOutlinedInput-notchedOutline': {
-          borderWidth: 1,
+          borderWidth: '0 0 2px 0',
           borderColor: 'var(--mui-palette-primary-main)'
         },
         '&.Mui-disabled .MuiOutlinedInput-notchedOutline': {
+          borderWidth: '0 0 2px 0',
           borderColor: 'var(--mui-palette-divider)'
         },
         '&.Mui-error .MuiOutlinedInput-notchedOutline': {
+          borderWidth: '0 0 2px 0',
           borderColor: 'var(--mui-palette-error-main)'
         }
       },

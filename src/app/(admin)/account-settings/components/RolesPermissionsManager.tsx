@@ -394,11 +394,11 @@ const RolesPermissionsManager = () => {
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 160px' }, gap: 2 }}>
             <Box>
               <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', mb: 1 }}>Nom du rôle</Typography>
-              <Box component='input' value={name} onChange={(e: any) => setName(e.target.value)} placeholder='ex. Modérateur' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' } }} />
+              <Box component='input' value={name} onChange={(e: any) => setName(e.target.value)} placeholder='ex. Modérateur' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: 'none', borderBottom: '2px solid', borderBottomColor: 'divider', backgroundColor: 'transparent', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderBottomColor: 'primary.main' } }} />
             </Box>
             <Box>
               <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', mb: 1 }}>Statut</Typography>
-              <Box component='select' value={status} onChange={(e: any) => setStatus(e.target.value)} sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}>
+              <Box component='select' value={status} onChange={(e: any) => setStatus(e.target.value)} sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: 'none', borderBottom: '2px solid', borderBottomColor: 'divider', backgroundColor: 'transparent', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}>
                 <option value='active'>Actif</option>
                 <option value='inactive'>Inactif</option>
                 <option value='suspended'>Suspendu</option>
@@ -408,7 +408,7 @@ const RolesPermissionsManager = () => {
 
           <Box>
             <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', mb: 1 }}>Description</Typography>
-            <Box component='input' value={description} onChange={(e: any) => setDescription(e.target.value)} placeholder='Rôle destiné à…' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' } }} />
+            <Box component='input' value={description} onChange={(e: any) => setDescription(e.target.value)} placeholder='Rôle destiné à…' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: 'none', borderBottom: '2px solid', borderBottomColor: 'divider', backgroundColor: 'transparent', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderBottomColor: 'primary.main' } }} />
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, p: 1.5, borderRadius: 0, backgroundColor: alpha(theme.palette.primary.main, 0.08) }}>
