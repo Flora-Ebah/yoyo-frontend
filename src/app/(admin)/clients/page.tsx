@@ -615,7 +615,7 @@ export default function ClientsPage() {
             <IconButton
               size='small'
               onClick={() => setSelectedClient(null)}
-              sx={{ position: 'absolute', top: 6, right: 6, color: 'common.white', '&:hover': { backgroundColor: alpha('#fff', 0.18) } }}
+              sx={{ position: 'absolute', top: 8, right: 8, color: 'common.white', borderRadius: 0, backgroundColor: alpha('#fff', 0.22), '&:hover': { backgroundColor: alpha('#fff', 0.38) } }}
             >
               <i className='tabler-x' />
             </IconButton>
@@ -665,17 +665,17 @@ export default function ClientsPage() {
 
           {/* Rangée de stats */}
           <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: '1px solid', borderColor: 'divider' }}>
-            <Box sx={{ px: 2.5, py: 1.75, borderRight: '1px solid', borderColor: 'divider' }}>
-              <Typography sx={{ fontSize: 20, fontWeight: 800, color: selectedClient.isEmailConfirmed ? 'success.main' : 'text.disabled', lineHeight: 1.2 }}>
+            <Box sx={{ px: 2.5, py: 3, borderRight: '1px solid', borderColor: 'divider' }}>
+              <Typography sx={{ fontSize: 22, fontWeight: 800, color: selectedClient.isEmailConfirmed ? 'success.main' : 'text.disabled', lineHeight: 1.2 }}>
                 {selectedClient.isEmailConfirmed ? 'Oui' : 'Non'}
               </Typography>
-              <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>Email confirmé</Typography>
+              <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.5 }}>Email confirmé</Typography>
             </Box>
-            <Box sx={{ px: 2.5, py: 1.75 }}>
-              <Typography sx={{ fontSize: 20, fontWeight: 800, color: selectedClient.isPhoneConfirmed ? 'success.main' : 'text.disabled', lineHeight: 1.2 }}>
+            <Box sx={{ px: 2.5, py: 3 }}>
+              <Typography sx={{ fontSize: 22, fontWeight: 800, color: selectedClient.isPhoneConfirmed ? 'success.main' : 'text.disabled', lineHeight: 1.2 }}>
                 {selectedClient.isPhoneConfirmed ? 'Oui' : 'Non'}
               </Typography>
-              <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>Téléphone confirmé</Typography>
+              <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.5 }}>Téléphone confirmé</Typography>
             </Box>
           </Box>
 
@@ -742,7 +742,7 @@ export default function ClientsPage() {
             anchor='right'
             open
             onClose={() => setSelectedClient(null)}
-            slotProps={{ paper: { sx: { width: 440, maxWidth: '100vw', borderRadius: 0, boxShadow: 'none', borderLeft: '1px solid', borderColor: 'divider' } } }}
+            slotProps={{ paper: { sx: { width: 500, maxWidth: '100vw', borderRadius: 0, boxShadow: 'none', borderLeft: '1px solid', borderColor: 'divider' } } }}
           >
             {panel}
           </Drawer>
@@ -842,15 +842,18 @@ export default function ClientsPage() {
                 width: '100%',
                 resize: 'vertical',
                 borderRadius: 0,
-                border: '1px solid',
-                borderColor: 'divider',
-                backgroundColor: 'action.hover',
-                p: 1.5,
+                border: 'none',
+                borderBottom: '2px solid',
+                borderBottomColor: 'divider',
+                backgroundColor: 'transparent',
+                px: 0.5,
+                py: 1,
                 fontSize: 14,
                 fontFamily: 'inherit',
                 color: 'var(--mui-palette-text-primary)',
                 outline: 'none',
-                '&:focus': { borderColor: 'primary.main' }
+                transition: 'border-color .15s',
+                '&:focus': { borderBottomColor: 'primary.main' }
               }}
             />
           </Box>

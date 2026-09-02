@@ -364,15 +364,8 @@ export default function ProsPage() {
         })}
       </Box>
 
-      {/* Split : table + détails */}
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', lg: selectedPro ? 'minmax(0, 1fr) 380px' : '1fr' },
-          gap: 3,
-          alignItems: 'stretch'
-        }}
-      >
+      {/* Tableau pleine largeur ; le détail s'ouvre dans un drawer droit (desktop) / bas (mobile). */}
+      <Box>
         <Card
           sx={{
             borderRadius: 0,
@@ -380,7 +373,7 @@ export default function ProsPage() {
             boxShadow: 'none',
             display: 'flex',
             flexDirection: 'column',
-            height: selectedPro ? { lg: 640 } : 'auto',
+            height: 'auto',
             overflow: 'hidden'
           }}
         >
@@ -487,13 +480,13 @@ export default function ProsPage() {
                             Création
                           </TableSortLabel>
                         </TableCell>
-                        {!selectedPro && <TableCell align='right'>Actions</TableCell>}
+                        <TableCell align='right'>Actions</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {rows.length === 0 ? (
                         <TableRow>
-                          <TableCell colSpan={selectedPro ? 6 : 7} align='center' sx={{ py: 8, borderColor: 'divider' }}>
+                          <TableCell colSpan={7} align='center' sx={{ py: 8, borderColor: 'divider' }}>
                             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
                               <i className='tabler-building-store text-4xl' />
                               <Typography sx={{ fontSize: 13, fontWeight: 700 }}>Aucun professionnel trouvé</Typography>
@@ -548,7 +541,6 @@ export default function ProsPage() {
                               <TableCell sx={{ fontSize: 12.5, color: 'text.secondary', whiteSpace: 'nowrap' }}>
                                 {formatDate(partner.createdAt)}
                               </TableCell>
-                              {!selectedPro && (
                               <TableCell align='right' sx={{ whiteSpace: 'nowrap' }} onClick={e => e.stopPropagation()}>
                                 <RowActions
                                   actions={[
@@ -559,7 +551,6 @@ export default function ProsPage() {
                                   ]}
                                 />
                               </TableCell>
-                              )}
                             </TableRow>
                           )
                         })
@@ -595,14 +586,14 @@ export default function ProsPage() {
               boxShadow: 'none',
               display: 'flex',
               flexDirection: 'column',
-              height: { lg: 640 },
+              height: '100%',
               overflow: 'hidden'
             }}
           >
             {/* Bandeau coloré + avatar débordant */}
             <Box sx={{ position: 'relative' }}>
               <Box sx={{ height: 48, backgroundColor: 'primary.main' }} />
-              <IconButton size='small' onClick={() => setSelectedPro(null)} sx={{ position: 'absolute', top: 6, right: 6, color: 'common.white', '&:hover': { backgroundColor: alpha('#fff', 0.18) } }}>
+              <IconButton size='small' onClick={() => setSelectedPro(null)} sx={{ position: 'absolute', top: 8, right: 8, color: 'common.white', borderRadius: 0, backgroundColor: alpha('#fff', 0.22), '&:hover': { backgroundColor: alpha('#fff', 0.38) } }}>
                 <i className='tabler-x' />
               </IconButton>
               <Box sx={{ px: 2.5, pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
@@ -732,7 +723,16 @@ export default function ProsPage() {
             <Drawer anchor='bottom' open onClose={() => setSelectedPro(null)} slotProps={{ paper: { sx: { maxHeight: '92vh', borderRadius: 0 } } }}>
               {panel}
             </Drawer>
-          ) : panel
+          ) : (
+            <Drawer
+              anchor='right'
+              open
+              onClose={() => setSelectedPro(null)}
+              slotProps={{ paper: { sx: { width: 500, maxWidth: '100vw', borderRadius: 0, boxShadow: 'none', borderLeft: '1px solid', borderColor: 'divider' } } }}
+            >
+              {panel}
+            </Drawer>
+          )
         })()}
       </Box>
 
