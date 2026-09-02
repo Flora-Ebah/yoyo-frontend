@@ -8,6 +8,7 @@ import Avatar from '@mui/material/Avatar'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
+import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 import { alpha, useTheme } from '@mui/material/styles'
 
@@ -132,8 +133,8 @@ export default function CommercialPage() {
       title={`Bonjour, ${agentName.split(' ')[0]} 👋`}
       subtitle='Enrôlez vos marchands à distance et suivez votre activité'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-          <Button onClick={goNew} disableElevation variant='contained' sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'nowrap', width: { xs: '100%', sm: 'auto' } }}>
+          <Button onClick={goNew} disableElevation variant='contained' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
             Nouveau partenaire
           </Button>
           <Box
@@ -144,8 +145,8 @@ export default function CommercialPage() {
             title='Actualiser'
             sx={{
               ml: 'auto',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              width: 36, height: 36, borderRadius: '6px', border: 'none',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              width: 36, height: 36, borderRadius: 0, border: '1px solid', borderColor: alpha(theme.palette.primary.main, 0.35),
               cursor: refreshing ? 'default' : 'pointer',
               color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.1),
               transition: 'background-color .15s', '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.18) },
@@ -173,27 +174,31 @@ export default function CommercialPage() {
 
       {/* Historique + filtres */}
       <SectionCard
-        title='Historique de mes enrôlements'
-        action={
-          <Box
-            component='button'
-            onClick={openFilters}
-            aria-label='Filtre'
-            sx={{
-              display: 'inline-flex', alignItems: 'center', gap: 0.75,
-              height: 36, px: 0.5, background: 'transparent', cursor: 'pointer',
-              border: 'none', borderBottom: '2px solid',
-              borderBottomColor: isFiltered ? 'primary.main' : 'divider',
-              color: isFiltered ? 'primary.main' : 'text.secondary',
-              fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
-              transition: 'border-color .15s, color .15s', '&:hover': { borderBottomColor: 'primary.main', color: 'primary.main' }
-            }}
-          >
-            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
-              <path d='M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z' />
-            </svg>
-            Filtre
-            {isFiltered && <Box sx={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: 'primary.main', ml: 0.25 }} />}
+        title={
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1.5, width: '100%' }}>
+            <Typography sx={{ fontSize: 15, fontWeight: 800, color: 'text.primary' }}>Historique de mes enrôlements</Typography>
+            <Box
+              component='button'
+              onClick={openFilters}
+              aria-label='Filtre'
+              sx={{
+                display: 'inline-flex', alignItems: 'center', gap: 0.75, flexShrink: 0,
+                height: 36, px: 1.5, cursor: 'pointer',
+                borderRadius: 0, border: '1px solid',
+                borderColor: isFiltered ? 'primary.main' : 'divider',
+                backgroundColor: isFiltered ? alpha(theme.palette.primary.main, 0.1) : 'action.hover',
+                color: isFiltered ? 'primary.main' : 'text.secondary',
+                fontSize: 13, fontWeight: 600, fontFamily: 'inherit',
+                transition: 'border-color .15s, color .15s, background-color .15s',
+                '&:hover': { borderColor: 'primary.main', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.1) }
+              }}
+            >
+              <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                <path d='M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z' />
+              </svg>
+              Filtre
+              {isFiltered && <Box sx={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: 'primary.main', ml: 0.25 }} />}
+            </Box>
           </Box>
         }
       >
@@ -205,23 +210,24 @@ export default function CommercialPage() {
         />
       </SectionCard>
 
-      {/* Modal de filtres */}
-      <Dialog
-        open={filterOpen}
-        onClose={() => setFilterOpen(false)}
-        fullWidth
-        maxWidth='xs'
-        slotProps={{ paper: { sx: { borderRadius: '10px' } } }}
-      >
-        <Box sx={{ p: { xs: 2.5, sm: 3 } }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
-            <svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke={theme.palette.primary.main} strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+      {/* Modal de filtres (style ui modal) */}
+      <Dialog open={filterOpen} onClose={() => setFilterOpen(false)} maxWidth='xs' fullWidth PaperProps={{ sx: { boxShadow: 'none', borderRadius: 0 } }}>
+        {/* En-tête */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 3, pb: 2 }}>
+          <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
+            <svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
               <path d='M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z' />
             </svg>
-            <Typography sx={{ fontSize: 16, fontWeight: 800, color: 'text.primary' }}>Filtrer</Typography>
           </Box>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Typography sx={{ fontSize: 17, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }}>Filtrer</Typography>
+            <Typography sx={{ fontSize: 12.5, color: 'text.secondary' }}>Affinez la liste de vos enrôlements.</Typography>
+          </Box>
+          <IconButton size='small' onClick={() => setFilterOpen(false)}><i className='tabler-x' /></IconButton>
+        </Box>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, '& > *': { width: '100%' } }}>
+        <Box sx={{ px: 3, pb: 3 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, '& > * > *:last-child': { width: '100%' } }}>
             <Box>
               <Typography sx={{ fontSize: 12.5, fontWeight: 600, color: 'text.secondary', mb: 0.75 }}>Recherche</Typography>
               <SearchInput value={dQuery} onChange={setDQuery} placeholder='Rechercher un marchand' minWidth={0} />
@@ -236,11 +242,11 @@ export default function CommercialPage() {
             </Box>
           </Box>
 
-          <Box sx={{ display: 'flex', gap: 1.5, mt: 3 }}>
-            <Button onClick={resetFilters} disableElevation sx={{ flex: 1, height: 38, borderRadius: '6px', textTransform: 'none', color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5, mt: 3 }}>
+            <Button onClick={resetFilters} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               Réinitialiser
             </Button>
-            <Button onClick={applyFilters} disableElevation variant='contained' sx={{ flex: 1, height: 38, borderRadius: '6px', textTransform: 'none' }}>
+            <Button onClick={applyFilters} disableElevation variant='contained' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}>
               Appliquer
             </Button>
           </Box>
