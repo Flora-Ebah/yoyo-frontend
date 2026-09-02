@@ -15,7 +15,7 @@ import { alpha, useTheme } from '@mui/material/styles'
 import { toast } from 'react-toastify'
 
 import { categoryService, type Category } from '@/services/category.service'
-import { merchantOnboardingService } from '@/services/merchant-onboarding.service'
+import { merchantOnboardingService, type OpeningHour } from '@/services/merchant-onboarding.service'
 
 type Props = {
   next?: string
@@ -33,6 +33,23 @@ const STEPS = [
 ]
 
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+
+const MIN_DISCOUNT = 5
+const DEFAULT_DISCOUNT = 15
+
+// Jours (valeur API en anglais, libellé FR) + gabarit d'horaires par défaut.
+const DAYS: { key: OpeningHour['day']; label: string; defaultOpen: boolean }[] = [
+  { key: 'monday', label: 'Lundi', defaultOpen: true },
+  { key: 'tuesday', label: 'Mardi', defaultOpen: true },
+  { key: 'wednesday', label: 'Mercredi', defaultOpen: true },
+  { key: 'thursday', label: 'Jeudi', defaultOpen: true },
+  { key: 'friday', label: 'Vendredi', defaultOpen: true },
+  { key: 'saturday', label: 'Samedi', defaultOpen: false },
+  { key: 'sunday', label: 'Dimanche', defaultOpen: false }
+]
+
+const defaultHours = (): OpeningHour[] =>
+  DAYS.map(d => ({ day: d.key, isOpen: d.defaultOpen, openTime: '09:00', closeTime: '18:00', breaks: [] }))
 
 const fieldSx = {
   width: '100%', height: 40, px: 1.5, borderRadius: '6px', border: '1px solid', borderColor: 'divider',
@@ -72,6 +89,8 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
   const [address, setAddress] = useState('')
   const [shopPhone, setShopPhone] = useState('')
   const [description, setDescription] = useState('')
+  const [maxDiscount, setMaxDiscount] = useState<number>(DEFAULT_DISCOUNT)
+  const [openingHours, setOpeningHours] = useState<OpeningHour[]>(defaultHours())
 
   const [sendEmail, setSendEmail] = useState(true)
   const [sendSms, setSendSms] = useState(true)
@@ -106,6 +125,8 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
           if (typeof d.address === 'string') setAddress(d.address)
           if (typeof d.shopPhone === 'string') setShopPhone(d.shopPhone)
           if (typeof d.description === 'string') setDescription(d.description)
+          if (typeof d.maxDiscount === 'number') setMaxDiscount(d.maxDiscount)
+          if (Array.isArray(d.openingHours) && d.openingHours.length === DAYS.length) setOpeningHours(d.openingHours)
           if (typeof d.sendEmail === 'boolean') setSendEmail(d.sendEmail)
           if (typeof d.sendSms === 'boolean') setSendSms(d.sendSms)
         }
@@ -126,12 +147,12 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
     try {
       window.localStorage.setItem(
         DRAFT_KEY,
-        JSON.stringify({ step, email, contact, firstname, lastname, ville, shopName, categoryId, shopVille, address, shopPhone, description, sendEmail, sendSms })
+        JSON.stringify({ step, email, contact, firstname, lastname, ville, shopName, categoryId, shopVille, address, shopPhone, description, maxDiscount, openingHours, sendEmail, sendSms })
       )
     } catch {
       // quota / mode privé : on ignore
     }
-  }, [hydrated, step, email, contact, firstname, lastname, ville, shopName, categoryId, shopVille, address, shopPhone, description, sendEmail, sendSms])
+  }, [hydrated, step, email, contact, firstname, lastname, ville, shopName, categoryId, shopVille, address, shopPhone, description, maxDiscount, openingHours, sendEmail, sendSms])
 
   const clearDraft = () => {
     try {
@@ -157,8 +178,14 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
     setAddress('')
     setShopPhone('')
     setDescription('')
+    setMaxDiscount(DEFAULT_DISCOUNT)
+    setOpeningHours(defaultHours())
     setSendEmail(true)
     setSendSms(true)
+  }
+
+  const updateDay = (index: number, patch: Partial<OpeningHour>) => {
+    setOpeningHours(prev => prev.map((h, i) => (i === index ? { ...h, ...patch } : h)))
   }
 
   const stepValid = useMemo(() => {
@@ -188,7 +215,18 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
     try {
       const res = await merchantOnboardingService.onboard({
         merchant: { firstname: firstname.trim(), lastname: lastname.trim(), email: email.trim(), contact: contact.trim(), ville: ville.trim() || undefined },
-        shop: { name: shopName.trim(), categoryId, ville: shopVille.trim(), address: address.trim() || undefined, phone: shopPhone.trim() || undefined, description: description.trim() || undefined },
+        shop: {
+          name: shopName.trim(),
+          categoryId,
+          ville: shopVille.trim(),
+          address: address.trim() || undefined,
+          phone: shopPhone.trim() || undefined,
+          description: description.trim() || undefined,
+          maxDiscount: Math.max(MIN_DISCOUNT, Math.min(100, Math.round(maxDiscount) || DEFAULT_DISCOUNT)),
+          // On n'envoie que les jours ouverts avec des heures valides ; les jours
+          // fermés sont transmis tels quels (isOpen:false) pour garder la trace.
+          openingHours
+        },
         channels: { email: sendEmail, sms: sendSms }
       })
 
@@ -281,6 +319,8 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
         <RecapRow k='Ville' v={shopVille} />
         <RecapRow k='Adresse' v={address} />
         <RecapRow k='Téléphone' v={shopPhone} />
+        <RecapRow k='Réduction' v={`${maxDiscount}%`} />
+        <RecapRow k='Jours ouverts' v={`${openingHours.filter(h => h.isOpen).length}/7`} />
       </RecapSection>
       <RecapSection title='Envoi du lien'>
         <RecapRow k='E-mail' v={sendEmail ? 'Oui' : 'Non'} />
@@ -348,6 +388,63 @@ const MerchantOnboardingForm = ({ next = '/pros', listLabel = 'Voir la liste' }:
             <Box sx={{ mb: 1.5 }}>
               <Typography sx={labelSx}>Description (optionnel)</Typography>
               <Box component='textarea' value={description} onChange={(e: any) => setDescription(e.target.value)} rows={3} placeholder='Quelques mots sur la boutique…' sx={{ ...fieldSx, height: 'auto', py: 1.25, resize: 'vertical', cursor: 'text' }} />
+            </Box>
+
+            {/* Réduction négociée */}
+            <Box sx={{ mb: 2 }}>
+              <Typography sx={labelSx}>Réduction accordée (%)</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Box
+                  component='input'
+                  type='number'
+                  value={String(maxDiscount)}
+                  onChange={(e: any) => setMaxDiscount(Number(e.target.value))}
+                  onBlur={() => setMaxDiscount(v => Math.max(MIN_DISCOUNT, Math.min(100, Math.round(v) || DEFAULT_DISCOUNT)))}
+                  min={MIN_DISCOUNT}
+                  max={100}
+                  sx={{ ...fieldSx, width: 110, textAlign: 'center' }}
+                />
+                <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>
+                  Minimum {MIN_DISCOUNT}%. Le marchand pourra l'ajuster ensuite.
+                </Typography>
+              </Box>
+            </Box>
+
+            {/* Horaires d'ouverture */}
+            <Box sx={{ mb: 1 }}>
+              <Typography sx={labelSx}>Horaires d'ouverture</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                {openingHours.map((h, i) => (
+                  <Box
+                    key={h.day}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1,
+                      p: 1,
+                      borderRadius: '6px',
+                      backgroundColor: 'action.hover'
+                    }}
+                  >
+                    <Switch size='small' checked={h.isOpen} onChange={e => updateDay(i, { isOpen: e.target.checked })} />
+                    <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.primary', width: 74, flexShrink: 0 }}>
+                      {DAYS[i].label}
+                    </Typography>
+                    {h.isOpen ? (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, ml: 'auto' }}>
+                        <Box component='input' type='time' value={h.openTime || '09:00'} onChange={(e: any) => updateDay(i, { openTime: e.target.value })} sx={{ ...fieldSx, width: 108, height: 34 }} />
+                        <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>à</Typography>
+                        <Box component='input' type='time' value={h.closeTime || '18:00'} onChange={(e: any) => updateDay(i, { closeTime: e.target.value })} sx={{ ...fieldSx, width: 108, height: 34 }} />
+                      </Box>
+                    ) : (
+                      <Typography sx={{ fontSize: 12, color: 'text.disabled', ml: 'auto' }}>Fermé</Typography>
+                    )}
+                  </Box>
+                ))}
+              </Box>
+              <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.75 }}>
+                Optionnel — le marchand pourra compléter/modifier ses horaires dans l'application.
+              </Typography>
             </Box>
           </>
         )}

@@ -17,6 +17,14 @@ export interface MerchantInfo {
   ville?: string
 }
 
+export interface OpeningHour {
+  day: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
+  isOpen: boolean
+  openTime?: string
+  closeTime?: string
+  breaks?: Array<{ startTime: string; endTime: string }>
+}
+
 export interface ShopInfo {
   name: string
   categoryId: string
@@ -24,6 +32,10 @@ export interface ShopInfo {
   address?: string
   phone?: string
   description?: string
+  /** Réduction négociée par le commercial (%). Min 5, défaut 15. */
+  maxDiscount?: number
+  /** Horaires d'ouverture (jours en anglais côté API). */
+  openingHours?: OpeningHour[]
 }
 
 export interface MerchantOnboardingPayload {
