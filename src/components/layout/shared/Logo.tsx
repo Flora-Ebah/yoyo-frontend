@@ -80,7 +80,7 @@ const Logo = ({ color }: { color?: CSSProperties['color'] }) => {
         style={{
           width: 44,
           height: 44,
-          borderRadius: 12,
+          borderRadius: 0,
           backgroundColor: 'var(--mui-palette-primary-lightOpacity)'
         }}
       >

@@ -123,7 +123,7 @@ const KpiCard = ({ title, value, subtitle, icon: Icon, href }: KpiCardProps) => 
       href={href}
       sx={{
         height: '100%',
-        borderRadius: '6px',
+        borderRadius: 0,
         textDecoration: 'none',
         border: 'none',
         boxShadow: 'none',
@@ -139,7 +139,7 @@ const KpiCard = ({ title, value, subtitle, icon: Icon, href }: KpiCardProps) => 
               width: 38,
               height: 38,
               flexShrink: 0,
-              borderRadius: '6px',
+              borderRadius: 0,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -164,7 +164,7 @@ const KpiCard = ({ title, value, subtitle, icon: Icon, href }: KpiCardProps) => 
               width: 34,
               height: 34,
               flexShrink: 0,
-              borderRadius: '6px',
+              borderRadius: 0,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -184,14 +184,14 @@ const KpiCard = ({ title, value, subtitle, icon: Icon, href }: KpiCardProps) => 
 /* Conteneur de section (charts)                                      */
 /* ------------------------------------------------------------------ */
 const SectionCard = ({ title, icon, children }: { title: string; icon: string; children: React.ReactNode }) => (
-  <Card sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none' }}>
+  <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none' }}>
     <CardContent sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, mb: 2.5 }}>
         <Box
           sx={{
             width: 34,
             height: 34,
-            borderRadius: '6px',
+            borderRadius: 0,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -491,7 +491,7 @@ export default function DashboardPage() {
               gap: 0.5,
               height: 40,
               p: 0.5,
-              borderRadius: '6px',
+              borderRadius: 0,
               backgroundColor: 'action.hover'
             }}
           >
@@ -505,7 +505,7 @@ export default function DashboardPage() {
                   alignItems: 'center',
                   height: '100%',
                   px: 2,
-                  borderRadius: '6px',
+                  borderRadius: 0,
                   cursor: 'pointer',
                   fontSize: 13,
                   fontWeight: 700,
@@ -535,7 +535,7 @@ export default function DashboardPage() {
               order: { xs: 2, md: 3 },
               ml: { xs: 'auto', md: 0 },
               height: 40,
-              borderRadius: '6px',
+              borderRadius: 0,
               fontWeight: 600,
               textTransform: 'none',
               px: 2,
@@ -568,7 +568,7 @@ export default function DashboardPage() {
 
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1.6fr' }, gap: 3, alignItems: 'stretch' }}>
             {/* État des paiements */}
-            <Card sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none', height: 380 }}>
+            <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', height: 380 }}>
               <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 3, p: 3, height: '100%' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Typography sx={{ fontSize: 16, fontWeight: 800, color: 'text.primary' }}>
@@ -588,16 +588,13 @@ export default function DashboardPage() {
                       { id: 'Échec', label: 'Échec', value: t.failed, color: errorColor }
                     ] as any}
                     colors={{ datum: 'data.color' }}
-                    margin={{ top: 24, right: 60, bottom: 56, left: 60 }}
+                    margin={{ top: 16, right: 20, bottom: 56, left: 20 }}
                     innerRadius={0.5}
                     padAngle={0.6}
                     cornerRadius={2}
                     activeOuterRadiusOffset={8}
                     borderWidth={0}
-                    arcLinkLabelsSkipAngle={10}
-                    arcLinkLabelsTextColor={theme.palette.text.primary}
-                    arcLinkLabelsThickness={2}
-                    arcLinkLabelsColor={{ from: 'color' }}
+                    enableArcLinkLabels={false}
                     arcLabelsSkipAngle={10}
                     arcLabelsTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
                     legends={[
@@ -623,7 +620,7 @@ export default function DashboardPage() {
             </Card>
 
             {/* File de modération */}
-            <Card sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none', height: 380 }}>
+            <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', height: 380 }}>
               <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, height: '100%', p: 3 }}>
                 {/* Header : titre + bouton */}
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
@@ -637,7 +634,7 @@ export default function DashboardPage() {
                     size='small'
                     sx={{
                       height: 34,
-                      borderRadius: '6px',
+                      borderRadius: 0,
                       fontWeight: 700,
                       fontSize: 12.5,
                       textTransform: 'none',
@@ -706,7 +703,7 @@ export default function DashboardPage() {
                             alignItems: 'center',
                             gap: 1.5,
                             py: 1.5,
-                            borderBottom: i < arr.length - 1 ? '2px dashed' : 'none',
+                            borderBottom: i < arr.length - 1 ? '1px dashed' : 'none',
                             borderColor: alpha(theme.palette.text.primary, 0.28)
                           }}
                         >
@@ -716,7 +713,7 @@ export default function DashboardPage() {
                               width: 40,
                               height: 40,
                               flexShrink: 0,
-                              borderRadius: '6px',
+                              borderRadius: 0,
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
@@ -746,7 +743,7 @@ export default function DashboardPage() {
                                 gap: 0.75,
                                 px: 1.25,
                                 py: 0.5,
-                                borderRadius: '6px',
+                                borderRadius: 0,
                                 backgroundColor: alpha(color, 0.14)
                               }}
                             >
@@ -808,7 +805,7 @@ export default function DashboardPage() {
                 disableElevation
                 sx={{
                   height: 40,
-                  borderRadius: '6px',
+                  borderRadius: 0,
                   fontWeight: 700,
                   textTransform: 'none',
                   px: 2,
@@ -831,7 +828,7 @@ export default function DashboardPage() {
             }}
           >
             {kpis.map(k => (
-              <Card key={k.label} sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none' }}>
+              <Card key={k.label} sx={{ borderRadius: 0, border: 'none', boxShadow: 'none' }}>
                 <CardContent sx={{ p: 2.5 }}>
                   <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary' }} noWrap>
                     {k.label}
@@ -964,7 +961,7 @@ export default function DashboardPage() {
 
           {/* Carte : répartition géographique (Côte d'Ivoire) */}
           <SectionCard title='Répartition par ville (Côte d’Ivoire)' icon='tabler-map-2'>
-            <Box sx={{ height: 420, borderRadius: '6px', overflow: 'hidden' }}>
+            <Box sx={{ height: 420, borderRadius: 0, overflow: 'hidden' }}>
               <CivRegionsMap points={analytics?.geo ?? []} />
             </Box>
           </SectionCard>
