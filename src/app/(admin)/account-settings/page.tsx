@@ -50,7 +50,7 @@ export default function SettingsHubPage() {
             variant='text'
             disableRipple
             onClick={() => router.push('/commercial')}
-            sx={{ ml: 'auto', height: 36, borderRadius: '6px', textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
+            sx={{ ml: 'auto', height: 36, borderRadius: 0, textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
           >
             Retour
           </Button>
@@ -67,7 +67,7 @@ export default function SettingsHubPage() {
               component={Link}
               href={item.href}
               sx={{
-                borderRadius: '5px',
+                borderRadius: 0,
                 border: 'none',
                 boxShadow: 'none',
                 textDecoration: 'none',
@@ -76,7 +76,7 @@ export default function SettingsHubPage() {
               }}
             >
               <CardContent sx={{ p: 2.5, display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Box sx={{ width: 46, height: 46, flexShrink: 0, borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color, backgroundColor: alpha(color, 0.14) }}>
+                <Box sx={{ width: 46, height: 46, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color, backgroundColor: alpha(color, 0.14) }}>
                   <i className={`${item.icon} text-2xl`} />
                 </Box>
                 <Box sx={{ flex: 1, minWidth: 0 }}>

@@ -150,7 +150,7 @@ const UserDropdown = () => {
           >
             <Paper
               className={settings.skin === 'bordered' ? 'border shadow-none' : 'shadow-lg'}
-              sx={{ borderRadius: '6px', overflow: 'hidden', minWidth: 260 }}
+              sx={{ borderRadius: 0, overflow: 'hidden', minWidth: 260 }}
             >
               <ClickAwayListener onClickAway={e => handleDropdownClose(e as MouseEvent | TouchEvent)}>
                 <div>
@@ -175,7 +175,7 @@ const UserDropdown = () => {
                             mt: 0.75,
                             px: 1,
                             py: 0.25,
-                            borderRadius: '7px',
+                            borderRadius: 0,
                             fontSize: 11,
                             fontWeight: 600,
                             bgcolor: 'var(--mui-palette-primary-lightOpacity)',
@@ -192,7 +192,7 @@ const UserDropdown = () => {
                   <MenuList sx={{ py: 1 }}>
                     <MenuItem
                       onClick={e => handleDropdownClose(e, '/account-settings')}
-                      sx={{ mx: 1, borderRadius: '6px', gap: 1.5, py: 1, fontSize: 13.5, fontWeight: 500 }}
+                      sx={{ mx: 1, borderRadius: 0, gap: 1.5, py: 1, fontSize: 13.5, fontWeight: 500 }}
                     >
                       <i className='tabler-user' style={{ fontSize: 19, color: 'var(--mui-palette-text-secondary)' }} />
                       Mon profil
@@ -207,7 +207,7 @@ const UserDropdown = () => {
                       size='small'
                       onClick={handleUserLogout}
                       disabled={isLoggingOut}
-                      sx={{ borderRadius: '6px', textTransform: 'none', fontWeight: 500, '& .MuiButton-endIcon': { marginInlineStart: 1 } }}
+                      sx={{ borderRadius: 0, textTransform: 'none', fontWeight: 500, '& .MuiButton-endIcon': { marginInlineStart: 1 } }}
                     >
                       {isLoggingOut ? 'Déconnexion...' : 'Déconnexion'}
                     </Button>

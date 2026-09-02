@@ -76,7 +76,7 @@ export default function ProfilPage() {
           variant='text'
           disableRipple
           onClick={() => router.push(backTo)}
-          sx={{ ml: 'auto', height: 36, borderRadius: '6px', textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
+          sx={{ ml: 'auto', height: 36, borderRadius: 0, textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
         >
           Retour
         </Button>
@@ -89,7 +89,7 @@ export default function ProfilPage() {
       ) : !user ? (
         <Alert severity='error'>Utilisateur non trouvé</Alert>
       ) : (
-        <Card sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none', overflow: 'hidden' }}>
+        <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', overflow: 'hidden' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, p: 3, backgroundColor: 'var(--mui-palette-action-hover)' }}>
             <Avatar src={user.avatar} alt={displayName} sx={{ width: 72, height: 72, fontSize: 26, fontWeight: 800, color: 'primary.main', backgroundColor: 'background.paper', border: '2px solid', borderColor: 'var(--mui-palette-primary-lightOpacity)' }}>
               {getInitials(displayName)}
@@ -97,7 +97,7 @@ export default function ProfilPage() {
             <Box sx={{ flex: 1, minWidth: 0 }}>
               <Typography sx={{ fontSize: 18, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }}>{displayName}</Typography>
               <Typography sx={{ fontSize: 13, color: 'text.secondary', mb: 1 }}>{user.email || '-'}</Typography>
-              <Box component='span' sx={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, fontWeight: 700, px: 1.25, py: 0.5, borderRadius: '6px', color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
+              <Box component='span' sx={{ display: 'inline-flex', alignItems: 'center', fontSize: 12, fontWeight: 700, px: 1.25, py: 0.5, borderRadius: 0, color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
                 {user.role === 'admin' ? 'Administrateur' : user.role === 'provider' ? 'Prestataire' : 'Utilisateur'}
               </Box>
             </Box>
@@ -128,7 +128,7 @@ export default function ProfilPage() {
 
             {isSuperAdmin && (
               <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
-                <Button variant='contained' disableElevation disabled sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}>
+                <Button variant='contained' disableElevation disabled sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
                   Modifier le profil (bientôt)
                 </Button>
               </Box>
