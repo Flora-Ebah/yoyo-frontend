@@ -50,6 +50,26 @@ export type DataTableProps<T> = {
  * état vide intégré, pagination optionnelle. Basé sur une config `columns`.
  */
 export function DataTable<T>({ columns, rows, getRowKey, onRowClick, empty, maxHeight, fillHeight, pagination }: DataTableProps<T>) {
+  // Aucune donnée : on n'affiche NI le tableau NI son en-tête, seulement l'état vide.
+  if (rows.length === 0) {
+    return (
+      <Box
+        sx={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          gap: 1, py: 8, textAlign: 'center', color: 'text.secondary',
+          ...(fillHeight ? { height: '100%', minHeight: 0, flex: 1 } : {})
+        }}
+      >
+        {empty?.icon && (
+          <Box sx={{ width: 64, height: 64, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'action.hover', mb: 0.5 }}>
+            <i className={`${empty.icon} text-3xl`} />
+          </Box>
+        )}
+        <Typography sx={{ fontSize: 14, fontWeight: 700 }}>{empty?.label || 'Aucune donnée'}</Typography>
+      </Box>
+    )
+  }
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', pt: 1, ...(fillHeight ? { height: '100%', minHeight: 0 } : {}) }}>
       <TableContainer sx={{ overflowX: 'auto', ...(fillHeight ? { flex: 1, minHeight: 0, overflowY: 'auto' } : maxHeight ? { maxHeight, overflowY: 'auto' } : {}) }}>
@@ -71,29 +91,18 @@ export function DataTable<T>({ columns, rows, getRowKey, onRowClick, empty, maxH
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={columns.length} align='center' sx={{ py: 8, borderColor: 'divider' }}>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
-                    {empty?.icon && <i className={`${empty.icon} text-4xl`} />}
-                    <Typography sx={{ fontSize: 13, fontWeight: 700 }}>{empty?.label || 'Aucune donnée'}</Typography>
-                  </Box>
-                </TableCell>
+            {rows.map((row, index) => (
+              <TableRow
+                key={getRowKey(row, index)}
+                hover
+                onClick={onRowClick ? () => onRowClick(row) : undefined}
+                sx={{ ...(onRowClick ? { cursor: 'pointer' } : {}), '& td': { borderColor: 'divider' } }}
+              >
+                {columns.map(c => (
+                  <TableCell key={c.key} align={c.align}>{c.render(row, index)}</TableCell>
+                ))}
               </TableRow>
-            ) : (
-              rows.map((row, index) => (
-                <TableRow
-                  key={getRowKey(row, index)}
-                  hover
-                  onClick={onRowClick ? () => onRowClick(row) : undefined}
-                  sx={{ ...(onRowClick ? { cursor: 'pointer' } : {}), '& td': { borderColor: 'divider' } }}
-                >
-                  {columns.map(c => (
-                    <TableCell key={c.key} align={c.align}>{c.render(row, index)}</TableCell>
-                  ))}
-                </TableRow>
-              ))
-            )}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
