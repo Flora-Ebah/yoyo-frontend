@@ -164,12 +164,12 @@ export default function CommercialPage() {
         </Box>
       }
     >
-      {/* Récap */}
+      {/* Récap — synchronisé avec les filtres (les cartes reflètent la liste filtrée) */}
       <StatCardGrid>
-        <StatCard label='Marchands' value={mine.length} caption='Enrôlés au total' icon='tabler-building-store' palette='primary' />
-        <StatCard label='Activés' value={mine.filter(e => e.status === 'activated').length} caption='Comptes activés' icon='tabler-circle-check' palette='success' />
-        <StatCard label='En attente' value={mine.filter(e => e.status === 'pending').length} caption='À finaliser' icon='tabler-clock' palette='warning' />
-        <StatCard label='Villes' value={new Set(mine.map(e => e.ville)).size} caption='Villes couvertes' icon='tabler-map-pin' palette='info' />
+        <StatCard label='Marchands' value={filtered.length} caption={isFiltered ? 'Résultats filtrés' : 'Enrôlés au total'} icon='tabler-building-store' palette='primary' />
+        <StatCard label='Activés' value={filtered.filter(e => e.status === 'activated').length} caption='Comptes activés' icon='tabler-circle-check' palette='success' />
+        <StatCard label='En attente' value={filtered.filter(e => e.status === 'pending').length} caption='À finaliser' icon='tabler-clock' palette='warning' />
+        <StatCard label='Villes' value={new Set(filtered.map(e => e.ville)).size} caption='Villes couvertes' icon='tabler-map-pin' palette='info' />
       </StatCardGrid>
 
       {/* Historique + filtres */}

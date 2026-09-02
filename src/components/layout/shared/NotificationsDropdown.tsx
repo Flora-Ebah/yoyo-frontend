@@ -494,13 +494,13 @@ const NotificationDropdown = ({
                               >
                                 {getAvatar({ avatarImage, avatarIcon, title, avatarText, avatarColor, avatarSkin })}
                                 <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
-                                  <Typography sx={{ fontSize: 13.5, fontWeight: 600, color: 'text.primary', lineHeight: 1.35, mb: 0.25 }}>
+                                  <Typography sx={{ fontSize: 12.5, fontWeight: 600, color: 'text.primary', lineHeight: 1.3, mb: 0.25 }}>
                                     {title}
                                   </Typography>
-                                  <Typography sx={{ fontSize: 12.5, color: 'text.secondary', lineHeight: 1.4, mb: 0.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                  <Typography sx={{ fontSize: 11.5, color: 'text.secondary', lineHeight: 1.35, mb: 0.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                                     {subtitle}
                                   </Typography>
-                                  <Typography sx={{ fontSize: 11.5, color: 'text.disabled' }}>{time}</Typography>
+                                  <Typography sx={{ fontSize: 10.5, color: 'text.disabled' }}>{time}</Typography>
                                 </Box>
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1, flexShrink: 0 }}>
                                   <Badge
