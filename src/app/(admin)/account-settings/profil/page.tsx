@@ -104,24 +104,40 @@ export default function ProfilPage() {
           </Box>
 
           <CardContent sx={{ p: 3 }}>
-            <Typography sx={{ fontSize: 12, fontWeight: 800, color: 'text.secondary', mb: 1.5, textTransform: 'uppercase', letterSpacing: '.03em' }}>
+            <Typography sx={{ fontSize: 12, fontWeight: 800, color: 'text.secondary', mb: 1.75, textTransform: 'uppercase', letterSpacing: '.03em' }}>
               Détails du compte
             </Typography>
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))' }, columnGap: 4 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, minmax(0, 1fr))', lg: 'repeat(3, minmax(0, 1fr))' }, gap: 1.5 }}>
               {[
-                { k: 'Prénom', v: user.firstname || '-' },
-                { k: 'Nom', v: user.lastname || '-' },
-                { k: 'Email', v: user.email || '-' },
-                { k: 'Téléphone', v: user.contact || '-' },
-                { k: "Nom d'utilisateur", v: user.username || '-' },
-                { k: 'Statut', v: user.status || 'Actif' },
-                { k: 'Membre depuis', v: new Date(user.createdAt).toLocaleDateString('fr-FR') }
+                { icon: 'tabler-user', k: 'Prénom', v: user.firstname || '-' },
+                { icon: 'tabler-user', k: 'Nom', v: user.lastname || '-' },
+                { icon: 'tabler-mail', k: 'Email', v: user.email || '-' },
+                { icon: 'tabler-phone', k: 'Téléphone', v: user.contact || '-' },
+                { icon: 'tabler-at', k: "Nom d'utilisateur", v: user.username || '-' },
+                { icon: 'tabler-circle-check', k: 'Statut', v: user.status || 'Actif' },
+                { icon: 'tabler-calendar', k: 'Membre depuis', v: new Date(user.createdAt).toLocaleDateString('fr-FR') }
               ].map(row => (
-                <Box key={row.k} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, py: 1.5, borderBottom: '2px dashed', borderColor: 'var(--mui-palette-divider)' }}>
-                  <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', flexShrink: 0 }}>{row.k}</Typography>
-                  <Typography sx={{ fontSize: 13.5, fontWeight: 600, color: 'text.primary', textAlign: 'right', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {row.v}
-                  </Typography>
+                <Box
+                  key={row.k}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1.5,
+                    p: 1.75,
+                    backgroundColor: 'action.hover',
+                    borderLeft: '3px solid',
+                    borderColor: 'primary.main'
+                  }}
+                >
+                  <Box sx={{ width: 36, height: 36, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
+                    <i className={`${row.icon} text-lg`} />
+                  </Box>
+                  <Box sx={{ minWidth: 0 }}>
+                    <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mb: 0.25 }}>{row.k}</Typography>
+                    <Typography sx={{ fontSize: 14, fontWeight: 700, color: 'text.primary', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {row.v}
+                    </Typography>
+                  </Box>
                 </Box>
               ))}
             </Box>
