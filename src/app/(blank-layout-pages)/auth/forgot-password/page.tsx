@@ -22,7 +22,7 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], weight: ['400', '500', '
 
 const BRAND = '#FF6100'
 const BRAND_DARK = '#E85400'
-const RADIUS = '6px'
+const RADIUS = 0
 const BORDER = '#E5E7EB'
 
 export default function ForgotPasswordPage() {
