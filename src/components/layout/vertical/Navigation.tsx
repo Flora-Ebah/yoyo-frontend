@@ -155,7 +155,7 @@ const Navigation = (props: Props) => {
               alignItems: 'center',
               gap: 10,
               padding: '10px 12px',
-              borderRadius: 10,
+              borderRadius: 0,
               textDecoration: 'none',
               backgroundColor: 'var(--mui-palette-action-hover)',
               color: 'var(--mui-palette-text-primary)'
@@ -166,7 +166,7 @@ const Navigation = (props: Props) => {
                 width: 32,
                 height: 32,
                 flexShrink: 0,
-                borderRadius: 8,
+                borderRadius: 0,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
