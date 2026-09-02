@@ -18,7 +18,8 @@ import { alpha, useTheme } from '@mui/material/styles'
 import PageContainer from '@/components/PageContainer'
 import { usePermissions } from '@/hooks/usePermissions'
 import { StatCard, StatCardGrid, StatusPill, SectionCard, DataTable, FilterBar, SearchInput, SelectFilter, DateRangeFilter, ResetButton, type Column, type UiPalette } from '@/components/ui'
-import { ENROLMENTS_MOCK, COMMERCIALS, summarizeByCommercial, type Enrolment, type EnrolmentStatus, type CommercialSummary } from '@/data/enrolments.mock'
+import { summarizeByCommercial, type Enrolment, type EnrolmentStatus, type CommercialSummary } from '@/data/enrolments.mock'
+import { enrolmentService } from '@/services/enrolment.service'
 
 type TabKey = 'detail' | 'recap'
 
@@ -59,7 +60,34 @@ function EnrolmentsInner() {
 
   const [selectedCommercialId, setSelectedCommercialId] = useState<string | null>(null)
 
-  // Pagination (données mock, côté client)
+  // Données réelles (API) — filtrage/pagination fin côté client.
+  const [enrolments, setEnrolments] = useState<Enrolment[]>([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState<string | null>(null)
+
+  useEffect(() => {
+    let active = true
+
+    setLoading(true)
+    enrolmentService
+      .list({ pageSize: 500 })
+      .then(rows => { if (active) { setEnrolments(rows); setLoadError(null) } })
+      .catch((err: any) => { if (active) setLoadError(err?.message || 'Impossible de charger les enrôlements') })
+      .finally(() => { if (active) setLoading(false) })
+
+    return () => { active = false }
+  }, [])
+
+  // Liste des commerciaux (pour le filtre) dérivée des données réelles.
+  const commercials = useMemo(() => {
+    const map = new Map<string, string>()
+
+    enrolments.forEach(e => { if (e.commercialId) map.set(e.commercialId, e.commercialName || e.commercialId) })
+
+    return Array.from(map, ([id, name]) => ({ id, name }))
+  }, [enrolments])
+
+  // Pagination (côté client)
   const [recapPage, setRecapPage] = useState(0)
   const [recapRpp, setRecapRpp] = useState(5)
   const [detailPage, setDetailPage] = useState(0)
@@ -85,7 +113,7 @@ function EnrolmentsInner() {
     const fromTs = dateFrom ? new Date(dateFrom).setHours(0, 0, 0, 0) : null
     const toTs = dateTo ? new Date(dateTo).setHours(23, 59, 59, 999) : null
 
-    return ENROLMENTS_MOCK.filter(e => {
+    return enrolments.filter(e => {
       if (commercialId && e.commercialId !== commercialId) return false
       if (status && e.status !== status) return false
       if (q && ![e.merchantName, e.shopName, e.ville, e.commercialName].join(' ').toLowerCase().includes(q)) return false
@@ -97,7 +125,7 @@ function EnrolmentsInner() {
 
       return true
     })
-  }, [query, commercialId, status, dateFrom, dateTo])
+  }, [enrolments, query, commercialId, status, dateFrom, dateTo])
 
   const summary = useMemo(() => summarizeByCommercial(filtered), [filtered])
 
@@ -291,7 +319,7 @@ function EnrolmentsInner() {
         <CardContent sx={{ p: 2.5 }}>
           <FilterBar>
             <SearchInput value={query} onChange={setQuery} placeholder='Rechercher (marchand, boutique, commercial)' />
-            <SelectFilter value={commercialId} onChange={setCommercialId} options={[{ value: '', label: 'Commercial : tous' }, ...COMMERCIALS.map(c => ({ value: c.id, label: c.name }))]} />
+            <SelectFilter value={commercialId} onChange={setCommercialId} options={[{ value: '', label: 'Commercial : tous' }, ...commercials.map(c => ({ value: c.id, label: c.name }))]} />
             <SelectFilter value={status} onChange={setStatus} options={[{ value: '', label: 'Statut : tous' }, { value: 'activated', label: 'Activé' }, { value: 'pending', label: 'En attente' }]} />
             <DateRangeFilter from={dateFrom} to={dateTo} onFrom={setDateFrom} onTo={setDateTo} />
             {isFiltered && <ResetButton onClick={() => { setQuery(''); setCommercialId(''); setStatus(''); setDateFrom(''); setDateTo('') }} />}
