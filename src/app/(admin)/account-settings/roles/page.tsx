@@ -26,7 +26,7 @@ export default function RolesPage() {
           variant='text'
           disableRipple
           onClick={() => router.push('/account-settings')}
-          sx={{ ml: 'auto', height: 36, borderRadius: '6px', textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
+          sx={{ ml: 'auto', height: 36, borderRadius: 0, textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
         >
           Retour
         </Button>
@@ -35,7 +35,7 @@ export default function RolesPage() {
       {ready && !canRoles ? (
         <Alert severity='warning'>Vous n&apos;avez pas la permission de gérer les rôles &amp; permissions.</Alert>
       ) : (
-        <Card sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none' }}>
+        <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none' }}>
           <CardContent sx={{ p: 3 }}>
             <RolesPermissionsManager />
           </CardContent>

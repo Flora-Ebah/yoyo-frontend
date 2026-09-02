@@ -44,7 +44,7 @@ export const CategoryFormDialog = ({
     <Dialog open={open} onClose={onClose} maxWidth='sm' fullWidth PaperProps={{ sx: { boxShadow: 'none' } }}>
       {/* En-tête */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 3, pb: 2 }}>
-        <Box sx={{ width: 44, height: 44, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
+        <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
           <i className='tabler-category' style={{ fontSize: '1.35rem' }} />
         </Box>
         <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -131,7 +131,7 @@ export const CategoryFormDialog = ({
         </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5, mt: 3 }}>
-          <Button onClick={onClose} disableElevation sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+          <Button onClick={onClose} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
             Annuler
           </Button>
           <Button
@@ -140,7 +140,7 @@ export const CategoryFormDialog = ({
             disabled={submitting}
             disableElevation
             startIcon={submitting ? <CircularProgress size={18} color='inherit' /> : undefined}
-            sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5 }}
+            sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}
           >
             Enregistrer
           </Button>

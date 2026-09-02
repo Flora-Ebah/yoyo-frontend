@@ -111,7 +111,7 @@ const NotificationList = ({
                   <TableRow key={notification._id} hover sx={{ '& td': { borderColor: 'divider' } }}>
                     <TableCell>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
-                        <Box sx={{ width: 32, height: 32, flexShrink: 0, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color, backgroundColor: alpha(color, 0.14) }}>
+                        <Box sx={{ width: 32, height: 32, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color, backgroundColor: alpha(color, 0.14) }}>
                           <i className={`${meta.icon} text-base`} />
                         </Box>
                         <Pill label={meta.label} palette={meta.palette} />

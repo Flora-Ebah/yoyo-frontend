@@ -290,7 +290,7 @@ export default function ProsPage() {
 
   const softBtn = {
     height: 40,
-    borderRadius: '6px',
+    borderRadius: 0,
     fontWeight: 700,
     textTransform: 'none' as const,
     px: 2,
@@ -315,7 +315,7 @@ export default function ProsPage() {
               onClick={() => router.push('/pros/nouveau?next=/pros')}
               disableElevation
               variant='contained'
-              sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}
+              sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}
             >
               Nouveau marchand
             </Button>
@@ -332,7 +332,7 @@ export default function ProsPage() {
           const color = theme.palette[s.palette].main
 
           return (
-            <Card key={s.label} sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none' }}>
+            <Card key={s.label} sx={{ borderRadius: 0, border: 'none', boxShadow: 'none' }}>
               <CardContent sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 1.25 }}>
                 <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 1 }}>
                   <Typography sx={{ fontSize: 13, fontWeight: 700, color: 'text.primary' }}>{s.label}</Typography>
@@ -341,7 +341,7 @@ export default function ProsPage() {
                       width: 38,
                       height: 38,
                       flexShrink: 0,
-                      borderRadius: '6px',
+                      borderRadius: 0,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -409,7 +409,7 @@ export default function ProsPage() {
                   <Button
                     onClick={() => setSelected([])}
                     disableElevation
-                    sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}
+                    sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}
                   >
                     Effacer
                   </Button>

@@ -43,7 +43,7 @@ export default function NotificationsPage() {
 
   const baseBtn = {
     height: 38,
-    borderRadius: '6px',
+    borderRadius: 0,
     fontWeight: 600,
     fontSize: 13,
     textTransform: 'none' as const,

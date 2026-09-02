@@ -327,7 +327,7 @@ export default function ProductDetailsPage() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenValidationDialog(false)} disableElevation sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>Annuler</Button>
+          <Button onClick={() => setOpenValidationDialog(false)} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>Annuler</Button>
           <Button onClick={handleValidationSubmit} variant='contained'>
             Enregistrer
           </Button>

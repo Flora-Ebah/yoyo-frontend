@@ -135,7 +135,7 @@ export default function FaqPage() {
           '& input': {
             width: '100%',
             height: 44,
-            borderRadius: '6px',
+            borderRadius: 0,
             border: 'none',
             outline: 'none',
             backgroundColor: 'action.hover',
@@ -161,17 +161,17 @@ export default function FaqPage() {
           {entries.map(entry => (
             <Box
               key={entry.href}
-              sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, p: 3, borderRadius: '6px', backgroundColor: 'background.paper' }}
+              sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, p: 3, borderRadius: 0, backgroundColor: 'background.paper' }}
             >
               {/* En-tête */}
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
-                <Box sx={{ width: 44, height: 44, flexShrink: 0, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: primary, backgroundColor: alpha(primary, 0.14) }}>
+                <Box sx={{ width: 44, height: 44, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: primary, backgroundColor: alpha(primary, 0.14) }}>
                   <i className={entry.icon} style={{ fontSize: '1.35rem' }} />
                 </Box>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1 }}>
                     <Typography sx={{ fontSize: 15.5, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }}>{entry.title}</Typography>
-                    <Box component='span' sx={{ flexShrink: 0, fontSize: 11.5, fontWeight: 700, px: 1, py: 0.25, borderRadius: '6px', color: primary, backgroundColor: alpha(primary, 0.12) }}>
+                    <Box component='span' sx={{ flexShrink: 0, fontSize: 11.5, fontWeight: 700, px: 1, py: 0.25, borderRadius: 0, color: primary, backgroundColor: alpha(primary, 0.12) }}>
                       {entry.href}
                     </Box>
                   </Box>
@@ -187,7 +187,7 @@ export default function FaqPage() {
                   component={Link}
                   href={entry.href}
                   disableElevation
-                  sx={{ height: 38, borderRadius: '6px', fontWeight: 500, fontSize: 13, textTransform: 'none', px: 2, color: 'primary.main', backgroundColor: alpha(primary, 0.1), '&:hover': { backgroundColor: alpha(primary, 0.18) } }}
+                  sx={{ height: 38, borderRadius: 0, fontWeight: 500, fontSize: 13, textTransform: 'none', px: 2, color: 'primary.main', backgroundColor: alpha(primary, 0.1), '&:hover': { backgroundColor: alpha(primary, 0.18) } }}
                 >
                   Ouvrir {entry.title}
                 </Button>

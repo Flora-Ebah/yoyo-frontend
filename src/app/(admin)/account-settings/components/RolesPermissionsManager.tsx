@@ -219,7 +219,7 @@ const RolesPermissionsManager = () => {
           </Typography>
         </Box>
         {canCreate && (
-          <Button onClick={openCreate} disableElevation variant='contained' sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}>
+          <Button onClick={openCreate} disableElevation variant='contained' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
             Nouveau rôle
           </Button>
         )}
@@ -253,7 +253,7 @@ const RolesPermissionsManager = () => {
                     alignItems: 'center',
                     gap: 1.25,
                     p: 1.5,
-                    borderRadius: '6px',
+                    borderRadius: 0,
                     cursor: 'pointer',
                     border: '1px solid',
                     transition: 'all .12s',
@@ -261,7 +261,7 @@ const RolesPermissionsManager = () => {
                     backgroundColor: active ? alpha(theme.palette.primary.main, 0.08) : 'action.hover'
                   }}
                 >
-                  <Box sx={{ width: 38, height: 38, flexShrink: 0, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
+                  <Box sx={{ width: 38, height: 38, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
                     <i className='tabler-shield-lock' style={{ fontSize: '1.2rem' }} />
                   </Box>
                   <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -278,10 +278,10 @@ const RolesPermissionsManager = () => {
 
           {/* Détail du rôle sélectionné */}
           {selected && (
-            <Box sx={{ borderRadius: '6px', border: '1px solid', borderColor: 'divider', overflow: 'hidden' }}>
+            <Box sx={{ borderRadius: 0, border: '1px solid', borderColor: 'divider', overflow: 'hidden' }}>
               {/* En-tête détail */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 2.5, backgroundColor: alpha(theme.palette.primary.main, 0.06) }}>
-                <Box sx={{ width: 46, height: 46, flexShrink: 0, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.16) }}>
+                <Box sx={{ width: 46, height: 46, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.16) }}>
                   <i className='tabler-shield-lock' style={{ fontSize: '1.4rem' }} />
                 </Box>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -312,7 +312,7 @@ const RolesPermissionsManager = () => {
               {/* Permissions */}
               <Box sx={{ p: 2.5 }}>
                 {isSuper(selected.ability || []) ? (
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, p: 2, borderRadius: '6px', backgroundColor: alpha(theme.palette.primary.main, 0.1) }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.25, p: 2, borderRadius: 0, backgroundColor: alpha(theme.palette.primary.main, 0.1) }}>
                     <i className='tabler-infinity' style={{ fontSize: '1.4rem', color: theme.palette.primary.main }} />
                     <Box>
                       <Typography sx={{ fontSize: 13.5, fontWeight: 800, color: 'text.primary' }}>Accès total</Typography>
@@ -353,11 +353,11 @@ const RolesPermissionsManager = () => {
                                 {!applicable ? (
                                   <Typography sx={{ fontSize: 13, color: 'text.disabled' }}>—</Typography>
                                 ) : ok ? (
-                                  <Box sx={{ width: 22, height: 22, borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', backgroundColor: 'success.main' }}>
+                                  <Box sx={{ width: 22, height: 22, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', backgroundColor: 'success.main' }}>
                                     <i className='tabler-check' style={{ fontSize: '0.85rem' }} />
                                   </Box>
                                 ) : (
-                                  <Box sx={{ width: 22, height: 22, borderRadius: '5px', border: '1.5px solid', borderColor: 'divider' }} />
+                                  <Box sx={{ width: 22, height: 22, borderRadius: 0, border: '1.5px solid', borderColor: 'divider' }} />
                                 )}
                               </Box>
                             )
@@ -376,7 +376,7 @@ const RolesPermissionsManager = () => {
       {/* Dialog création / édition */}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)} fullWidth maxWidth='md' PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 3, pb: 2 }}>
-          <Box sx={{ width: 44, height: 44, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
+          <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
             <i className='tabler-shield-lock' style={{ fontSize: '1.35rem' }} />
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -394,11 +394,11 @@ const RolesPermissionsManager = () => {
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: '1fr 160px' }, gap: 2 }}>
             <Box>
               <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', mb: 1 }}>Nom du rôle</Typography>
-              <Box component='input' value={name} onChange={(e: any) => setName(e.target.value)} placeholder='ex. Modérateur' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: '6px', border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' } }} />
+              <Box component='input' value={name} onChange={(e: any) => setName(e.target.value)} placeholder='ex. Modérateur' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' } }} />
             </Box>
             <Box>
               <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', mb: 1 }}>Statut</Typography>
-              <Box component='select' value={status} onChange={(e: any) => setStatus(e.target.value)} sx={{ width: '100%', height: 44, px: 1.5, borderRadius: '6px', border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}>
+              <Box component='select' value={status} onChange={(e: any) => setStatus(e.target.value)} sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}>
                 <option value='active'>Actif</option>
                 <option value='inactive'>Inactif</option>
                 <option value='suspended'>Suspendu</option>
@@ -408,10 +408,10 @@ const RolesPermissionsManager = () => {
 
           <Box>
             <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: 'text.secondary', mb: 1 }}>Description</Typography>
-            <Box component='input' value={description} onChange={(e: any) => setDescription(e.target.value)} placeholder='Rôle destiné à…' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: '6px', border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' } }} />
+            <Box component='input' value={description} onChange={(e: any) => setDescription(e.target.value)} placeholder='Rôle destiné à…' sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 14, fontFamily: 'inherit', fontWeight: 600, color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'primary.main' } }} />
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, p: 1.5, borderRadius: '6px', backgroundColor: alpha(theme.palette.primary.main, 0.08) }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, p: 1.5, borderRadius: 0, backgroundColor: alpha(theme.palette.primary.main, 0.08) }}>
             <Box>
               <Typography sx={{ fontSize: 13.5, fontWeight: 800, color: 'text.primary' }}>Super administrateur</Typography>
               <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>Accès total à tous les modules (ignore la matrice).</Typography>
@@ -420,7 +420,7 @@ const RolesPermissionsManager = () => {
           </Box>
 
           {!superAdmin && (
-            <Box sx={{ borderRadius: '6px', border: '1px solid', borderColor: 'divider', overflow: 'hidden' }}>
+            <Box sx={{ borderRadius: 0, border: '1px solid', borderColor: 'divider', overflow: 'hidden' }}>
               <Box sx={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(4, 72px)', alignItems: 'center', px: 2, py: 1.25, backgroundColor: 'action.hover' }}>
                 <Typography sx={{ fontSize: 12, fontWeight: 800, color: 'text.secondary' }}>Module</Typography>
                 {PERMISSION_ACTIONS.map(a => (
@@ -437,7 +437,7 @@ const RolesPermissionsManager = () => {
                     return (
                       <Box key={a.key} sx={{ display: 'flex', justifyContent: 'center' }}>
                         {applicable ? (
-                          <Box role='checkbox' aria-checked={checked} onClick={() => toggleCell(s.key, a.key)} sx={{ width: 22, height: 22, borderRadius: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .12s', border: '2px solid', borderColor: checked ? 'primary.main' : 'divider', backgroundColor: checked ? 'primary.main' : 'transparent', color: '#fff' }}>
+                          <Box role='checkbox' aria-checked={checked} onClick={() => toggleCell(s.key, a.key)} sx={{ width: 22, height: 22, borderRadius: 0, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all .12s', border: '2px solid', borderColor: checked ? 'primary.main' : 'divider', backgroundColor: checked ? 'primary.main' : 'transparent', color: '#fff' }}>
                             {checked && <i className='tabler-check' style={{ fontSize: '0.85rem' }} />}
                           </Box>
                         ) : (
@@ -452,10 +452,10 @@ const RolesPermissionsManager = () => {
           )}
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5, mt: 0.5 }}>
-            <Button onClick={() => setDialogOpen(false)} disableElevation sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+            <Button onClick={() => setDialogOpen(false)} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               Annuler
             </Button>
-            <Button onClick={save} disabled={saving} disableElevation variant='contained' startIcon={saving ? <CircularProgress size={18} color='inherit' /> : undefined} sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5 }}>
+            <Button onClick={save} disabled={saving} disableElevation variant='contained' startIcon={saving ? <CircularProgress size={18} color='inherit' /> : undefined} sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}>
               Enregistrer
             </Button>
           </Box>
@@ -466,7 +466,7 @@ const RolesPermissionsManager = () => {
       <Dialog open={!!deleteTarget} onClose={() => setDeleteTarget(null)} maxWidth='xs' fullWidth PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
         <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-            <Box sx={{ width: 44, height: 44, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.14) }}>
+            <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.14) }}>
               <i className='tabler-trash' style={{ fontSize: '1.35rem' }} />
             </Box>
             <Box>
@@ -478,10 +478,10 @@ const RolesPermissionsManager = () => {
             Cette action est définitive. Les admins portant ce rôle perdront ses permissions.
           </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5 }}>
-            <Button onClick={() => setDeleteTarget(null)} disableElevation sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+            <Button onClick={() => setDeleteTarget(null)} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               Annuler
             </Button>
-            <Button onClick={confirmDelete} disableElevation variant='contained' color='error' sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}>
+            <Button onClick={confirmDelete} disableElevation variant='contained' color='error' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
               Supprimer
             </Button>
           </Box>

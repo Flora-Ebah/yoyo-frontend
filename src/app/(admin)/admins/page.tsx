@@ -283,7 +283,7 @@ export default function AdminAccountsPage() {
   }
 
   const softBtn = {
-    height: 36, borderRadius: '6px', textTransform: 'none' as const, px: 2,
+    height: 36, borderRadius: 0, textTransform: 'none' as const, px: 2,
     color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.1), '&:hover': { backgroundColor: alpha(theme.palette.primary.main, 0.18) }
   }
 
@@ -358,7 +358,7 @@ export default function AdminAccountsPage() {
       actions={
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
           {canCreate && (
-            <Button onClick={openCreate} disableElevation variant='contained' sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}>
+            <Button onClick={openCreate} disableElevation variant='contained' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
               Nouvel admin
             </Button>
           )}
@@ -424,7 +424,7 @@ export default function AdminAccountsPage() {
       {/* Dialog création / édition */}
       <Dialog open={dialogOpen} onClose={closeDialog} fullWidth maxWidth='md' PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 3, pb: 2 }}>
-          <Box sx={{ width: 44, height: 44, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
+          <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
             <i className='tabler-user-shield' style={{ fontSize: '1.35rem' }} />
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -489,10 +489,10 @@ export default function AdminAccountsPage() {
           {formError ? <Box sx={{ pt: 2 }}><Alert severity='error'>{formError}</Alert></Box> : null}
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5, mt: 3 }}>
-            <Button onClick={closeDialog} disableElevation sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+            <Button onClick={closeDialog} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               Annuler
             </Button>
-            <Button onClick={submitDialog} disabled={submitting} disableElevation variant='contained' startIcon={submitting ? <CircularProgress size={18} color='inherit' /> : undefined} sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5 }}>
+            <Button onClick={submitDialog} disabled={submitting} disableElevation variant='contained' startIcon={submitting ? <CircularProgress size={18} color='inherit' /> : undefined} sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}>
               Enregistrer
             </Button>
           </Box>

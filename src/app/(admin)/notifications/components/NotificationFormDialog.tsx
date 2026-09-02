@@ -52,7 +52,7 @@ const NotificationFormDialog = ({
     width: '100%',
     height: 44,
     px: 1.5,
-    borderRadius: '6px',
+    borderRadius: 0,
     border: '1px solid',
     borderColor: 'divider',
     backgroundColor: 'background.paper',
@@ -101,7 +101,7 @@ const NotificationFormDialog = ({
               justifyContent: 'center',
               gap: 0.75,
               height: 44,
-              borderRadius: '6px',
+              borderRadius: 0,
               cursor: 'pointer',
               fontSize: 13,
               fontWeight: 700,
@@ -124,7 +124,7 @@ const NotificationFormDialog = ({
     <Dialog open={open} onClose={handleClose} maxWidth='sm' fullWidth PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
       {/* En-tête */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 3, pb: 2 }}>
-        <Box sx={{ width: 44, height: 44, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
+        <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.14) }}>
           <i className='tabler-send' style={{ fontSize: '1.35rem' }} />
         </Box>
         <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -177,7 +177,7 @@ const NotificationFormDialog = ({
           <Typography sx={label}>Ciblage</Typography>
           <Segmented value={formData.targeting} onChange={v => setFormData({ ...formData, targeting: v })} options={TARGETS} />
           {broadcastUnsupported && (
-            <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 0.75, px: 1.25, py: 0.75, borderRadius: '6px', backgroundColor: alpha(theme.palette.warning.main, 0.12) }}>
+            <Box sx={{ mt: 1, display: 'flex', alignItems: 'center', gap: 0.75, px: 1.25, py: 0.75, borderRadius: 0, backgroundColor: alpha(theme.palette.warning.main, 0.12) }}>
               <i className='tabler-info-circle' style={{ fontSize: '1rem', color: theme.palette.warning.main }} />
               <Typography sx={{ fontSize: 12, fontWeight: 600, color: 'warning.main' }}>
                 La diffusion « Tous » / « Par rôle » n'est pas encore disponible — sélectionnez « Spécifique ».
@@ -224,7 +224,7 @@ const NotificationFormDialog = ({
           <Button
             onClick={handleClose}
             disableElevation
-            sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}
+            sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}
           >
             Annuler
           </Button>
@@ -234,7 +234,7 @@ const NotificationFormDialog = ({
             disableElevation
             variant='contained'
             startIcon={submitting ? <CircularProgress size={18} color='inherit' /> : undefined}
-            sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5 }}
+            sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}
           >
             Publier
           </Button>

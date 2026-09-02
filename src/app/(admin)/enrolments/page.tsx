@@ -230,7 +230,7 @@ function EnrolmentsInner() {
             <Typography sx={{ fontSize: 17, fontWeight: 800, color: 'text.primary' }} noWrap>{name}</Typography>
             <Typography sx={{ fontSize: 12.5, color: 'text.secondary' }}>Activité (selon les filtres en cours)</Typography>
           </Box>
-          <IconButton onClick={() => setSelectedCommercialId(null)} sx={{ borderRadius: '6px' }}>
+          <IconButton onClick={() => setSelectedCommercialId(null)} sx={{ borderRadius: 0 }}>
             <i className='tabler-x' style={{ fontSize: 20 }} />
           </IconButton>
         </Box>
@@ -240,8 +240,8 @@ function EnrolmentsInner() {
             const color = theme.palette[s.palette].main
 
             return (
-              <Box key={s.label} sx={{ p: 2, borderRadius: '5px', display: 'flex', alignItems: 'center', gap: 1.5, backgroundColor: alpha(color, 0.08) }}>
-                <Box sx={{ width: 42, height: 42, flexShrink: 0, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color, backgroundColor: alpha(color, 0.16) }}>
+              <Box key={s.label} sx={{ p: 2, borderRadius: 0, display: 'flex', alignItems: 'center', gap: 1.5, backgroundColor: alpha(color, 0.08) }}>
+                <Box sx={{ width: 42, height: 42, flexShrink: 0, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color, backgroundColor: alpha(color, 0.16) }}>
                   <i className={`${s.icon} text-xl`} />
                 </Box>
                 <Box sx={{ minWidth: 0 }}>
@@ -285,10 +285,10 @@ function EnrolmentsInner() {
       <Box
         role='button'
         onClick={() => setTab(id)}
-        sx={{ display: 'flex', alignItems: 'center', gap: 1, height: 40, px: 2, borderRadius: '6px', cursor: 'pointer', fontSize: 13, fontWeight: 700, whiteSpace: 'nowrap', transition: 'all .15s', color: active ? 'primary.main' : 'text.secondary', backgroundColor: active ? 'background.paper' : 'transparent', boxShadow: active ? 'var(--mui-customShadows-xs)' : 'none' }}
+        sx={{ display: 'flex', alignItems: 'center', gap: 1, height: 40, px: 2, borderRadius: 0, cursor: 'pointer', fontSize: 13, fontWeight: 700, whiteSpace: 'nowrap', transition: 'all .15s', color: active ? 'primary.main' : 'text.secondary', backgroundColor: active ? 'background.paper' : 'transparent', boxShadow: active ? 'var(--mui-customShadows-xs)' : 'none' }}
       >
         {label}
-        <Box component='span' sx={{ minWidth: 20, height: 20, px: 0.5, borderRadius: '6px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, bgcolor: active ? 'var(--mui-palette-primary-lightOpacity)' : 'action.hover', color: active ? 'primary.main' : 'text.secondary' }}>
+        <Box component='span' sx={{ minWidth: 20, height: 20, px: 0.5, borderRadius: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 800, bgcolor: active ? 'var(--mui-palette-primary-lightOpacity)' : 'action.hover', color: active ? 'primary.main' : 'text.secondary' }}>
           {count}
         </Box>
       </Box>
@@ -300,7 +300,7 @@ function EnrolmentsInner() {
       title='Activité commerciale'
       subtitle='Traçabilité des enrôlements par commercial (base de commission)'
       actions={
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 48, p: 0.5, borderRadius: '6px', backgroundColor: 'action.hover' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 48, p: 0.5, borderRadius: 0, backgroundColor: 'action.hover' }}>
           <TabBtn id='detail' label='Détail des enrôlements' count={filtered.length} />
           <TabBtn id='recap' label='Récap commercial' count={summary.length} />
         </Box>

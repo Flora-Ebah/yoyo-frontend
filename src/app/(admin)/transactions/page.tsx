@@ -313,7 +313,7 @@ export default function TransactionsPage() {
 
   const softBtn = {
     height: 40,
-    borderRadius: '6px',
+    borderRadius: 0,
     fontWeight: 700,
     textTransform: 'none' as const,
     px: 2,
@@ -327,7 +327,7 @@ export default function TransactionsPage() {
   const Pill = StatusPill
 
   const DonutPanel = ({ title, data }: { title: string; data: Array<{ id: string; value: number; color: string }> }) => (
-    <Card sx={{ borderRadius: '5px', border: 'none', boxShadow: 'none', height: { xs: 360, lg: '100%' }, display: 'flex', flexDirection: 'column' }}>
+    <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', height: { xs: 360, lg: '100%' }, display: 'flex', flexDirection: 'column' }}>
       <CardContent sx={{ p: 2.5, display: 'flex', flexDirection: 'column', height: '100%' }}>
         <Typography sx={{ fontSize: 15, fontWeight: 800, color: 'text.primary', mb: 1 }}>{title}</Typography>
         <Box sx={{ flex: 1, minHeight: 0 }}>
@@ -391,7 +391,7 @@ export default function TransactionsPage() {
       subtitle='Suivi des paiements clients et opérations de correction'
       actions={
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 40, p: 0.5, borderRadius: '6px', backgroundColor: 'action.hover' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 40, p: 0.5, borderRadius: 0, backgroundColor: 'action.hover' }}>
             {['Abonnements', 'Paiements partenaires'].map((label, i) => (
               <Box
                 key={label}
@@ -402,7 +402,7 @@ export default function TransactionsPage() {
                   alignItems: 'center',
                   height: '100%',
                   px: 2,
-                  borderRadius: '6px',
+                  borderRadius: 0,
                   cursor: 'pointer',
                   fontSize: 13,
                   fontWeight: 700,
@@ -580,7 +580,7 @@ export default function TransactionsPage() {
                                   height: 34,
                                   width: 118,
                                   px: 1,
-                                  borderRadius: '6px',
+                                  borderRadius: 0,
                                   border: '1px solid',
                                   borderColor: 'divider',
                                   backgroundColor: 'background.paper',

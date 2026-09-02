@@ -260,7 +260,7 @@ export default function ModerationPage() {
 
   const softBtn = {
     height: 40,
-    borderRadius: '6px',
+    borderRadius: 0,
     fontWeight: 700,
     textTransform: 'none' as const,
     px: 2,
@@ -306,7 +306,7 @@ export default function ModerationPage() {
       subtitle='Validation KYC des clients et contrôle des questions secrètes'
       actions={
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexWrap: 'wrap' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 40, p: 0.5, borderRadius: '6px', backgroundColor: 'action.hover' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, height: 40, p: 0.5, borderRadius: 0, backgroundColor: 'action.hover' }}>
             {([
               { k: 'documents', label: 'Dossiers KYC' },
               { k: 'questions', label: 'Questions secrètes' }
@@ -320,7 +320,7 @@ export default function ModerationPage() {
                   alignItems: 'center',
                   height: '100%',
                   px: 2,
-                  borderRadius: '6px',
+                  borderRadius: 0,
                   cursor: 'pointer',
                   fontSize: 13,
                   fontWeight: 700,
@@ -519,7 +519,7 @@ export default function ModerationPage() {
                         <Box
                           key={i}
                           onClick={() => window.open(url, '_blank', 'noopener')}
-                          sx={{ cursor: 'pointer', borderRadius: '6px', overflow: 'hidden', border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', transition: 'border-color .15s', '&:hover': { borderColor: 'primary.main' } }}
+                          sx={{ cursor: 'pointer', borderRadius: 0, overflow: 'hidden', border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', transition: 'border-color .15s', '&:hover': { borderColor: 'primary.main' } }}
                         >
                           {isImageFile(f) ? (
                             <Box component='img' src={url} alt={f} sx={{ width: '100%', height: 72, objectFit: 'cover', display: 'block' }} />
@@ -643,7 +643,7 @@ export default function ModerationPage() {
                                   component='select'
                                   value={item.status || 'active'}
                                   onChange={(e: any) => updateQuestionStatus(item, e.target.value as SecretQuestion['status'])}
-                                  sx={{ height: 34, width: 130, px: 1, borderRadius: '6px', border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}
+                                  sx={{ height: 34, width: 130, px: 1, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'background.paper', fontSize: 13, fontWeight: 600, fontFamily: 'inherit', color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}
                                 >
                                   {questionStatusOptions.map(option => (
                                     <option key={option} value={option}>{questionMeta[option as string]?.label || option}</option>
@@ -676,7 +676,7 @@ export default function ModerationPage() {
       {/* ------------------------------- Modal rejet ------------------------------- */}
       <Dialog open={!!rejectTarget} onClose={() => setRejectTarget(null)} fullWidth maxWidth='sm' PaperProps={{ sx: { borderRadius: 0, boxShadow: 'none' } }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 3, pb: 2 }}>
-          <Box sx={{ width: 44, height: 44, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.14) }}>
+          <Box sx={{ width: 44, height: 44, borderRadius: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.14) }}>
             <ShieldX size={22} />
           </Box>
           <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -697,7 +697,7 @@ export default function ModerationPage() {
               component='select'
               value={rejectReason}
               onChange={(e: any) => setRejectReason(e.target.value)}
-              sx={{ width: '100%', height: 44, px: 1.5, borderRadius: '6px', border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}
+              sx={{ width: '100%', height: 44, px: 1.5, borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', fontSize: 14, fontWeight: 600, fontFamily: 'inherit', color: 'var(--mui-palette-text-primary)', cursor: 'pointer', outline: 'none' }}
             >
               {rejectionReasons.length === 0 && <option value='document-invalide'>Document invalide</option>}
               {rejectionReasons.map(reason => (
@@ -714,15 +714,15 @@ export default function ModerationPage() {
               onChange={(e: any) => setRejectNotes(e.target.value)}
               placeholder='Précisez la raison…'
               rows={4}
-              sx={{ width: '100%', resize: 'vertical', borderRadius: '6px', border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', p: 1.5, fontSize: 14, fontFamily: 'inherit', color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'error.main' } }}
+              sx={{ width: '100%', resize: 'vertical', borderRadius: 0, border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', p: 1.5, fontSize: 14, fontFamily: 'inherit', color: 'var(--mui-palette-text-primary)', outline: 'none', '&:focus': { borderColor: 'error.main' } }}
             />
           </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1.5, mt: 0.5 }}>
-            <Button onClick={() => setRejectTarget(null)} disableElevation sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+            <Button onClick={() => setRejectTarget(null)} disableElevation sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5, color: 'text.secondary', backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               Annuler
             </Button>
-            <Button onClick={submitRejection} disabled={!rejectReason} disableElevation variant='contained' color='error' sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5 }}>
+            <Button onClick={submitRejection} disabled={!rejectReason} disableElevation variant='contained' color='error' sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}>
               Confirmer le rejet
             </Button>
           </Box>

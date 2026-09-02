@@ -298,7 +298,7 @@ export default function ClientsPage() {
 
   const softBtn = {
     height: 40,
-    borderRadius: '6px',
+    borderRadius: 0,
     fontWeight: 700,
     textTransform: 'none' as const,
     px: 2,
@@ -378,7 +378,7 @@ export default function ClientsPage() {
                   disableElevation
                   sx={{
                     height: 40,
-                    borderRadius: '6px',
+                    borderRadius: 0,
                     fontWeight: 700,
                     textTransform: 'none',
                     px: 2,
@@ -394,7 +394,7 @@ export default function ClientsPage() {
                   disableElevation
                   sx={{
                     height: 40,
-                    borderRadius: '6px',
+                    borderRadius: 0,
                     fontWeight: 700,
                     textTransform: 'none',
                     px: 2,
@@ -760,7 +760,7 @@ export default function ClientsPage() {
             sx={{
               width: 44,
               height: 44,
-              borderRadius: '6px',
+              borderRadius: 0,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -807,7 +807,7 @@ export default function ClientsPage() {
                       justifyContent: 'center',
                       gap: 0.75,
                       height: 44,
-                      borderRadius: '6px',
+                      borderRadius: 0,
                       cursor: 'pointer',
                       fontSize: 13.5,
                       fontWeight: 700,
@@ -838,7 +838,7 @@ export default function ClientsPage() {
               sx={{
                 width: '100%',
                 resize: 'vertical',
-                borderRadius: '6px',
+                borderRadius: 0,
                 border: '1px solid',
                 borderColor: 'divider',
                 backgroundColor: 'action.hover',
@@ -859,7 +859,7 @@ export default function ClientsPage() {
               disableElevation
               sx={{
                 height: 42,
-                borderRadius: '6px',
+                borderRadius: 0,
                 fontWeight: 700,
                 textTransform: 'none',
                 px: 2.5,
@@ -875,7 +875,7 @@ export default function ClientsPage() {
               disabled={!notifyMessage.trim()}
               disableElevation
               variant='contained'
-              sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2.5 }}
+              sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2.5 }}
             >
               Envoyer
             </Button>

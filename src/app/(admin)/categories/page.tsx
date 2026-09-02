@@ -114,11 +114,11 @@ export default function CategoriesPage() {
             variant='text'
             disableRipple
             onClick={() => router.push('/account-settings')}
-            sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
+            sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 1.5, color: 'text.secondary', '&:hover': { backgroundColor: 'action.hover', color: 'primary.main' } }}
           >
             Retour
           </Button>
-          <Button variant='contained' disableElevation onClick={handleCreate} sx={{ height: 36, borderRadius: '6px', textTransform: 'none', px: 2 }}>
+          <Button variant='contained' disableElevation onClick={handleCreate} sx={{ height: 36, borderRadius: 0, textTransform: 'none', px: 2 }}>
             Nouvelle catégorie
           </Button>
         </Box>
