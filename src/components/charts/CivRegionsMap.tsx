@@ -54,20 +54,10 @@ const CITY_COORDS: Record<string, { lat: number; lng: number }> = {
   bingerville: { lat: 5.35, lng: -3.89 }
 }
 
-// Jeu de démonstration (affiché uniquement en l'absence de données réelles exploitables).
-const DEMO_POINTS: ResolvedPoint[] = [
-  { name: 'Cocody (Abidjan)', lat: 5.36, lng: -3.99, pros: 68 },
-  { name: 'Yopougon (Abidjan)', lat: 5.33, lng: -4.07, pros: 52 },
-  { name: 'Plateau (Abidjan)', lat: 5.32, lng: -4.02, pros: 41 },
-  { name: 'Bouaké', lat: 7.69, lng: -5.03, pros: 37 },
-  { name: 'Yamoussoukro', lat: 6.82, lng: -5.28, pros: 24 },
-  { name: 'San-Pédro', lat: 4.75, lng: -6.64, pros: 19 }
-]
-
-function resolvePoints(points?: GeoPoint[]): { data: ResolvedPoint[]; isDemo: boolean } {
-  if (!points || points.length === 0) {
-    return { data: DEMO_POINTS, isDemo: true }
-  }
+// Résout les coordonnées des points réels (lat/lng propres, sinon repli sur CITY_COORDS via le nom).
+// Aucune donnée fictive : si rien n'est exploitable, on renvoie une liste vide (état vide côté UI).
+function resolvePoints(points?: GeoPoint[]): ResolvedPoint[] {
+  if (!points || points.length === 0) return []
 
   const resolved: ResolvedPoint[] = []
 
@@ -90,44 +80,73 @@ function resolvePoints(points?: GeoPoint[]): { data: ResolvedPoint[]; isDemo: bo
     }
   }
 
-  // Aucune coordonnée exploitable : on retombe sur la démo pour ne pas afficher une carte vide.
-  if (resolved.length === 0) {
-    return { data: DEMO_POINTS, isDemo: true }
-  }
-
-  return { data: resolved, isDemo: false }
+  return resolved
 }
 
 export default function CivRegionsMap({ points }: Props) {
-  const { data } = resolvePoints(points)
+  const data = resolvePoints(points)
   const max = Math.max(1, ...data.map(p => p.pros))
 
   const radiusFor = (pros: number) => 8 + (pros / max) * 22
 
   return (
-    <MapContainer
-      center={[6.9, -5.3]}
-      zoom={7}
-      scrollWheelZoom={false}
-      style={{ height: '100%', width: '100%', background: 'transparent' }}
-      attributionControl={false}
-    >
-      <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap' />
-      {data.map(p => (
-        <CircleMarker
-          key={p.name}
-          center={[p.lat, p.lng]}
-          radius={radiusFor(p.pros)}
-          pathOptions={{ color: '#FF6100', fillColor: '#FF6100', fillOpacity: 0.35, weight: 1.5 }}
+    <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+      <MapContainer
+        center={[6.9, -5.3]}
+        zoom={7}
+        scrollWheelZoom={false}
+        style={{ height: '100%', width: '100%', background: 'transparent' }}
+        attributionControl={false}
+      >
+        <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' attribution='&copy; OpenStreetMap' />
+        {data.map(p => (
+          <CircleMarker
+            key={p.name}
+            center={[p.lat, p.lng]}
+            radius={radiusFor(p.pros)}
+            pathOptions={{ color: '#FF6100', fillColor: '#FF6100', fillOpacity: 0.35, weight: 1.5 }}
+          >
+            <Tooltip direction='top' offset={[0, -4]} opacity={1}>
+              <div style={{ fontWeight: 700, marginBottom: 2 }}>{p.name}</div>
+              <div>
+                {p.pros} {p.pros > 1 ? 'pros' : 'pro'}
+              </div>
+            </Tooltip>
+          </CircleMarker>
+        ))}
+      </MapContainer>
+
+      {data.length === 0 && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none'
+          }}
         >
-          <Tooltip direction='top' offset={[0, -4]} opacity={1}>
-            <div style={{ fontWeight: 700, marginBottom: 2 }}>{p.name}</div>
-            <div>
-              {p.pros} {p.pros > 1 ? 'pros' : 'pro'}
-            </div>
-          </Tooltip>
-        </CircleMarker>
-      ))}
-    </MapContainer>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 6,
+              padding: '12px 18px',
+              background: 'rgba(255,255,255,0.9)',
+              color: '#5b6470',
+              fontSize: 13,
+              fontWeight: 600,
+              textAlign: 'center'
+            }}
+          >
+            <i className='tabler-map-pin-off' style={{ fontSize: 24, color: '#9aa3ad' }} />
+            Aucune donnée de localisation pour le moment
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
