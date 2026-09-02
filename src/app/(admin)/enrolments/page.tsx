@@ -253,12 +253,16 @@ export default function EnrolmentsPage() {
                       <Avatar sx={{ width: 36, height: 36, flexShrink: 0, borderRadius: 0, fontSize: 12, fontWeight: 800, color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>{initials(c.name)}</Avatar>
                       <Box sx={{ flex: 1, minWidth: 0 }}>
                         <Typography sx={{ fontSize: 13, fontWeight: 700, color: 'text.primary' }} noWrap>{c.name}</Typography>
-                        <Typography sx={{ fontSize: 11.5, color: 'text.secondary' }} noWrap>{c.total} enrôlés · {c.activated} activés · {rate}%</Typography>
-                        <Box sx={{ mt: 0.75, height: 5, backgroundColor: 'var(--mui-palette-divider)', overflow: 'hidden' }}>
-                          <Box sx={{ height: '100%', width: `${rate}%`, backgroundColor: 'success.main' }} />
-                        </Box>
+                        <Typography sx={{ fontSize: 10, fontWeight: 700, letterSpacing: '.04em', textTransform: 'uppercase', color: 'text.secondary', mt: 0.25 }} noWrap>
+                          {c.total} enrôlés — {c.activated} activés — {rate}%
+                        </Typography>
                       </Box>
-                      <i className='tabler-chevron-right' style={{ fontSize: 18, color: theme.palette.text.disabled }} />
+                      <Box sx={{ width: 32, height: 32, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: alpha(theme.palette.primary.main, 0.12) }}>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
+                          <path d='M7 7h10v10' />
+                          <path d='M7 17 17 7' />
+                        </svg>
+                      </Box>
                     </Box>
                   )
                 })
