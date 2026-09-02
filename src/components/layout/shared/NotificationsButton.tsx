@@ -15,7 +15,6 @@ import { useSession } from '@/hooks/useSession'
 import { usePermissions } from '@/hooks/usePermissions'
 
 // Mock Imports
-import { COMMERCIAL_NOTIFICATIONS_MOCK } from '@/data/commercial-notifications.mock'
 
 // Context Imports
 import { SocketContext } from '@/contexts/SocketContext'
@@ -37,7 +36,6 @@ const NotificationsButton = () => {
   const router = useRouter()
 
   // Commercial : droit pros mais pas dashboard.
-  const isCommercial = ready && can('create', 'pros') && !can('read', 'dashboard')
   const socketContext = useContext(SocketContext)
   const isConnected = socketContext?.isConnected ?? false
   const on = socketContext?.on
@@ -198,11 +196,9 @@ const NotificationsButton = () => {
     return null
   }
 
-  // Commercial : on complète avec les notifications fictives (en attendant les
-  // vraies notifications backend — cf. CONTRAT-API-ONBOARDING-MARCHAND.md).
-  const displayedNotifications = isCommercial
-    ? [...COMMERCIAL_NOTIFICATIONS_MOCK.filter(m => !notifications.some(n => n._id === m._id)), ...notifications]
-    : notifications
+  // Notifications réelles (backend) — plus de mock : le commercial et l'admin voient
+  // leurs vraies notifications via GET /notifications/me.
+  const displayedNotifications = notifications
 
   return (
     <>
