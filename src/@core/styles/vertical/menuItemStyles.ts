@@ -72,7 +72,7 @@ const menuItemStyles = (verticalNavOptions: VerticalNavState, theme: Theme): Men
       paddingInline: '12px',
       fontSize: '0.8125rem',
       fontWeight: 700,
-      borderRadius: 'var(--border-radius)',
+      borderRadius: 0,
       ...(!(isCollapsed && !isHovered) && {
         '&:has(.MuiChip-root)': {
           paddingBlock: theme.spacing(1.75)
@@ -80,7 +80,7 @@ const menuItemStyles = (verticalNavOptions: VerticalNavState, theme: Theme): Men
       }),
 
       ...((!isPopoutWhenCollapsed || popoutExpanded || (popoutCollapsed && level === 0)) && {
-        borderRadius: 'var(--mui-shape-borderRadius)',
+        borderRadius: 0,
         transition: `padding-inline-start ${transitionDuration}ms ease-in-out`
       }),
       ...(!active && {
@@ -148,7 +148,7 @@ const menuItemStyles = (verticalNavOptions: VerticalNavState, theme: Theme): Men
     },
     subMenuContent: ({ level }) => ({
       zIndex: 'calc(var(--drawer-z-index) + 1)',
-      borderRadius: 'var(--border-radius)',
+      borderRadius: 0,
       backgroundColor: popoutCollapsed ? 'var(--mui-palette-background-paper)' : 'transparent',
       ...(popoutCollapsed && {
         '& > ul, & > div > ul': {
