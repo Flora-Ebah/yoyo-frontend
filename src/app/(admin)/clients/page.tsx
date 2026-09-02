@@ -334,15 +334,8 @@ export default function ClientsPage() {
         ))}
       </Box>
 
-      {/* Split : table (gauche) + détails (droite) */}
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', lg: selectedClient ? 'minmax(0, 1fr) 380px' : '1fr' },
-          gap: 3,
-          alignItems: 'stretch'
-        }}
-      >
+      {/* Tableau pleine largeur ; le détail s'ouvre dans un drawer (droite sur desktop, bas sur mobile). */}
+      <Box>
       <Card
         sx={{
           borderRadius: 0,
@@ -350,7 +343,7 @@ export default function ClientsPage() {
           boxShadow: 'none',
           display: 'flex',
           flexDirection: 'column',
-          height: selectedClient ? { lg: 640 } : 'auto',
+          height: 'auto',
           overflow: 'hidden'
         }}
       >
@@ -496,13 +489,13 @@ export default function ClientsPage() {
                           Création
                         </TableSortLabel>
                       </TableCell>
-                      {!selectedClient && <TableCell align='right'>Actions</TableCell>}
+                      <TableCell align='right'>Actions</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {rows.length === 0 ? (
                       <TableRow>
-                        <TableCell colSpan={selectedClient ? 6 : 7} align='center' sx={{ py: 8, borderColor: 'divider' }}>
+                        <TableCell colSpan={7} align='center' sx={{ py: 8, borderColor: 'divider' }}>
                           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
                             <i className='tabler-users-group text-4xl' />
                             <Typography sx={{ fontSize: 13, fontWeight: 700 }}>Aucun client trouvé</Typography>
@@ -568,7 +561,6 @@ export default function ClientsPage() {
                             <TableCell sx={{ fontSize: 12.5, color: 'text.secondary', whiteSpace: 'nowrap' }}>
                               {formatDate(client.createdAt)}
                             </TableCell>
-                            {!selectedClient && (
                             <TableCell align='right' sx={{ whiteSpace: 'nowrap' }} onClick={e => e.stopPropagation()}>
                               <RowActions
                                 actions={[
@@ -578,7 +570,6 @@ export default function ClientsPage() {
                                 ]}
                               />
                             </TableCell>
-                            )}
                           </TableRow>
                         )
                       })
@@ -614,7 +605,7 @@ export default function ClientsPage() {
             boxShadow: 'none',
             display: 'flex',
             flexDirection: 'column',
-            height: { lg: 640 },
+            height: '100%',
             overflow: 'hidden'
           }}
         >
@@ -746,7 +737,16 @@ export default function ClientsPage() {
           <Drawer anchor='bottom' open onClose={() => setSelectedClient(null)} slotProps={{ paper: { sx: { maxHeight: '92vh', borderRadius: 0 } } }}>
             {panel}
           </Drawer>
-        ) : panel
+        ) : (
+          <Drawer
+            anchor='right'
+            open
+            onClose={() => setSelectedClient(null)}
+            slotProps={{ paper: { sx: { width: 440, maxWidth: '100vw', borderRadius: 0, boxShadow: 'none', borderLeft: '1px solid', borderColor: 'divider' } } }}
+          >
+            {panel}
+          </Drawer>
+        )
       })()}
       </Box>
 
