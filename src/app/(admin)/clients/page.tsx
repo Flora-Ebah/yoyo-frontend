@@ -605,125 +605,85 @@ export default function ClientsPage() {
             overflow: 'hidden'
           }}
         >
-          {/* Bandeau coloré + avatar débordant */}
-          <Box sx={{ position: 'relative' }}>
-            <Box sx={{ height: 48, backgroundColor: 'primary.main' }} />
-            <IconButton
-              size='small'
-              onClick={() => setSelectedClient(null)}
-              sx={{ position: 'absolute', top: 8, right: 8, color: 'common.white', borderRadius: 0, backgroundColor: alpha('#fff', 0.22), '&:hover': { backgroundColor: alpha('#fff', 0.38) } }}
-            >
+          {/* En-tête compact */}
+          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2.5, borderBottom: '1px solid', borderColor: 'divider' }}>
+            <Avatar sx={{ width: 52, height: 52, flexShrink: 0, borderRadius: 0, fontSize: 17, fontWeight: 800, color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
+              {initials(fullName(selectedClient))}
+            </Avatar>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography sx={{ fontSize: 16, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }} noWrap>{fullName(selectedClient)}</Typography>
+              <Typography sx={{ fontSize: 12.5, color: 'text.secondary' }} noWrap>{selectedClient.email || '-'}</Typography>
+              <Box sx={{ display: 'flex', gap: 0.75, mt: 1, flexWrap: 'wrap' }}>
+                <Pill label={statusMeta[selectedClient.status || '']?.label || selectedClient.status || 'Inconnu'} palette={statusMeta[selectedClient.status || '']?.palette || 'secondary'} />
+                <Pill label={selectedClient.isDocumentVerified ? 'KYC validé' : 'KYC à vérifier'} palette={selectedClient.isDocumentVerified ? 'success' : 'warning'} />
+              </Box>
+            </Box>
+            <IconButton size='small' onClick={() => setSelectedClient(null)} sx={{ borderRadius: 0, backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
               <i className='tabler-x' />
             </IconButton>
-            <Box sx={{ px: 2.5, pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-              <Avatar
-                sx={{
-                  width: 56,
-                  height: 56,
-                  mt: '-28px',
-                  fontSize: 18,
-                  fontWeight: 800,
-                  color: 'primary.main',
-                  backgroundColor: 'background.paper',
-                  border: '3px solid',
-                  borderColor: 'background.paper',
-                  boxShadow: `0 0 0 1px ${theme.palette.divider}`
-                }}
-              >
-                {initials(fullName(selectedClient))}
-              </Avatar>
-              <Typography sx={{ fontSize: 16, fontWeight: 800, color: 'text.primary', mt: 1, lineHeight: 1.2 }}>
-                {fullName(selectedClient)}
-              </Typography>
-              <Typography sx={{ fontSize: 12.5, color: 'text.secondary' }} noWrap>
-                {selectedClient.email || '-'}
-              </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1.5, mt: 1.25, flexWrap: 'wrap' }}>
-                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                  <Pill
-                    label={statusMeta[selectedClient.status || '']?.label || selectedClient.status || 'Inconnu'}
-                    palette={statusMeta[selectedClient.status || '']?.palette || 'secondary'}
-                  />
-                  <Pill
-                    label={selectedClient.isDocumentVerified ? 'KYC validé' : 'KYC à vérifier'}
-                    palette={selectedClient.isDocumentVerified ? 'success' : 'warning'}
-                  />
-                </Box>
-                <RowActions
-                  actions={[
-                    { label: 'Notifier', color: 'primary', onClick: () => openNotifyDialog(selectedClient) },
-                    { label: 'Modérer', color: 'error', onClick: () => handleRemove(selectedClient) }
-                  ]}
-                />
-              </Box>
-            </Box>
           </Box>
 
-          {/* Rangée de stats */}
-          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: '1px solid', borderColor: 'divider' }}>
-            <Box sx={{ px: 2.5, py: 3, borderRight: '1px solid', borderColor: 'divider' }}>
-              <Typography sx={{ fontSize: 22, fontWeight: 800, color: selectedClient.isEmailConfirmed ? 'success.main' : 'text.disabled', lineHeight: 1.2 }}>
-                {selectedClient.isEmailConfirmed ? 'Oui' : 'Non'}
-              </Typography>
-              <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.5 }}>Email confirmé</Typography>
-            </Box>
-            <Box sx={{ px: 2.5, py: 3 }}>
-              <Typography sx={{ fontSize: 22, fontWeight: 800, color: selectedClient.isPhoneConfirmed ? 'success.main' : 'text.disabled', lineHeight: 1.2 }}>
-                {selectedClient.isPhoneConfirmed ? 'Oui' : 'Non'}
-              </Typography>
-              <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.5 }}>Téléphone confirmé</Typography>
-            </Box>
-          </Box>
-
-          {/* Corps scrollable : informations */}
-          <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', px: 2.5, py: 2 }}>
+          {/* Corps scrollable */}
+          <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', p: 2.5 }}>
             {detailsLoading ? (
-              <Box className='flex items-center justify-center py-8'>
-                <CircularProgress size={22} />
-              </Box>
+              <Box className='flex items-center justify-center py-8'><CircularProgress size={22} /></Box>
             ) : (
               <>
-                <Typography sx={{ fontSize: 11, letterSpacing: '.04em', textTransform: 'uppercase', color: 'text.secondary', mb: 1.25 }}>
+                {/* Mini-stats (vérifications) */}
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1.5, mb: 2.5 }}>
+                  {[
+                    { ok: selectedClient.isEmailConfirmed, label: 'Email confirmé', icon: 'tabler-mail' },
+                    { ok: selectedClient.isPhoneConfirmed, label: 'Téléphone confirmé', icon: 'tabler-phone' }
+                  ].map(s => (
+                    <Box key={s.label} sx={{ p: 1.75, backgroundColor: 'action.hover', borderLeft: '3px solid', borderColor: s.ok ? 'success.main' : 'text.disabled' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, color: s.ok ? 'success.main' : 'text.disabled' }}>
+                        <i className={s.icon} style={{ fontSize: 17 }} />
+                        <Typography sx={{ fontSize: 18, fontWeight: 800, lineHeight: 1 }}>{s.ok ? 'Oui' : 'Non'}</Typography>
+                      </Box>
+                      <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.75 }}>{s.label}</Typography>
+                    </Box>
+                  ))}
+                </Box>
+
+                <Typography sx={{ fontSize: 11, letterSpacing: '.04em', textTransform: 'uppercase', fontWeight: 800, color: 'text.secondary', mb: 1.25 }}>
                   Informations
                 </Typography>
-                {[
-                  { icon: Phone, k: 'Contact', v: selectedClient.contact || '-' },
-                  { icon: MapPin, k: 'Pays', v: selectedClient.country || '-' },
-                  { icon: ShieldCheck, k: 'KYC', v: selectedClient.documentVerificationStatus || '-' },
-                  { icon: CalendarDays, k: 'Création', v: formatDate(selectedClient.createdAt) }
-                ].map(row => {
-                  const Icon = row.icon
+                <Box sx={{ display: 'grid', gap: 1.5 }}>
+                  {[
+                    { icon: Phone, k: 'Contact', v: selectedClient.contact || '-' },
+                    { icon: MapPin, k: 'Pays', v: selectedClient.country || '-' },
+                    { icon: ShieldCheck, k: 'Statut KYC', v: selectedClient.documentVerificationStatus || '-' },
+                    { icon: CalendarDays, k: 'Création', v: formatDate(selectedClient.createdAt) }
+                  ].map(row => {
+                    const Icon = row.icon
 
-                  return (
-                    <Box
-                      key={row.k}
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        gap: 2,
-                        py: 0.85
-                      }}
-                    >
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
-                        <Icon size={15} />
-                        <Typography sx={{ fontSize: 12.5 }}>{row.k}</Typography>
+                    return (
+                      <Box key={row.k} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 1.75, backgroundColor: 'action.hover' }}>
+                        <Box sx={{ width: 36, height: 36, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
+                          <Icon size={17} />
+                        </Box>
+                        <Box sx={{ minWidth: 0 }}>
+                          <Typography sx={{ fontSize: 11.5, color: 'text.secondary' }}>{row.k}</Typography>
+                          <Typography sx={{ fontSize: 13.5, fontWeight: 700, color: 'text.primary', overflowWrap: 'anywhere' }}>{row.v}</Typography>
+                        </Box>
                       </Box>
-                      <Typography sx={{ fontSize: 13, fontWeight: 600, color: 'text.primary', textAlign: 'right' }}>
-                        {row.v}
-                      </Typography>
-                    </Box>
-                  )
-                })}
+                    )
+                  })}
+                </Box>
+
                 {selectedClient.removedReason && (
-                  <Box sx={{ mt: 2, p: 1.5, backgroundColor: alpha(theme.palette.error.main, 0.1) }}>
-                    <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'error.main' }}>
-                      Motif de retrait : {selectedClient.removedReason}
-                    </Typography>
+                  <Box sx={{ mt: 2, p: 1.5, backgroundColor: alpha(theme.palette.error.main, 0.1), borderLeft: '3px solid', borderColor: 'error.main' }}>
+                    <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'error.main' }}>Motif de retrait : {selectedClient.removedReason}</Typography>
                   </Box>
                 )}
               </>
             )}
+          </Box>
+
+          {/* Actions */}
+          <Box sx={{ display: 'flex', gap: 1.5, p: 2.5, borderTop: '1px solid', borderColor: 'divider' }}>
+            <Button onClick={() => openNotifyDialog(selectedClient)} disableElevation variant='contained' sx={{ flex: 1, height: 40, borderRadius: 0, textTransform: 'none' }}>Notifier</Button>
+            <Button onClick={() => handleRemove(selectedClient)} disableElevation sx={{ flex: 1, height: 40, borderRadius: 0, textTransform: 'none', color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.error.main, 0.2) } }}>Modérer</Button>
           </Box>
 
         </Card>

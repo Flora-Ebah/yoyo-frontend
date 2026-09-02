@@ -348,7 +348,7 @@ export default function ModerationPage() {
             {docStats.map(statCard)}
           </Box>
 
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: selectedDoc ? 'minmax(0, 1fr) 400px' : '1fr' }, gap: 3, alignItems: 'start' }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: 3, alignItems: 'start' }}>
           <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', overflow: 'hidden' }}>
             <CardContent sx={{ p: 0 }}>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, p: 2.5, borderBottom: '1px solid', borderColor: 'divider' }}>
@@ -374,13 +374,13 @@ export default function ModerationPage() {
                           <TableCell>Fichiers</TableCell>
                           <TableCell>Statut KYC</TableCell>
                           <TableCell>Date</TableCell>
-                          {(!selectedDoc || isDownLg) && <TableCell align='right'>Actions</TableCell>}
+                          <TableCell align='right'>Actions</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {documents.length === 0 ? (
                           <TableRow>
-                            <TableCell colSpan={selectedDoc ? 5 : 6} align='center' sx={{ py: 8, borderColor: 'divider' }}>
+                            <TableCell colSpan={6} align='center' sx={{ py: 8, borderColor: 'divider' }}>
                               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, color: 'text.secondary' }}>
                                 <i className='tabler-file-description text-4xl' />
                                 <Typography sx={{ fontSize: 13, fontWeight: 700 }}>Aucun dossier KYC</Typography>
@@ -424,18 +424,16 @@ export default function ModerationPage() {
                                   <Pill label={meta.label} palette={meta.palette} />
                                 </TableCell>
                                 <TableCell sx={{ fontSize: 12.5, color: 'text.secondary', whiteSpace: 'nowrap' }}>{formatDate(item.createdAt)}</TableCell>
-                                {(!selectedDoc || isDownLg) && (
-                                  <TableCell align='right' sx={{ whiteSpace: 'nowrap' }} onClick={e => e.stopPropagation()}>
-                                    <RowActions
-                                      actions={[
-                                        { label: 'Voir', color: 'info', onClick: () => setSelectedDoc(item) },
-                                        { label: 'Valider', color: 'success', onClick: () => updateDocumentStatus(item, 'verifie') },
-                                        { label: 'En cours', color: 'info', onClick: () => updateDocumentStatus(item, 'en-cours') },
-                                        { label: 'Rejeter', color: 'error', onClick: () => { setRejectTarget(item); setRejectReason(rejectionReasons[0]?.slug || ''); setRejectNotes('') } }
-                                      ]}
-                                    />
-                                  </TableCell>
-                                )}
+                                <TableCell align='right' sx={{ whiteSpace: 'nowrap' }} onClick={e => e.stopPropagation()}>
+                                  <RowActions
+                                    actions={[
+                                      { label: 'Voir', color: 'info', onClick: () => setSelectedDoc(item) },
+                                      { label: 'Valider', color: 'success', onClick: () => updateDocumentStatus(item, 'verifie') },
+                                      { label: 'En cours', color: 'info', onClick: () => updateDocumentStatus(item, 'en-cours') },
+                                      { label: 'Rejeter', color: 'error', onClick: () => { setRejectTarget(item); setRejectReason(rejectionReasons[0]?.slug || ''); setRejectNotes('') } }
+                                    ]}
+                                  />
+                                </TableCell>
                               </TableRow>
                             )
                           })
@@ -460,69 +458,51 @@ export default function ModerationPage() {
 
           {selectedDoc && (() => {
             const panel = (
-            <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', overflow: 'hidden', position: { lg: 'sticky' }, top: { lg: 16 } }}>
-              {/* Bandeau coloré + avatar débordant */}
-              <Box sx={{ position: 'relative' }}>
-                <Box sx={{ height: 48, backgroundColor: 'primary.main' }} />
-                <IconButton size='small' onClick={() => setSelectedDoc(null)} sx={{ position: 'absolute', top: 6, right: 6, color: 'common.white', '&:hover': { backgroundColor: alpha('#fff', 0.18) } }}>
-                  <i className='tabler-x' />
-                </IconButton>
-                <Box sx={{ px: 2.5, pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
-                  <Avatar sx={{ width: 56, height: 56, mt: '-28px', fontSize: 18, fontWeight: 800, color: 'primary.main', backgroundColor: 'background.paper', border: '3px solid', borderColor: 'background.paper', boxShadow: `0 0 0 1px ${theme.palette.divider}` }}>
-                    {initials(userLabel(selectedDoc.user))}
-                  </Avatar>
-                  <Typography sx={{ fontSize: 16, fontWeight: 800, color: 'text.primary', mt: 1, lineHeight: 1.2 }}>
-                    {userLabel(selectedDoc.user)}
-                  </Typography>
-                  <Typography sx={{ fontSize: 12.5, color: 'text.secondary' }} noWrap>
-                    {userEmail(selectedDoc.user) || '-'}
-                  </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 1.5, mt: 1.25, flexWrap: 'wrap' }}>
+            <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none', display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden' }}>
+              {/* En-tête compact */}
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5, p: 2.5, borderBottom: '1px solid', borderColor: 'divider' }}>
+                <Avatar sx={{ width: 52, height: 52, flexShrink: 0, borderRadius: 0, fontSize: 17, fontWeight: 800, color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
+                  {initials(userLabel(selectedDoc.user))}
+                </Avatar>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography sx={{ fontSize: 16, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }} noWrap>{userLabel(selectedDoc.user)}</Typography>
+                  <Typography sx={{ fontSize: 12.5, color: 'text.secondary' }} noWrap>{userEmail(selectedDoc.user) || '-'}</Typography>
+                  <Box sx={{ mt: 1 }}>
                     <Pill label={kycOf(selectedDoc.verificationStatus).label} palette={kycOf(selectedDoc.verificationStatus).palette} />
-                    <RowActions
-                      actions={[
-                        { label: 'Valider', color: 'success', onClick: () => updateDocumentStatus(selectedDoc, 'verifie') },
-                        { label: 'En cours', color: 'info', onClick: () => updateDocumentStatus(selectedDoc, 'en-cours') },
-                        { label: 'Rejeter', color: 'error', onClick: () => { setRejectTarget(selectedDoc); setRejectReason(rejectionReasons[0]?.slug || ''); setRejectNotes('') } }
-                      ]}
-                    />
                   </Box>
                 </Box>
+                <IconButton size='small' onClick={() => setSelectedDoc(null)} sx={{ borderRadius: 0, backgroundColor: 'action.hover', '&:hover': { backgroundColor: 'action.selected' } }}>
+                  <i className='tabler-x' />
+                </IconButton>
               </Box>
 
-              {/* Rangée de stats */}
-              <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', borderBottom: '1px solid', borderColor: 'divider' }}>
-                <Box sx={{ px: 2.5, py: 1.5, borderRight: '1px solid', borderColor: 'divider' }}>
-                  <Typography sx={{ fontSize: 20, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }}>{selectedDoc.documentFile?.length || 0}</Typography>
-                  <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>Fichiers</Typography>
+              {/* Corps scrollable */}
+              <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', p: 2.5 }}>
+                {/* Mini-stats */}
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1.5, mb: 2.5 }}>
+                  <Box sx={{ p: 1.75, backgroundColor: 'action.hover', borderLeft: '3px solid', borderColor: 'primary.main' }}>
+                    <Typography sx={{ fontSize: 20, fontWeight: 800, color: 'text.primary', lineHeight: 1 }}>{selectedDoc.documentFile?.length || 0}</Typography>
+                    <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.75 }}>Fichiers</Typography>
+                  </Box>
+                  <Box sx={{ p: 1.75, backgroundColor: 'action.hover', borderLeft: '3px solid', borderColor: 'primary.main' }}>
+                    <Typography sx={{ fontSize: 14, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }} noWrap>{selectedDoc.documentType || '-'}</Typography>
+                    <Typography sx={{ fontSize: 11.5, color: 'text.secondary', mt: 0.75 }}>Type de document</Typography>
+                  </Box>
                 </Box>
-                <Box sx={{ px: 2.5, py: 1.5 }}>
-                  <Typography sx={{ fontSize: 15, fontWeight: 800, color: 'text.primary', lineHeight: 1.2 }} noWrap>{selectedDoc.documentType || '-'}</Typography>
-                  <Typography sx={{ fontSize: 11, color: 'text.secondary' }}>Type de document</Typography>
-                </Box>
-              </Box>
 
-              {/* Corps */}
-              <Box sx={{ px: 2.5, py: 2, maxHeight: { lg: 400 }, overflowY: 'auto' }}>
-                {/* Fichiers */}
-                <Typography sx={{ fontSize: 11, letterSpacing: '.04em', textTransform: 'uppercase', color: 'text.secondary', mb: 1.25 }}>
-                  Aperçu des fichiers
-                </Typography>
+                {/* Aperçu des fichiers */}
+                <Typography sx={{ fontSize: 11, letterSpacing: '.04em', textTransform: 'uppercase', fontWeight: 800, color: 'text.secondary', mb: 1.25 }}>Aperçu des fichiers</Typography>
                 {selectedDoc.documentFile && selectedDoc.documentFile.length > 0 ? (
                   <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, mb: 2.5 }}>
                     {selectedDoc.documentFile.map((f, i) => {
                       const url = fileUrl(f)
 
                       return (
-                        <Box
-                          key={i}
-                          onClick={() => window.open(url, '_blank', 'noopener')}
-                          sx={{ cursor: 'pointer', borderRadius: 0, overflow: 'hidden', border: '1px solid', borderColor: 'divider', backgroundColor: 'action.hover', transition: 'border-color .15s', '&:hover': { borderColor: 'primary.main' } }}
-                        >
+                        <Box key={i} onClick={() => window.open(url, '_blank', 'noopener')} sx={{ cursor: 'pointer', overflow: 'hidden', backgroundColor: 'action.hover', transition: 'opacity .15s', '&:hover': { opacity: 0.85 } }}>
                           {isImageFile(f) ? (
-                            <Box component='img' src={url} alt={f} sx={{ width: '100%', height: 72, objectFit: 'cover', display: 'block' }} />
+                            <Box component='img' src={url} alt={f} sx={{ width: '100%', height: 78, objectFit: 'cover', display: 'block' }} />
                           ) : (
-                            <Box sx={{ height: 72, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0.25, color: 'text.secondary' }}>
+                            <Box sx={{ height: 78, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 0.25, color: 'text.secondary' }}>
                               <i className='tabler-file-text text-xl' />
                               <Typography sx={{ fontSize: 10, fontWeight: 700 }}>Ouvrir</Typography>
                             </Box>
@@ -535,26 +515,40 @@ export default function ModerationPage() {
                   <Typography sx={{ fontSize: 13, color: 'text.secondary', mb: 2.5 }}>Aucun fichier joint.</Typography>
                 )}
 
-                {/* Infos */}
-                <Typography sx={{ fontSize: 11, letterSpacing: '.04em', textTransform: 'uppercase', color: 'text.secondary', mt: 2.5, mb: 1.25 }}>Informations</Typography>
-                {[
-                  { k: 'Statut', v: kycOf(selectedDoc.verificationStatus).label },
-                  { k: 'Date', v: formatDate(selectedDoc.createdAt) },
-                  { k: 'Motif rejet', v: selectedDoc.rejectionReason || '—' },
-                  { k: 'Revu par', v: selectedDoc.reviewedBy ? userLabel(selectedDoc.reviewedBy) : '—' }
-                ].map(row => (
-                  <Box key={row.k} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2, py: 0.85 }}>
-                    <Typography sx={{ fontSize: 12.5, color: 'text.secondary', flexShrink: 0 }}>{row.k}</Typography>
-                    <Typography sx={{ fontSize: 13, fontWeight: 600, color: 'text.primary', textAlign: 'right' }}>{row.v}</Typography>
-                  </Box>
-                ))}
+                {/* Informations en tuiles */}
+                <Typography sx={{ fontSize: 11, letterSpacing: '.04em', textTransform: 'uppercase', fontWeight: 800, color: 'text.secondary', mb: 1.25 }}>Informations</Typography>
+                <Box sx={{ display: 'grid', gap: 1.5 }}>
+                  {[
+                    { icon: 'tabler-shield-check', k: 'Statut', v: kycOf(selectedDoc.verificationStatus).label },
+                    { icon: 'tabler-calendar', k: 'Date', v: formatDate(selectedDoc.createdAt) },
+                    { icon: 'tabler-alert-triangle', k: 'Motif rejet', v: selectedDoc.rejectionReason || '—' },
+                    { icon: 'tabler-user-check', k: 'Revu par', v: selectedDoc.reviewedBy ? userLabel(selectedDoc.reviewedBy) : '—' }
+                  ].map(row => (
+                    <Box key={row.k} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, p: 1.75, backgroundColor: 'action.hover' }}>
+                      <Box sx={{ width: 36, height: 36, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'primary.main', backgroundColor: 'var(--mui-palette-primary-lightOpacity)' }}>
+                        <i className={row.icon} style={{ fontSize: 17 }} />
+                      </Box>
+                      <Box sx={{ minWidth: 0 }}>
+                        <Typography sx={{ fontSize: 11.5, color: 'text.secondary' }}>{row.k}</Typography>
+                        <Typography sx={{ fontSize: 13.5, fontWeight: 700, color: 'text.primary', overflowWrap: 'anywhere' }}>{row.v}</Typography>
+                      </Box>
+                    </Box>
+                  ))}
+                </Box>
 
                 {selectedDoc.reviewNotes && (
-                  <Box sx={{ mt: 2, p: 1.5, backgroundColor: 'action.hover' }}>
+                  <Box sx={{ mt: 2, p: 1.5, backgroundColor: 'action.hover', borderLeft: '3px solid', borderColor: 'primary.main' }}>
                     <Typography sx={{ fontSize: 12, fontWeight: 700, color: 'text.secondary', mb: 0.5 }}>Notes de révision</Typography>
                     <Typography sx={{ fontSize: 13, color: 'text.primary', lineHeight: 1.6 }}>{selectedDoc.reviewNotes}</Typography>
                   </Box>
                 )}
+              </Box>
+
+              {/* Actions */}
+              <Box sx={{ display: 'flex', gap: 1, p: 2.5, borderTop: '1px solid', borderColor: 'divider' }}>
+                <Button onClick={() => updateDocumentStatus(selectedDoc, 'verifie')} disableElevation variant='contained' color='success' sx={{ flex: 1, height: 40, borderRadius: 0, textTransform: 'none' }}>Valider</Button>
+                <Button onClick={() => updateDocumentStatus(selectedDoc, 'en-cours')} disableElevation sx={{ flex: 1, height: 40, borderRadius: 0, textTransform: 'none', color: 'info.main', backgroundColor: alpha(theme.palette.info.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.info.main, 0.2) } }}>En cours</Button>
+                <Button onClick={() => { setRejectTarget(selectedDoc); setRejectReason(rejectionReasons[0]?.slug || ''); setRejectNotes('') }} disableElevation sx={{ flex: 1, height: 40, borderRadius: 0, textTransform: 'none', color: 'error.main', backgroundColor: alpha(theme.palette.error.main, 0.12), '&:hover': { backgroundColor: alpha(theme.palette.error.main, 0.2) } }}>Rejeter</Button>
               </Box>
             </Card>
             )
@@ -563,7 +557,16 @@ export default function ModerationPage() {
               <Drawer anchor='bottom' open onClose={() => setSelectedDoc(null)} slotProps={{ paper: { sx: { maxHeight: '92vh', borderRadius: 0 } } }}>
                 {panel}
               </Drawer>
-            ) : panel
+            ) : (
+              <Drawer
+                anchor='right'
+                open
+                onClose={() => setSelectedDoc(null)}
+                slotProps={{ paper: { sx: { width: 500, maxWidth: '100vw', borderRadius: 0, boxShadow: 'none', borderLeft: '1px solid', borderColor: 'divider' } } }}
+              >
+                {panel}
+              </Drawer>
+            )
           })()}
           </Box>
         </>
