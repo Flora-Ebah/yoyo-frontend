@@ -229,10 +229,10 @@ export default function EnrolmentsPage() {
       {loading && enrolments.length === 0 ? (
         <Box className='flex items-center justify-center' sx={{ minHeight: '30vh' }}><CircularProgress /></Box>
       ) : (
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '380px minmax(0, 1fr)' }, gap: 3, alignItems: 'start' }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '380px minmax(0, 1fr)' }, gap: 3, alignItems: 'stretch', height: { lg: 640 } }}>
           {/* Classement des commerciaux */}
-          <SectionCard title='Classement des commerciaux'>
-            <Box sx={{ p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <SectionCard title='Classement des commerciaux' fill>
+            <Box sx={{ flex: 1, minHeight: 0, overflowY: 'auto', p: 1.5, display: 'flex', flexDirection: 'column', gap: 1, scrollbarWidth: 'none', '&::-webkit-scrollbar': { display: 'none' } }}>
               {leaderboard.length === 0 ? (
                 <Box sx={{ py: 6, textAlign: 'center', color: 'text.secondary' }}>
                   <i className='tabler-users text-4xl' />
@@ -271,13 +271,14 @@ export default function EnrolmentsPage() {
           </SectionCard>
 
           {/* Tous les enrôlements */}
-          <SectionCard title='Tous les enrôlements'>
+          <SectionCard title='Tous les enrôlements' fill>
             <DataTable
               columns={columns}
               rows={paged}
               getRowKey={e => e.id}
               onRowClick={e => router.push(`/enrolments/commercial/${encodeURIComponent(commercialKey(e))}`)}
               empty={{ icon: 'tabler-building-store', label: 'Aucun enrôlement' }}
+              fillHeight
               pagination={{
                 count: filtered.length,
                 page,
