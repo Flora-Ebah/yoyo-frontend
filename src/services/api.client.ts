@@ -137,13 +137,27 @@ export class ApiClientService {
    * ajoutée par le proxy `/api/proxy` (cookie httpOnly). Pour un appel public
    * (skipAuth), on le signale au proxy via l'en-tête `x-proxy-skip-auth`.
    */
-  private async buildHeaders(includeAuth: boolean = true): Promise<HeadersInit> {
-    const headers: HeadersInit = {
+  private async buildHeaders(includeAuth: boolean = true, endpoint?: string): Promise<HeadersInit> {
+    const headers: Record<string, string> = {
       'Content-Type': 'application/json'
     }
 
     if (!includeAuth) {
       headers['x-proxy-skip-auth'] = '1'
+    }
+
+    // Firebase App Check — atteste l'origine (le navigateur), indépendamment de l'authentification.
+    // Import dynamique : évite d'entraîner le SDK Firebase dans un bundle serveur. Le proxy
+    // `/api/proxy` relaie ensuite l'en-tête `X-Firebase-AppCheck` vers le backend.
+    try {
+      const { getAppCheckToken, getLimitedUseAppCheckToken, requiresLimitedUseToken } = await import('@/libs/appCheck')
+      const appCheckToken = requiresLimitedUseToken(endpoint) ? await getLimitedUseAppCheckToken() : await getAppCheckToken()
+
+      if (appCheckToken) {
+        headers['X-Firebase-AppCheck'] = appCheckToken
+      }
+    } catch {
+      // Attestation indisponible : la requête part sans en-tête (le backend est en observation).
     }
 
     return headers
@@ -288,7 +302,7 @@ export class ApiClientService {
     options?: ApiRequestOptions
   ): Promise<T> {
     try {
-      const headers = await this.buildHeaders(!options?.skipAuth)
+      const headers = await this.buildHeaders(!options?.skipAuth, endpoint)
       const url = this.getEndpointUrl(endpoint)
       const { skipAuth: _skipAuth, rawResponse, ...restOptions } = options || {}
 

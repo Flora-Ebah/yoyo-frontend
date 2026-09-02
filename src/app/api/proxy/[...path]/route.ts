@@ -52,11 +52,15 @@ async function forward(req: NextRequest, pathParts: string[]): Promise<NextRespo
   const body = hasBody ? await req.arrayBuffer() : undefined
   const incomingContentType = req.headers.get('content-type')
 
+  // Attestation App Check produite par le navigateur : relayée telle quelle vers le backend.
+  const appCheckToken = req.headers.get('x-firebase-appcheck')
+
   const doFetch = async () => {
     const headers: Record<string, string> = {
       // On préserve le Content-Type entrant (avec la boundary multipart le cas échéant).
       ...(incomingContentType ? { 'Content-Type': incomingContentType } : {}),
       ...(API_KEY ? { 'x-api-key': API_KEY } : {}),
+      ...(appCheckToken ? { 'X-Firebase-AppCheck': appCheckToken } : {}),
       ...(await authHeader(skipAuth))
     }
 
