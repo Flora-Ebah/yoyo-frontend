@@ -67,8 +67,8 @@ const MODES = [
 const searchInputStyle: React.CSSProperties = {
   width: '100%',
   height: 40,
-  borderRadius: 10,
-  border: '1px solid var(--mui-palette-divider)',
+  borderRadius: 0,
+  border: 'none',
   background: 'var(--mui-palette-background-paper)',
   padding: '0 14px 0 38px',
   fontSize: 14,
@@ -96,8 +96,8 @@ const NavbarContent = () => {
         gap: 2,
         height: 40,
         padding: '0 4px',
-        borderRadius: 10,
-        border: '1px solid var(--mui-palette-divider)',
+        borderRadius: 0,
+        border: 'none',
         background: 'var(--mui-palette-background-paper)'
       }}
     >
@@ -116,7 +116,7 @@ const NavbarContent = () => {
               justifyContent: 'center',
               width: 30,
               height: 30,
-              borderRadius: 8,
+              borderRadius: 0,
               border: 'none',
               cursor: 'pointer',
               transition: 'all .15s',

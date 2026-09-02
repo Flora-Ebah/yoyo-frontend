@@ -27,7 +27,7 @@ export const StatCard = ({ label, value, caption, icon, palette = 'primary', val
   const color = theme.palette[palette].main
 
   return (
-    <Card sx={{ border: 'none', boxShadow: 'none' }}>
+    <Card sx={{ borderRadius: 0, border: 'none', boxShadow: 'none' }}>
       <CardContent sx={{ p: 2.5, display: 'flex', flexDirection: 'column', gap: 1.25 }}>
         <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 1 }}>
           <Typography sx={{ fontSize: 13, fontWeight: 700, color: 'text.primary' }}>{label}</Typography>

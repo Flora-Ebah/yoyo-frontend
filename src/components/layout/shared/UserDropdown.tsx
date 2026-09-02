@@ -114,8 +114,8 @@ const UserDropdown = () => {
           display: 'flex',
           alignItems: 'center',
           gap: 1,
-          borderRadius: '6px',
-          border: { xs: 'none', sm: '1px solid var(--mui-palette-divider)' },
+          borderRadius: 0,
+          border: 'none',
           backgroundColor: { xs: 'transparent', sm: 'var(--mui-palette-background-paper)' },
           padding: { xs: 0, sm: '4px' },
           paddingInlineEnd: { xs: 0, sm: '12px' }

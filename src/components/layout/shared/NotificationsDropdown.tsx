@@ -210,8 +210,8 @@ const NotificationDropdown = ({
         onClick={handleToggle}
         className='text-textPrimary'
         sx={{
-          borderRadius: '6px',
-          border: '1px solid var(--mui-palette-divider)',
+          borderRadius: 0,
+          border: 'none',
           backgroundColor: 'var(--mui-palette-background-paper)',
           '&:hover': { backgroundColor: 'var(--mui-palette-action-hover)' }
         }}
