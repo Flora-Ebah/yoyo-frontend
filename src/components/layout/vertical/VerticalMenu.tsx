@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
 // Lucide Icons (pour Transactions / Notifications / chevrons)
-import { Receipt, ChevronRight, Dot, UserPlus } from 'lucide-react'
+import { Receipt, ChevronRight, Dot } from 'lucide-react'
 
 // Type Imports
 import type { VerticalMenuContextProps } from '@menu/components/vertical-menu/Menu'
@@ -98,6 +98,15 @@ const IcoAdminCog = ({ size }: { size: number }) => (
     <path d='m20.772 19.148.924.383' />
     <circle cx='10' cy='8' r='5' />
     <circle cx='18' cy='18' r='3' />
+  </svg>
+)
+
+// Activité commerciale : graphique en ligne montant (performance des ventes / enrôlements),
+// plus parlant qu'un « ajout d'utilisateur » pour cette section (classement + KPIs commerciaux).
+const IcoCommercial = ({ size }: { size: number }) => (
+  <svg {...svgBase(size)}>
+    <path d='M3 3v16a2 2 0 0 0 2 2h16' />
+    <path d='m19 9-5 5-4-4-3 3' />
   </svg>
 )
 
@@ -202,7 +211,7 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
               </MenuItem>
             )}
             {enrolVisible && (
-              <MenuItem href='/enrolments' icon={<UserPlus size={ICON_SIZE} />}>
+              <MenuItem href='/enrolments' icon={<IcoCommercial size={ICON_SIZE} />}>
                 Activité commerciale
               </MenuItem>
             )}
