@@ -1,0 +1,254 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manuel Back-office YoYo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --brand:#FF6100; --brand-2:#FF904B; --brand-ink:#C24A00;
+    --ink:#1F2933; --body:#454F59; --muted:#78868F;
+    --paper:#FFFFFF; --sand:#F7F5F2; --line:#E8E3DC; --line-2:#D8D2C9;
+    --ok:#1E9E6A; --warn:#B07A00; --bad:#D93025;
+    --shadow:0 1px 0 var(--line);
+    --font:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --ink:#F2EFEA; --body:#C7CDD3; --muted:#939DA6;
+    --paper:#1B1E22; --sand:#23272C; --line:#31363C; --line-2:#3C424A;
+  }}
+  :root[data-theme="dark"]{
+    --ink:#F2EFEA; --body:#C7CDD3; --muted:#939DA6;
+    --paper:#1B1E22; --sand:#23272C; --line:#31363C; --line-2:#3C424A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--sand);color:var(--body);font-family:var(--font);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+  a{color:var(--brand-ink)}
+
+  /* Cover */
+  .cover{background:var(--brand);background-image:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);
+    color:#fff;padding:54px 22px 46px;margin-bottom:34px}
+  .cover .inner{max-width:860px;margin:0 auto}
+  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    background:rgba(255,255,255,.18);padding:6px 12px}
+  .cover h1{font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:800;margin:18px 0 10px;
+    text-wrap:balance;letter-spacing:-.02em}
+  .cover p{font-size:17px;max-width:56ch;margin:0;color:#fff;opacity:.95}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px;font-size:13.5px;font-weight:600}
+  .meta span{opacity:.9}
+
+  /* TOC */
+  .toc{background:var(--paper);border:1px solid var(--line);padding:20px 22px;margin-bottom:38px}
+  .toc h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  .toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px 22px;counter-reset:t}
+  .toc li{counter-increment:t}
+  .toc a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);font-weight:600;padding:5px 0;font-size:14.5px}
+  .toc a::before{content:counter(t,decimal-leading-zero);color:var(--brand);font-weight:800;font-variant-numeric:tabular-nums;font-size:13px}
+  .toc a:hover{color:var(--brand-ink)}
+
+  section{background:var(--paper);border:1px solid var(--line);padding:30px 30px 34px;margin-bottom:20px}
+  section>h2{font-size:23px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance;
+    display:flex;align-items:baseline;gap:12px}
+  section>h2 .n{font-size:14px;font-weight:800;color:#fff;background:var(--brand);min-width:30px;height:30px;
+    display:inline-flex;align-items:center;justify-content:center;flex:none;align-self:center}
+  .lead{color:var(--muted);margin:.2em 0 1.4em;font-size:15px}
+  h3{font-size:16px;font-weight:700;color:var(--ink);margin:26px 0 8px}
+
+  ol.steps{counter-reset:s;list-style:none;margin:0;padding:0}
+  ol.steps>li{counter-increment:s;position:relative;padding:6px 0 14px 42px;border-bottom:1px dashed var(--line)}
+  ol.steps>li:last-child{border-bottom:0}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;
+    border:2px solid var(--brand);color:var(--brand-ink);font-weight:800;font-size:13px;
+    display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+  ol.steps>li b{color:var(--ink)}
+
+  .note,.tip,.warn{border-left:3px solid var(--line-2);background:var(--sand);padding:12px 16px;margin:16px 0;font-size:14.5px}
+  .note b,.tip b,.warn b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+  .tip{border-left-color:var(--ok)} .tip b{color:var(--ok)}
+  .warn{border-left-color:var(--warn)} .warn b{color:var(--warn)}
+  .note b{color:var(--brand-ink)}
+
+  .shot{border:1.5px dashed var(--line-2);background:repeating-linear-gradient(135deg,transparent,transparent 12px,rgba(120,134,143,.05) 12px,rgba(120,134,143,.05) 24px);
+    padding:26px;text-align:center;color:var(--muted);margin:16px 0;font-size:13.5px}
+  .shot .cam{font-size:22px;display:block;margin-bottom:6px;opacity:.6}
+  .shot i{font-style:normal;color:var(--body);font-weight:600}
+
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border:1px solid var(--line-2);color:var(--body)}
+  .pill.on{color:var(--ok);border-color:var(--ok)}
+  .pill.off{color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  td b{color:var(--ink)}
+
+  .flow{width:100%;height:auto;margin:14px 0;overflow-x:auto}
+  .foot{text-align:center;color:var(--muted);font-size:13px;margin-top:34px}
+
+  @media print{
+    body{background:#fff}
+    .cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    section,.toc{break-inside:avoid;border-color:#ccc}
+    .toc{display:none}
+  }
+</style>
+
+<div class="cover"><div class="inner">
+  <span class="badge">Manuel d'utilisation</span>
+  <h1>Back-office YoYo</h1>
+  <p>Guide de l'administrateur — piloter les clients, les marchands, la modération et l'activité commerciale depuis <b>cmsdev.yoyolacarte.com</b>.</p>
+  <div class="meta"><span>Version dev · v1</span><span>Rôle : Administrateur</span><span>Dernière mise à jour : 03/09/2026</span></div>
+</div></div>
+
+<div class="wrap">
+
+  <nav class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#connexion">Se connecter</a></li>
+      <li><a href="#dashboard">Tableau de bord</a></li>
+      <li><a href="#clients">Clients</a></li>
+      <li><a href="#partenaires">Marchands (partenaires)</a></li>
+      <li><a href="#moderation">Modération &amp; KYC</a></li>
+      <li><a href="#commercial">Activité commerciale</a></li>
+      <li><a href="#admins">Comptes admin &amp; rôles</a></li>
+      <li><a href="#categories">Catégories</a></li>
+      <li><a href="#notifications">Notifications</a></li>
+      <li><a href="#compte">Mon compte</a></li>
+    </ol>
+  </nav>
+
+  <section id="connexion">
+    <h2><span class="n">1</span> Se connecter</h2>
+    <p class="lead">L'accès au back-office est réservé aux comptes administrateurs et commerciaux.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>cmsdev.yoyolacarte.com/login</b> dans votre navigateur.</li>
+      <li>Saisissez votre <b>e-mail</b> et votre <b>mot de passe</b>.</li>
+      <li>Cliquez sur <b>Se connecter</b>. Vous êtes redirigé vers votre espace : le <b>tableau de bord</b> (admin) ou l'<b>activité commerciale</b> (commercial).</li>
+    </ol>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : page de connexion]</i></div>
+    <div class="note"><b>Sécurité</b> L'application est protégée par une attestation (Firebase App Check) : elle vérifie que la requête vient bien de l'application officielle. Si vous voyez « Requête non attestée », prévenez l'équipe technique — ce n'est pas une erreur de mot de passe.</div>
+    <div class="tip"><b>Mot de passe oublié</b> Cliquez sur « Mot de passe oublié ? » et suivez la procédure par e-mail (code de vérification).</div>
+  </section>
+
+  <section id="dashboard">
+    <h2><span class="n">2</span> Tableau de bord</h2>
+    <p class="lead">Vue d'ensemble de l'activité : indicateurs clés, graphiques et répartition.</p>
+    <h3>Lire les indicateurs</h3>
+    <ol class="steps">
+      <li>Les <b>cartes de statistiques</b> (en haut) résument les chiffres importants : clients, marchands, transactions, montants (en FCFA).</li>
+      <li>Les <b>graphiques</b> détaillent les tendances et la répartition (ex. par catégorie).</li>
+      <li>Le bouton <b>Actualiser</b> (à droite) recharge les données à la demande.</li>
+    </ol>
+    <h3>Filtrer la période</h3>
+    <ol class="steps">
+      <li>Utilisez le <b>sélecteur de dates / période</b> en haut de la page.</li>
+      <li>Le filtre s'applique <b>aussi</b> aux cartes de statistiques et aux widgets de l'onglet concerné.</li>
+    </ol>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : tableau de bord avec cartes + graphiques]</i></div>
+    <div class="tip"><b>Astuce</b> Les onglets en haut (ex. « Vue d'ensemble ») changent le jeu d'indicateurs affiché. Le filtre de période reste actif d'un onglet à l'autre.</div>
+  </section>
+
+  <section id="clients">
+    <h2><span class="n">3</span> Clients</h2>
+    <p class="lead">Consulter et rechercher les utilisateurs de l'application cliente.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Clients</b> dans le menu latéral.</li>
+      <li>Utilisez la <b>barre de recherche</b> ou le bouton <b>Filtre</b> (à droite du titre) pour affiner la liste.</li>
+      <li>Cliquez sur <b>Voir</b> sur une ligne : un <b>panneau détaillé</b> s'ouvre à droite (informations, statut, activité).</li>
+      <li>Fermez le panneau en cliquant en dehors ou sur la croix.</li>
+    </ol>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : liste clients + panneau détail à droite]</i></div>
+    <div class="note"><b>Bon à savoir</b> Quand une liste est vide, le tableau affiche « panier vide » (sans en-tête) au lieu d'un tableau vide.</div>
+  </section>
+
+  <section id="partenaires">
+    <h2><span class="n">4</span> Marchands (partenaires)</h2>
+    <p class="lead">Gérer les boutiques marchandes et suivre leurs paiements.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Partenaires</b> dans le menu.</li>
+      <li>Recherchez / filtrez, puis cliquez sur un marchand pour ouvrir sa <b>page de détail</b> dédiée.</li>
+      <li>La page détail présente les <b>informations de la boutique</b>, ses <b>indicateurs</b> et le <b>tableau des paiements</b> du partenaire.</li>
+    </ol>
+    <h3>Remise &amp; horaires</h3>
+    <p>La <b>remise</b> (minimum 5 %) et les <b>horaires d'ouverture</b> sont définis à la création (voir le manuel Commercial). Un marchand ne peut pas descendre sa remise sous le minimum ni désactiver sa boutique lui-même.</p>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : page détail d'un marchand + tableau paiements]</i></div>
+  </section>
+
+  <section id="moderation">
+    <h2><span class="n">5</span> Modération &amp; KYC</h2>
+    <p class="lead">Vérifier les documents soumis et statuer sur les dossiers.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Modération</b> dans le menu.</li>
+      <li>Cliquez sur un dossier pour ouvrir le <b>panneau détaillé</b> à droite (mêmes principes que le détail client).</li>
+      <li>Examinez les documents, puis <b>validez</b> ou <b>refusez</b> (avec motif) selon le cas.</li>
+    </ol>
+    <div class="note"><b>Notification</b> Le résultat (documents vérifiés / refusés) déclenche une notification pour l'utilisateur concerné.</div>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : modération + panneau détail]</i></div>
+  </section>
+
+  <section id="commercial">
+    <h2><span class="n">6</span> Activité commerciale</h2>
+    <p class="lead">Suivre la performance des commerciaux : enrôlements et marchands actifs.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Activité commerciale</b> (icône graphique) dans le menu.</li>
+      <li>En haut : les <b>KPIs</b> (nombre d'enrôlés, actifs, taux…).</li>
+      <li>Le <b>classement des commerciaux</b> montre, pour chacun : <b>nombre enrôlés</b> — <b>nombre actifs</b> — <b>taux %</b>.</li>
+      <li>Cliquez sur un commercial pour ouvrir sa <b>page de détail</b> (son activité, ses marchands).</li>
+    </ol>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : KPIs + classement + tableau]</i></div>
+    <div class="tip"><b>Astuce</b> Le widget « classement » et le widget « tous les enrôlements » ont la même hauteur ; le classement défile à l'intérieur sans barre visible.</div>
+  </section>
+
+  <section id="admins">
+    <h2><span class="n">7</span> Comptes admin &amp; rôles</h2>
+    <p class="lead">Créer des comptes internes et définir précisément leurs droits (RBAC).</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Comptes admin</b> dans la section Administration.</li>
+      <li>Cliquez sur <b>Ajouter</b> pour créer un compte : nom, e-mail, <b>rôle</b>.</li>
+      <li>Le <b>rôle</b> détermine ce que la personne voit et peut faire. Exemple : un <b>commercial</b> a le droit « créer des marchands » mais pas l'accès au tableau de bord — il ne voit que son espace commercial.</li>
+    </ol>
+    <table>
+      <thead><tr><th>Rôle</th><th>Voit</th><th>Peut faire</th></tr></thead>
+      <tbody>
+        <tr><td><b>Administrateur</b></td><td>Tout le back-office</td><td>Gérer clients, marchands, modération, comptes, réglages</td></tr>
+        <tr><td><b>Commercial</b></td><td>Espace « Activité commerciale » uniquement</td><td>Enrôler des marchands, suivre son activité</td></tr>
+      </tbody>
+    </table>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : création d'un compte admin + choix du rôle]</i></div>
+  </section>
+
+  <section id="categories">
+    <h2><span class="n">8</span> Catégories</h2>
+    <p class="lead">Gérer la taxonomie utilisée par les applications pour classer les marchands.</p>
+    <ol class="steps">
+      <li>Ouvrez la page <b>Catégories</b>.</li>
+      <li>Ajoutez ou modifiez une catégorie via le formulaire (nom, éventuellement position d'affichage).</li>
+    </ol>
+    <div class="warn"><b>Réservé admin</b> La création / modification / suppression des catégories est réservée aux administrateurs. La lecture reste ouverte aux applications.</div>
+  </section>
+
+  <section id="notifications">
+    <h2><span class="n">9</span> Notifications</h2>
+    <p class="lead">Envoyer et suivre les notifications aux utilisateurs.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Notifications</b> (icône mégaphone).</li>
+      <li>Composez et envoyez une notification, ou consultez l'historique.</li>
+    </ol>
+    <div class="note"><b>Automatique</b> Certaines notifications partent seules (activation marchand, KYC soumis/validé, inscription, paiement reçu).</div>
+  </section>
+
+  <section id="compte">
+    <h2><span class="n">10</span> Mon compte</h2>
+    <p class="lead">Gérer votre profil et votre sécurité.</p>
+    <ol class="steps">
+      <li>Cliquez sur votre <b>avatar</b> (en haut à droite) puis <b>Paramètres du compte</b>.</li>
+      <li>Mettez à jour votre <b>profil</b> et votre <b>mot de passe</b>.</li>
+      <li>Pour vous déconnecter : avatar → <b>Déconnexion</b>.</li>
+    </ol>
+    <div class="tip"><b>Thème</b> Un sélecteur clair / sombre est disponible dans la barre du haut.</div>
+  </section>
+
+  <p class="foot">YoYo La Carte · Manuel back-office · Document interne</p>
+</div>

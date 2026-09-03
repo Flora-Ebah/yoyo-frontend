@@ -1,0 +1,186 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Manuel YoYo Pro</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --brand:#FF6100; --brand-2:#FF904B; --brand-ink:#C24A00;
+    --ink:#1F2933; --body:#454F59; --muted:#78868F;
+    --paper:#FFFFFF; --sand:#F7F5F2; --line:#E8E3DC; --line-2:#D8D2C9;
+    --ok:#1E9E6A; --warn:#B07A00; --bad:#D93025;
+    --font:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --ink:#F2EFEA; --body:#C7CDD3; --muted:#939DA6;
+    --paper:#1B1E22; --sand:#23272C; --line:#31363C; --line-2:#3C424A;
+  }}
+  :root[data-theme="dark"]{
+    --ink:#F2EFEA; --body:#C7CDD3; --muted:#939DA6;
+    --paper:#1B1E22; --sand:#23272C; --line:#31363C; --line-2:#3C424A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--sand);color:var(--body);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+  a{color:var(--brand-ink)}
+  .cover{background:var(--brand);background-image:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;padding:54px 22px 46px;margin-bottom:34px}
+  .cover .inner{max-width:860px;margin:0 auto}
+  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:6px 12px}
+  .cover h1{font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:800;margin:18px 0 10px;text-wrap:balance;letter-spacing:-.02em}
+  .cover p{font-size:17px;max-width:56ch;margin:0;opacity:.95}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px;font-size:13.5px;font-weight:600;opacity:.92}
+  .toc{background:var(--paper);border:1px solid var(--line);padding:20px 22px;margin-bottom:38px}
+  .toc h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+  .toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px 22px;counter-reset:t}
+  .toc li{counter-increment:t}
+  .toc a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);font-weight:600;padding:5px 0;font-size:14.5px}
+  .toc a::before{content:counter(t,decimal-leading-zero);color:var(--brand);font-weight:800;font-variant-numeric:tabular-nums;font-size:13px}
+  section{background:var(--paper);border:1px solid var(--line);padding:30px 30px 34px;margin-bottom:20px}
+  section>h2{font-size:23px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance;display:flex;align-items:baseline;gap:12px}
+  section>h2 .n{font-size:14px;font-weight:800;color:#fff;background:var(--brand);min-width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex:none;align-self:center}
+  .lead{color:var(--muted);margin:.2em 0 1.4em;font-size:15px}
+  h3{font-size:16px;font-weight:700;color:var(--ink);margin:26px 0 8px}
+  ol.steps{counter-reset:s;list-style:none;margin:0;padding:0}
+  ol.steps>li{counter-increment:s;position:relative;padding:6px 0 14px 42px;border-bottom:1px dashed var(--line)}
+  ol.steps>li:last-child{border-bottom:0}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border:2px solid var(--brand);color:var(--brand-ink);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+  ol.steps>li b{color:var(--ink)}
+  .note,.tip,.warn{border-left:3px solid var(--line-2);background:var(--sand);padding:12px 16px;margin:16px 0;font-size:14.5px}
+  .note b,.tip b,.warn b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+  .tip{border-left-color:var(--ok)} .tip b{color:var(--ok)}
+  .warn{border-left-color:var(--warn)} .warn b{color:var(--warn)}
+  .note b{color:var(--brand-ink)}
+  .shot{border:1.5px dashed var(--line-2);background:repeating-linear-gradient(135deg,transparent,transparent 12px,rgba(120,134,143,.05) 12px,rgba(120,134,143,.05) 24px);padding:26px;text-align:center;color:var(--muted);margin:16px 0;font-size:13.5px}
+  .shot .cam{font-size:22px;display:block;margin-bottom:6px;opacity:.6}
+  .shot i{font-style:normal;color:var(--body);font-weight:600}
+  .lock{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);border:1px solid var(--line-2);padding:2px 9px}
+  .foot{text-align:center;color:var(--muted);font-size:13px;margin-top:34px}
+  @media print{body{background:#fff}.cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}section,.toc{break-inside:avoid;border-color:#ccc}.toc{display:none}}
+</style>
+
+<div class="cover"><div class="inner">
+  <span class="badge">Manuel d'utilisation</span>
+  <h1>YoYo Pro — l'app marchand</h1>
+  <p>Guide du partenaire : activer votre compte, gérer votre boutique et suivre vos encaissements depuis votre téléphone.</p>
+  <div class="meta"><span>Version dev · v1</span><span>Android</span><span>Dernière mise à jour : 03/09/2026</span></div>
+</div></div>
+
+<div class="wrap">
+  <nav class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#activer">Activer mon compte (e-mail)</a></li>
+      <li><a href="#creer">Créer un compte moi-même</a></li>
+      <li><a href="#connexion">Se connecter</a></li>
+      <li><a href="#accueil">Écran d'accueil</a></li>
+      <li><a href="#boutique">Ma boutique</a></li>
+      <li><a href="#paiements">Encaissements &amp; paiements</a></li>
+      <li><a href="#profil">Profil &amp; sécurité</a></li>
+      <li><a href="#aide">Problèmes fréquents</a></li>
+    </ol>
+  </nav>
+
+  <section id="activer">
+    <h2><span class="n">1</span> Activer mon compte depuis l'e-mail</h2>
+    <p class="lead">Si un commercial YoYo a créé votre boutique, vous recevez un e-mail « Activez votre boutique YoYo ».</p>
+    <ol class="steps">
+      <li>Ouvrez l'e-mail <b>sur votre téléphone</b> (application Gmail recommandée).</li>
+      <li>Appuyez sur le bouton <b>Activer ma boutique</b>.</li>
+      <li>L'application <b>YoYo Pro s'ouvre</b> directement sur l'écran d'activation.</li>
+      <li>Choisissez votre <b>code de sécurité</b> (mot de passe), confirmez : votre compte est activé.</li>
+    </ol>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : e-mail d'activation + écran d'activation dans l'app]</i></div>
+    <div class="warn"><b>Lien valable 48 h</b> Le lien est à usage unique et expire. Passé ce délai, demandez au commercial de renvoyer l'invitation.</div>
+    <div class="note"><b>Si le navigateur s'ouvre au lieu de l'app</b> Assurez-vous que YoYo Pro est installée. Au besoin : Réglages → Applications → YoYo Pro → « Ouvrir par défaut » → activer l'ouverture des liens.</div>
+  </section>
+
+  <section id="creer">
+    <h2><span class="n">2</span> Créer un compte moi-même</h2>
+    <p class="lead">Vous pouvez aussi vous inscrire directement dans l'application.</p>
+    <ol class="steps">
+      <li>Sur l'écran de connexion, appuyez sur <b>Créer un compte</b>.</li>
+      <li><b>Étape 1</b> — saisissez votre <b>e-mail</b> et votre <b>numéro de téléphone</b>, puis <b>Vérifier</b>.</li>
+      <li><b>Étape 2</b> — choisissez votre <b>code PIN</b> (6 chiffres).</li>
+      <li><b>Étape 3</b> — renseignez vos informations (nom, prénom, pays).</li>
+      <li><b>Étape 4</b> — acceptez les conditions, puis validez.</li>
+    </ol>
+    <div class="tip"><b>Astuce</b> Si l'e-mail ou le numéro est déjà utilisé, un message vous le signale à l'étape 1.</div>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : formulaire d'inscription — étape 1]</i></div>
+  </section>
+
+  <section id="connexion">
+    <h2><span class="n">3</span> Se connecter</h2>
+    <ol class="steps">
+      <li>Ouvrez YoYo Pro.</li>
+      <li>Saisissez votre <b>e-mail</b> (ou numéro) et votre <b>code</b>.</li>
+      <li>Appuyez sur <b>Se connecter</b>.</li>
+    </ol>
+    <div class="note"><b>Réservé aux partenaires</b> YoYo Pro n'accepte que les comptes marchands. Un compte client classique ne pourra pas s'y connecter.</div>
+    <div class="tip"><b>Code oublié</b> Utilisez « Mot de passe oublié » : vous recevrez un code par e-mail pour en définir un nouveau.</div>
+  </section>
+
+  <section id="accueil">
+    <h2><span class="n">4</span> Écran d'accueil</h2>
+    <p class="lead">Votre tableau de bord marchand : l'essentiel en un coup d'œil.</p>
+    <ol class="steps">
+      <li>Retrouvez vos <b>chiffres clés</b> (encaissements, activité récente).</li>
+      <li>La <b>barre de navigation</b> en bas donne accès aux sections principales.</li>
+    </ol>
+    <div class="note"><b>Affichage</b> La barre du bas s'affiche au-dessus des boutons système Android — elle reste toujours accessible.</div>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : écran d'accueil marchand]</i></div>
+  </section>
+
+  <section id="boutique">
+    <h2><span class="n">5</span> Ma boutique</h2>
+    <p class="lead">Vos informations, votre remise et vos horaires d'ouverture.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Ma boutique</b>.</li>
+      <li>Modifiez les informations via le formulaire (le formulaire démarre à la <b>première étape</b>).</li>
+      <li>Renseignez les <b>horaires d'ouverture</b> : les <b>7 jours</b> de la semaine sont affichés.</li>
+      <li>Enregistrez.</li>
+    </ol>
+    <h3>Ce que vous ne pouvez pas modifier</h3>
+    <p>Pour protéger l'offre YoYo, certains réglages sont verrouillés :</p>
+    <ul>
+      <li><span class="lock">🔒 Statut de la boutique</span> — vous ne pouvez pas désactiver votre boutique vous-même.</li>
+      <li><span class="lock">🔒 Remise minimale</span> — la remise ne peut pas descendre sous le minimum fixé (5 %).</li>
+    </ul>
+    <div class="note"><b>Besoin d'un changement verrouillé ?</b> Contactez votre commercial ou le support YoYo.</div>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : formulaire boutique + horaires 7 jours]</i></div>
+  </section>
+
+  <section id="paiements">
+    <h2><span class="n">6</span> Encaissements &amp; paiements</h2>
+    <p class="lead">Suivez les paiements reçus via YoYo.</p>
+    <ol class="steps">
+      <li>Ouvrez la section <b>Paiements / Transactions</b>.</li>
+      <li>Consultez la liste des opérations et leur statut.</li>
+      <li>Ouvrez une opération pour voir le <b>détail</b>.</li>
+    </ol>
+    <div class="shot"><span class="cam">▲</span><i>[Capture : liste des paiements + détail]</i></div>
+  </section>
+
+  <section id="profil">
+    <h2><span class="n">7</span> Profil &amp; sécurité</h2>
+    <p class="lead">Mettez à jour vos informations personnelles et vos identifiants.</p>
+    <ol class="steps">
+      <li>Ouvrez <b>Profil</b>.</li>
+      <li>Modifiez votre <b>e-mail</b> ou votre <b>numéro de téléphone</b> (une vérification par code peut être demandée).</li>
+      <li>Changez votre <b>mot de passe</b> depuis la section sécurité.</li>
+    </ol>
+    <div class="tip"><b>Confirmation</b> Après un changement sensible, vous recevez un e-mail de confirmation.</div>
+  </section>
+
+  <section id="aide">
+    <h2><span class="n">8</span> Problèmes fréquents</h2>
+    <ol class="steps">
+      <li><b>« Cette application est réservée aux partenaires »</b> — vous utilisez un compte client. Demandez la création d'un compte marchand.</li>
+      <li><b>Le lien d'activation ne fonctionne plus</b> — il a expiré (48 h) : demandez un nouvel envoi.</li>
+      <li><b>Je ne reçois pas l'e-mail</b> — vérifiez les spams ; confirmez l'adresse avec votre commercial.</li>
+      <li><b>Impossible de me connecter</b> — vérifiez votre connexion Internet, puis réessayez ; utilisez « Mot de passe oublié » si besoin.</li>
+    </ol>
+    <div class="note"><b>Support</b> En cas de blocage, contactez votre commercial YoYo ou le support.</div>
+  </section>
+
+  <p class="foot">YoYo La Carte · Manuel YoYo Pro · Document destiné aux marchands partenaires</p>
+</div>
