@@ -1,76 +1,77 @@
 <!doctype html>
+<html lang="fr">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Manuel Commercial YoYo</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
   :root{
-    --brand:#FF6100; --brand-2:#FF904B; --brand-ink:#C24A00;
-    --ink:#1F2933; --body:#454F59; --muted:#78868F;
-    --paper:#FFFFFF; --sand:#F7F5F2; --line:#E8E3DC; --line-2:#D8D2C9;
-    --ok:#1E9E6A; --warn:#B07A00; --bad:#D93025;
+    --brand:#FF6100;--brand-2:#FF904B;--brand-ink:#C24A00;
+    --ink:#1F2933;--body:#454F59;--muted:#78868F;
+    --paper:#FFFFFF;--sand:#F1EDE7;--tint:#FFF4EC;--soft:#F5F2EC;
+    --ok:#1E9E6A;--okbg:#E7F4EE;--warn:#B07A00;--warnbg:#FBF2DC;
     --font:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
   }
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-    --ink:#F2EFEA; --body:#C7CDD3; --muted:#939DA6;
-    --paper:#1B1E22; --sand:#23272C; --line:#31363C; --line-2:#3C424A;
+    --ink:#F2EFEA;--body:#C7CDD3;--muted:#939DA6;--paper:#1B1E22;--sand:#15171A;--tint:#2A2016;--soft:#23262B;--okbg:#16281F;--warnbg:#2A2410;
   }}
-  :root[data-theme="dark"]{
-    --ink:#F2EFEA; --body:#C7CDD3; --muted:#939DA6;
-    --paper:#1B1E22; --sand:#23272C; --line:#31363C; --line-2:#3C424A;
-  }
+  :root[data-theme="dark"]{--ink:#F2EFEA;--body:#C7CDD3;--muted:#939DA6;--paper:#1B1E22;--sand:#15171A;--tint:#2A2016;--soft:#23262B;--okbg:#16281F;--warnbg:#2A2410}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--sand);color:var(--body);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-  .wrap{max-width:860px;margin:0 auto;padding:0 22px 80px}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--sand);color:var(--body);font-family:var(--font);font-size:clamp(15px,.5vw+13.6px,16.5px);line-height:1.62;-webkit-font-smoothing:antialiased}
   a{color:var(--brand-ink)}
-  .cover{background:var(--brand);background-image:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);color:#fff;padding:54px 22px 46px;margin-bottom:34px}
-  .cover .inner{max-width:860px;margin:0 auto}
-  .badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:rgba(255,255,255,.18);padding:6px 12px}
-  .cover h1{font-size:clamp(30px,6vw,46px);line-height:1.05;font-weight:800;margin:18px 0 10px;text-wrap:balance;letter-spacing:-.02em}
-  .cover p{font-size:17px;max-width:56ch;margin:0;opacity:.95}
-  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px;font-size:13.5px;font-weight:600;opacity:.92}
-  .toc{background:var(--paper);border:1px solid var(--line);padding:20px 22px;margin-bottom:38px}
+  .ic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .page{max-width:900px;margin:0 auto;padding:26px 20px 80px;display:flex;flex-direction:column;gap:16px}
+  .cover{background:var(--brand);background-image:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;padding:clamp(30px,5vw,50px) clamp(22px,4vw,40px)}
+  .badge{display:inline-block;font-size:clamp(11px,1.4vw,12px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:rgba(255,255,255,.2);padding:6px 12px}
+  .cover h1{font-size:clamp(27px,5vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin:16px 0 8px;text-wrap:balance}
+  .cover p{font-size:clamp(15px,1.7vw,17px);max-width:56ch;margin:0;opacity:.95}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;font-size:clamp(12px,1.4vw,13.5px);font-weight:600;opacity:.92}
+  .toc{background:var(--paper);padding:clamp(20px,3vw,26px)}
   .toc h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
-  .toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px 22px;counter-reset:t}
+  .toc ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 22px;counter-reset:t}
   .toc li{counter-increment:t}
-  .toc a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);font-weight:600;padding:5px 0;font-size:14.5px}
-  .toc a::before{content:counter(t,decimal-leading-zero);color:var(--brand);font-weight:800;font-variant-numeric:tabular-nums;font-size:13px}
-  section{background:var(--paper);border:1px solid var(--line);padding:30px 30px 34px;margin-bottom:20px}
-  section>h2{font-size:23px;font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance;display:flex;align-items:baseline;gap:12px}
-  section>h2 .n{font-size:14px;font-weight:800;color:#fff;background:var(--brand);min-width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex:none;align-self:center}
-  .lead{color:var(--muted);margin:.2em 0 1.4em;font-size:15px}
-  h3{font-size:16px;font-weight:700;color:var(--ink);margin:26px 0 8px}
+  .toc a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);font-weight:600;padding:5px 0;font-size:clamp(13.5px,1.7vw,14.5px)}
+  .toc a::before{content:counter(t,decimal-leading-zero);color:var(--brand);font-weight:800;font-variant-numeric:tabular-nums;font-size:12.5px}
+  section{background:var(--paper);padding:clamp(22px,3.6vw,34px)}
+  section>h2{font-size:clamp(19px,3vw,23px);font-weight:800;color:var(--ink);letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance;display:flex;align-items:center;gap:12px}
+  section>h2 .n{font-size:clamp(12px,1.7vw,14px);font-weight:800;color:#fff;background:var(--brand);width:clamp(26px,6vw,30px);height:clamp(26px,6vw,30px);display:inline-flex;align-items:center;justify-content:center;flex:none}
+  .lead{color:var(--muted);margin:.2em 0 1.4em;font-size:clamp(14px,1.6vw,15px)}
+  h3{font-size:clamp(15px,2vw,16.5px);font-weight:700;color:var(--ink);margin:24px 0 8px}
   ol.steps{counter-reset:s;list-style:none;margin:0;padding:0}
-  ol.steps>li{counter-increment:s;position:relative;padding:6px 0 14px 42px;border-bottom:1px dashed var(--line)}
+  ol.steps>li{counter-increment:s;position:relative;padding:6px 0 14px clamp(38px,9vw,42px);border-bottom:1px dashed var(--soft)}
   ol.steps>li:last-child{border-bottom:0}
-  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border:2px solid var(--brand);color:var(--brand-ink);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:3px;width:28px;height:28px;border:2px solid var(--brand);color:var(--brand-ink);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
   ol.steps>li b{color:var(--ink)}
-  .note,.tip,.warn{border-left:3px solid var(--line-2);background:var(--sand);padding:12px 16px;margin:16px 0;font-size:14.5px}
-  .note b,.tip b,.warn b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
-  .tip{border-left-color:var(--ok)} .tip b{color:var(--ok)}
-  .warn{border-left-color:var(--warn)} .warn b{color:var(--warn)}
-  .note b{color:var(--brand-ink)}
-  .shot{border:1.5px dashed var(--line-2);background:repeating-linear-gradient(135deg,transparent,transparent 12px,rgba(120,134,143,.05) 12px,rgba(120,134,143,.05) 24px);padding:26px;text-align:center;color:var(--muted);margin:16px 0;font-size:13.5px}
-  .shot .cam{font-size:22px;display:block;margin-bottom:6px;opacity:.6}
+  ul{padding-left:20px}
+  .callout{background:var(--tint);padding:13px 16px;margin:16px 0;font-size:clamp(13.5px,1.6vw,14.5px)}
+  .callout b{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px;color:var(--brand-ink)}
+  .callout.tip{background:var(--okbg)} .callout.tip b{color:var(--ok)}
+  .callout.warn{background:var(--warnbg)} .callout.warn b{color:var(--warn)}
+  .shot{background:var(--soft);padding:clamp(22px,4vw,30px);text-align:center;color:var(--muted);margin:16px 0;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:8px}
+  .shot .ic{width:26px;height:26px;stroke-width:1.7;opacity:.7}
   .shot i{font-style:normal;color:var(--body);font-weight:600}
-  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
-  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:clamp(13px,1.6vw,14px)}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--soft);vertical-align:top}
+  th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
   td b{color:var(--ink)}
-  .flow{margin:20px 0;overflow-x:auto}
-  .flow svg{display:block;min-width:640px;width:100%;height:auto}
-  .foot{text-align:center;color:var(--muted);font-size:13px;margin-top:34px}
-  @media print{body{background:#fff}.cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}section,.toc{break-inside:avoid;border-color:#ccc}.toc{display:none}}
+  .flow{margin:18px 0;overflow-x:auto}
+  .flow svg{display:block;min-width:600px;width:100%;height:auto}
+  .foot{text-align:center;color:var(--muted);font-size:13px;margin-top:14px}
+  @media (max-width:640px){.page{padding:0 0 50px;gap:9px}.cover,.toc,section{padding-left:18px;padding-right:18px}.toc ol{grid-template-columns:1fr}}
+  @media print{body{background:#fff}.cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}.toc{display:none}section{break-inside:avoid}}
 </style>
+</head>
+<body>
+<div class="page">
+  <header class="cover">
+    <span class="badge">Manuel d'utilisation</span>
+    <h1>Commercial YoYo</h1>
+    <p>Guide du commercial : enrôler un marchand, envoyer son invitation d'activation et suivre votre performance.</p>
+    <div class="meta"><span>Version dev · v1</span><span>Rôle : Commercial</span><span>Mise à jour : 03/09/2026</span></div>
+  </header>
 
-<div class="cover"><div class="inner">
-  <span class="badge">Manuel d'utilisation</span>
-  <h1>Commercial YoYo</h1>
-  <p>Guide du commercial : enrôler un marchand, envoyer son invitation d'activation et suivre votre performance.</p>
-  <div class="meta"><span>Version dev · v1</span><span>Rôle : Commercial</span><span>Dernière mise à jour : 03/09/2026</span></div>
-</div></div>
-
-<div class="wrap">
   <nav class="toc">
     <h2>Sommaire</h2>
     <ol>
@@ -87,9 +88,9 @@
 
   <section id="role">
     <h2><span class="n">1</span> Votre espace commercial</h2>
-    <p class="lead">En tant que commercial, vous avez un accès <b>dédié et simplifié</b> au back-office.</p>
-    <p>Votre compte a le droit de <b>créer des marchands</b> mais pas l'accès au tableau de bord général. À la connexion, vous arrivez donc <b>directement sur votre espace « Activité commerciale »</b> — vous n'avez pas la barre latérale complète de l'administrateur.</p>
-    <div class="note"><b>Bon à savoir</b> C'est voulu : vous voyez uniquement ce qui concerne votre activité (vos enrôlements et vos statistiques).</div>
+    <p class="lead">En tant que commercial, vous avez un accès dédié et simplifié au back-office.</p>
+    <p>Votre compte a le droit de <b>créer des marchands</b> mais pas l'accès au tableau de bord général. À la connexion, vous arrivez <b>directement sur votre espace « Activité commerciale »</b> — sans la barre latérale complète de l'administrateur.</p>
+    <div class="callout"><b>Bon à savoir</b> C'est voulu : vous voyez uniquement ce qui concerne votre activité (vos enrôlements et vos statistiques).</div>
   </section>
 
   <section id="connexion">
@@ -99,43 +100,31 @@
       <li>Saisissez l'<b>e-mail</b> et le <b>mot de passe</b> de votre compte commercial (créés par un administrateur).</li>
       <li>Cliquez sur <b>Se connecter</b> : vous arrivez sur votre espace commercial.</li>
     </ol>
-    <div class="shot"><span class="cam">▲</span><i>[Capture : espace commercial après connexion]</i></div>
+    <div class="shot"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 21"/></svg><i>[Capture : espace commercial]</i></div>
   </section>
 
   <section id="flux">
     <h2><span class="n">3</span> Le parcours d'enrôlement</h2>
     <p class="lead">De la création du marchand à sa boutique active, en 4 temps.</p>
     <div class="flow">
-      <svg viewBox="0 0 660 130" role="img" aria-label="Étapes : vous créez le marchand, il reçoit un e-mail, il active, la boutique est active">
-        <defs>
-          <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
-            <path d="M0 0L9 4.5L0 9z" fill="#FF6100"/>
-          </marker>
-        </defs>
+      <svg viewBox="0 0 620 120" role="img" aria-label="Vous créez le marchand, il reçoit un e-mail, il active, la boutique est active">
+        <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9z" fill="#FF6100"/></marker></defs>
         <g font-family="Plus Jakarta Sans, sans-serif">
-          <g>
-            <rect x="4" y="34" width="150" height="62" fill="none" stroke="#FF6100" stroke-width="2"/>
-            <text x="79" y="60" text-anchor="middle" font-size="13" font-weight="800" fill="#C24A00">1 · Vous</text>
-            <text x="79" y="80" text-anchor="middle" font-size="12" fill="#78868F">Créez le marchand</text>
-          </g>
-          <line x1="158" y1="65" x2="196" y2="65" stroke="#FF6100" stroke-width="2" marker-end="url(#ar)"/>
-          <g>
-            <rect x="200" y="34" width="150" height="62" fill="none" stroke="#D8D2C9" stroke-width="2"/>
-            <text x="275" y="60" text-anchor="middle" font-size="13" font-weight="800" fill="#1F2933">2 · E-mail</text>
-            <text x="275" y="80" text-anchor="middle" font-size="12" fill="#78868F">Invitation d'activation</text>
-          </g>
-          <line x1="354" y1="65" x2="392" y2="65" stroke="#FF6100" stroke-width="2" marker-end="url(#ar)"/>
-          <g>
-            <rect x="396" y="34" width="150" height="62" fill="none" stroke="#D8D2C9" stroke-width="2"/>
-            <text x="471" y="60" text-anchor="middle" font-size="13" font-weight="800" fill="#1F2933">3 · Marchand</text>
-            <text x="471" y="80" text-anchor="middle" font-size="12" fill="#78868F">Choisit son code</text>
-          </g>
-          <line x1="550" y1="65" x2="588" y2="65" stroke="#FF6100" stroke-width="2" marker-end="url(#ar)"/>
-          <g>
-            <rect x="592" y="34" width="64" height="62" fill="#FF6100"/>
-            <text x="624" y="60" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">4 ·</text>
-            <text x="624" y="78" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Actif</text>
-          </g>
+          <rect x="2" y="30" width="140" height="60" fill="none" stroke="#FF6100" stroke-width="2"/>
+          <text x="72" y="56" text-anchor="middle" font-size="12.5" font-weight="800" fill="#C24A00">1 · Vous</text>
+          <text x="72" y="75" text-anchor="middle" font-size="11.5" fill="#78868F">Créez le marchand</text>
+          <line x1="146" y1="60" x2="180" y2="60" stroke="#FF6100" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="184" y="30" width="140" height="60" fill="none" stroke="#D8D2C9" stroke-width="2"/>
+          <text x="254" y="56" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1F2933">2 · E-mail</text>
+          <text x="254" y="75" text-anchor="middle" font-size="11.5" fill="#78868F">Invitation d'activation</text>
+          <line x1="328" y1="60" x2="362" y2="60" stroke="#FF6100" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="366" y="30" width="140" height="60" fill="none" stroke="#D8D2C9" stroke-width="2"/>
+          <text x="436" y="56" text-anchor="middle" font-size="12.5" font-weight="800" fill="#1F2933">3 · Marchand</text>
+          <text x="436" y="75" text-anchor="middle" font-size="11.5" fill="#78868F">Choisit son code</text>
+          <line x1="510" y1="60" x2="544" y2="60" stroke="#FF6100" stroke-width="2" marker-end="url(#ar)"/>
+          <rect x="548" y="30" width="70" height="60" fill="#FF6100"/>
+          <text x="583" y="56" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">4 ·</text>
+          <text x="583" y="74" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">Actif</text>
         </g>
       </svg>
     </div>
@@ -145,28 +134,28 @@
     <h2><span class="n">4</span> Enrôler un marchand</h2>
     <p class="lead">Créer une boutique à distance et déclencher son invitation.</p>
     <ol class="steps">
-      <li>Dans votre espace, ouvrez le formulaire <b>Enrôler / Ajouter un marchand</b>.</li>
+      <li>Dans votre espace, ouvrez le formulaire <b>Ajouter un marchand</b>.</li>
       <li>Renseignez les <b>informations du marchand</b> : nom complet, e-mail, téléphone.</li>
-      <li>Renseignez les <b>informations de la boutique</b> : nom de la boutique, catégorie, localisation.</li>
-      <li>Définissez la <b>remise</b> et les <b>horaires d'ouverture</b> (voir section suivante).</li>
-      <li>Validez : le marchand est créé et reçoit automatiquement son <b>e-mail (et SMS) d'activation</b>.</li>
+      <li>Renseignez les <b>informations de la boutique</b> : nom, catégorie, localisation.</li>
+      <li>Définissez la <b>remise</b> et les <b>horaires</b> (voir section suivante).</li>
+      <li>Validez : le marchand est créé et reçoit son <b>e-mail (et SMS) d'activation</b>.</li>
     </ol>
-    <div class="tip"><b>Confirmation</b> Après validation, l'écran indique par quels canaux l'invitation est réellement partie (e-mail / SMS).</div>
-    <div class="shot"><span class="cam">▲</span><i>[Capture : formulaire d'enrôlement marchand]</i></div>
+    <div class="callout tip"><b>Confirmation</b> Après validation, l'écran indique par quels canaux l'invitation est réellement partie (e-mail / SMS).</div>
+    <div class="shot"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 21"/></svg><i>[Capture : formulaire d'enrôlement]</i></div>
   </section>
 
   <section id="remise">
     <h2><span class="n">5</span> Remise &amp; horaires</h2>
-    <p class="lead">Ces réglages sont définis dès la création — c'est important, le marchand ne pourra pas les contourner.</p>
+    <p class="lead">Définis dès la création — le marchand ne pourra pas les contourner.</p>
     <table>
       <thead><tr><th>Champ</th><th>Règle</th></tr></thead>
       <tbody>
         <tr><td><b>Remise (%)</b></td><td>Le pourcentage accordé aux clients YoYo. <b>Minimum 5 %</b>. Le marchand ne pourra pas descendre en dessous.</td></tr>
-        <tr><td><b>Horaires d'ouverture</b></td><td>Définis pour les <b>7 jours</b> de la semaine (ouverture / fermeture, ou fermé).</td></tr>
+        <tr><td><b>Horaires</b></td><td>Définis pour les <b>7 jours</b> de la semaine (ouverture / fermeture, ou fermé).</td></tr>
         <tr><td><b>Statut boutique</b></td><td>La boutique est active ; le marchand ne peut pas la désactiver lui-même.</td></tr>
       </tbody>
     </table>
-    <div class="warn"><b>Vérifiez avant de valider</b> La remise et les horaires conditionnent l'offre vue par les clients. Confirmez-les avec le marchand au moment de l'enrôlement.</div>
+    <div class="callout warn"><b>Vérifiez avant de valider</b> La remise et les horaires conditionnent l'offre vue par les clients. Confirmez-les avec le marchand.</div>
   </section>
 
   <section id="activation">
@@ -177,20 +166,19 @@
       <li>Il appuie sur <b>Activer ma boutique</b> → l'application <b>YoYo Pro</b> s'ouvre sur l'écran d'activation.</li>
       <li>Il choisit son <b>code de sécurité</b> : la boutique passe <b>active</b>.</li>
     </ol>
-    <div class="warn"><b>Lien valable 48 h · usage unique</b> Si le marchand dépasse le délai, ré-enrôlez-le ou demandez un renvoi de l'invitation.</div>
-    <div class="note"><b>Le marchand n'a pas reçu le mail ?</b> Vérifiez l'adresse saisie, demandez-lui de regarder ses spams, et au besoin renvoyez l'invitation.</div>
+    <div class="callout warn"><b>Lien valable 48 h · usage unique</b> Si le marchand dépasse le délai, ré-enrôlez-le ou demandez un renvoi.</div>
   </section>
 
   <section id="suivi">
     <h2><span class="n">7</span> Suivre mon activité</h2>
     <p class="lead">Mesurer vos enrôlements et le taux de marchands réellement actifs.</p>
     <ol class="steps">
-      <li>Dans votre espace, consultez vos <b>KPIs</b> : nombre d'enrôlés, nombre d'actifs, taux.</li>
-      <li>Le <b>classement</b> vous situe par rapport aux autres commerciaux : <b>enrôlés — actifs — %</b>.</li>
+      <li>Consultez vos <b>KPIs</b> : nombre d'enrôlés, nombre d'actifs, taux.</li>
+      <li>Le <b>classement</b> vous situe par rapport aux autres commerciaux : enrôlés — actifs — %.</li>
       <li>Ouvrez le détail pour voir la liste de <b>vos marchands</b> et leur statut.</li>
     </ol>
-    <div class="tip"><b>Objectif</b> Un marchand « enrôlé » ne compte vraiment que lorsqu'il est <b>actif</b> (il a activé sa boutique). Suivez votre <b>taux d'activation</b>.</div>
-    <div class="shot"><span class="cam">▲</span><i>[Capture : KPIs + classement commercial]</i></div>
+    <div class="callout tip"><b>Objectif</b> Un marchand « enrôlé » ne compte vraiment que lorsqu'il est <b>actif</b> (il a activé sa boutique). Suivez votre taux d'activation.</div>
+    <div class="shot"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16"/><circle cx="8.5" cy="9.5" r="1.7"/><path d="M21 16l-5-5L5 21"/></svg><i>[Capture : KPIs + classement]</i></div>
   </section>
 
   <section id="bonnes">
@@ -199,9 +187,11 @@
       <li><b>Vérifiez l'e-mail et le téléphone</b> avant de valider : c'est par là que part l'invitation.</li>
       <li><b>Expliquez au marchand</b> qu'il recevra un lien à ouvrir <b>sur son téléphone</b> pour choisir son code.</li>
       <li><b>Relancez sous 48 h</b> : le lien expire ; un rappel augmente le taux d'activation.</li>
-      <li><b>Confirmez la remise</b> avec le marchand — elle ne pourra pas être baissée sous 5 %.</li>
+      <li><b>Confirmez la remise</b> — elle ne pourra pas être baissée sous 5 %.</li>
     </ol>
   </section>
 
   <p class="foot">YoYo La Carte · Manuel Commercial · Document interne</p>
 </div>
+</body>
+</html>
