@@ -24,6 +24,10 @@ import Typography from '@mui/material/Typography'
 // Actions Imports
 import { loginAction, resolveLandingRoute } from '@/app/actions/auth.actions'
 
+// App Check — l'attestation est produite ici (navigateur) puis passée à la Server Action,
+// qui la relaie au backend. Une Server Action ne peut pas attester elle-même (pas de DOM).
+import { getAppCheckToken } from '@/libs/appCheck'
+
 // Util Imports
 import { ROUTES } from '@/configs/constants'
 
@@ -62,11 +66,18 @@ export default function LoginPage() {
     try {
       setLoading(true)
 
-      const result = await loginAction({
-        login: email, // Le backend utilise 'login' (email ou username)
-        password,
-        rememberMe
-      })
+      // Jeton d'attestation obtenu côté navigateur (peut être null en cas d'échec :
+      // le backend tranchera). Relayé au backend par la Server Action.
+      const appCheckToken = await getAppCheckToken()
+
+      const result = await loginAction(
+        {
+          login: email, // Le backend utilise 'login' (email ou username)
+          password,
+          rememberMe
+        },
+        appCheckToken
+      )
 
       if (result.success) {
         // Destination décidée par le backend (autoritaire) : un commercial va TOUJOURS

@@ -227,12 +227,18 @@ export async function updatePasswordAction(
  * Server Action pour générer un OTP pour le changement d'email
  * POST /otp/generate
  */
-export async function generateEmailChangeOtpAction(email: string): Promise<{ success: boolean; error?: string; data?: any }> {
+export async function generateEmailChangeOtpAction(
+  email: string,
+  appCheckToken?: string | null
+): Promise<{ success: boolean; error?: string; data?: any }> {
   try {
-    const result = await otpService.generate({
-      login: email,
-      messageType: 'ACCOUNT_UPDATED'
-    })
+    const result = await otpService.generate(
+      {
+        login: email,
+        messageType: 'ACCOUNT_UPDATED'
+      },
+      appCheckToken
+    )
 
     return { success: true, data: result }
   } catch (error: any) {

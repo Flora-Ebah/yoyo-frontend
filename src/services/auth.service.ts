@@ -102,11 +102,15 @@ export class AuthService {
    * Connexion utilisateur (client)
    * POST /client/login
    */
-  async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await apiServer.post<any>('/client/login', {
-      login: credentials.login,
-      password: credentials.password
-    })
+  async login(credentials: LoginCredentials, appCheckToken?: string | null): Promise<AuthResponse> {
+    const response = await apiServer.post<any>(
+      '/client/login',
+      {
+        login: credentials.login,
+        password: credentials.password
+      },
+      appCheckToken ? { headers: { 'X-Firebase-AppCheck': appCheckToken } } : undefined
+    )
 
     return this.normalizeAuthResponse(response, 'user')
   }
@@ -115,11 +119,15 @@ export class AuthService {
    * Connexion administrateur
    * POST /admin/login
    */
-  async loginAdmin(credentials: AdminLoginCredentials): Promise<AuthResponse> {
-    const response = await apiServer.post<any>('/admin/login', {
-      email: credentials.email,
-      password: credentials.password
-    })
+  async loginAdmin(credentials: AdminLoginCredentials, appCheckToken?: string | null): Promise<AuthResponse> {
+    const response = await apiServer.post<any>(
+      '/admin/login',
+      {
+        email: credentials.email,
+        password: credentials.password
+      },
+      appCheckToken ? { headers: { 'X-Firebase-AppCheck': appCheckToken } } : undefined
+    )
 
     return this.normalizeAuthResponse(response, 'admin')
   }

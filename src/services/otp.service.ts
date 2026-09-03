@@ -48,11 +48,15 @@ class OtpService {
   /**
    * Génère un code OTP
    */
-  async generate(request: GenerateOtpRequest): Promise<GenerateOtpResponse> {
-    const response = await apiServer.post<GenerateOtpResponse>('/otp/generate', {
-      login: request.login,
-      messageType: request.messageType
-    })
+  async generate(request: GenerateOtpRequest, appCheckToken?: string | null): Promise<GenerateOtpResponse> {
+    const response = await apiServer.post<GenerateOtpResponse>(
+      '/otp/generate',
+      {
+        login: request.login,
+        messageType: request.messageType
+      },
+      appCheckToken ? { headers: { 'X-Firebase-AppCheck': appCheckToken } } : undefined
+    )
     return response
   }
 

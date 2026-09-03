@@ -44,7 +44,7 @@ export async function resolveLandingRoute(requested?: string): Promise<string> {
  * Server Action pour la connexion utilisateur.
  * Dans le backoffice, nous utilisons le flux admin.
  */
-export async function loginAction(credentials: LoginCredentials) {
+export async function loginAction(credentials: LoginCredentials, appCheckToken?: string | null) {
   try {
     const adminCredentials: AdminLoginCredentials = {
       email: credentials.login,
@@ -52,7 +52,7 @@ export async function loginAction(credentials: LoginCredentials) {
       rememberMe: credentials.rememberMe
     }
 
-    const authResponse = await authService.loginAdmin(adminCredentials)
+    const authResponse = await authService.loginAdmin(adminCredentials, appCheckToken)
 
     await sessionService.createSession(authResponse, credentials.rememberMe)
 
@@ -75,9 +75,9 @@ export async function loginAction(credentials: LoginCredentials) {
 /**
  * Server Action pour la connexion administrateur
  */
-export async function loginAdminAction(credentials: AdminLoginCredentials) {
+export async function loginAdminAction(credentials: AdminLoginCredentials, appCheckToken?: string | null) {
   try {
-    const authResponse = await authService.loginAdmin(credentials)
+    const authResponse = await authService.loginAdmin(credentials, appCheckToken)
 
     await sessionService.createSession(authResponse, credentials.rememberMe)
 
